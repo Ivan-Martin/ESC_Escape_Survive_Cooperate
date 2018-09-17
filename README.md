@@ -39,9 +39,9 @@ El juego estará caracterizado por su estilo retro y su arte visual en pixel art
 
 Equipo de desarrollo de ESC:
 
-* Iván Martín de San Lázaro (i.martinde.2016@alumnos.urjc.es / Ivan-Martin[gitivan])
-* Ángel Noguero Salgado (a.noguero.2016@alumnos.urjc.es / aaangell[gitangel])
-* Álvaro García Bardón (a.garciaba.2016@alumnos.urjc.es / digifireEX[gitalvaro])
+* Iván Martín de San Lázaro (i.martinde.2016@alumnos.urjc.es / [Ivan-Martin][gitivan])
+* Ángel Noguero Salgado (a.noguero.2016@alumnos.urjc.es / [aaangell][gitangel])
+* Álvaro García Bardón (a.garciaba.2016@alumnos.urjc.es / [digifireEX][gitalvaro])
 
 Trello: <https://trello.com/escgame/>
 
