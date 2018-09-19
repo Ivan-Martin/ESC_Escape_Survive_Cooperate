@@ -29,7 +29,7 @@ No obstante, el jugador humano podrá encontrar a lo largo de su travesía un ob
 
 El poder de *sombra* por el contrario, es que comenzará el juego con una velocidad más lenta que el personaje humano, pero conforme vaya pasando el tiempo, alcanzará la velocidad del jugador y en los últimos segundos de la partida, será más rápido que el jugador. Gracias a este poder, la mayoría de las veces que gane sombra se producirán al final de la partida, cuando hay una mayor tensión acumulada y por tanto una experiencia más intensa.
 
-![No se pudo cargar la imagen](https://imgur.com/33RiJTc "Diagrama de ejemplo del modo Survive")
+![No se pudo cargar la imagen](https://imgur.com/33RiJTc.png "Diagrama de ejemplo del modo Survive")
 
 ### Survive alone
 
