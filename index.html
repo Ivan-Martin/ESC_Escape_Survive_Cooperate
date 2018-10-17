@@ -18,7 +18,7 @@
             
             game.load.image('sky', 'assets/fire.png');
             game.load.image('player', 'assets/Placeholder.png');
-            game.load.image('tileo', 'assets/Tileo.png');
+            game.load.image('tileo', 'assets/tilemap.png');
             
         }
         
@@ -58,15 +58,16 @@
             
             
             var capa2 = mapatiles.createBlankLayer('nivel2', 45, 45, 32, 32); //Añade al mundo la capa de colisiones
+            var muros = tileindex();
             
             for (var i = 0; i < 45; i++){
                 for (var j = 0; j < 45; j++){
-                    var pos = i*45+j;
-                    mapatiles.putTile(tilecolision[pos], i, j, capa2);
+                    var pos = (i*45)+j;
+                    mapatiles.putTile(muros[pos], i, j, capa2);
                 }
             }
             mapatiles.setCollision(1, true, capa1); //Le dice que las tiles con 1 colisionan
-            //capa1.renderable = false;
+            capa1.renderable = false; //Hacemos que el mapa de colisiones no se renderice.
             
             game.physics.startSystem(Phaser.Physics.P2JS);
             

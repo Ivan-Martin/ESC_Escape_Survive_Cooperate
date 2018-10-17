@@ -203,23 +203,127 @@ function arr() {
                         else if (world[j][i].east && world[j][i].north) {
                             mat[j][i] = 8;
                         }
-                        else if (world[j][i].north) {
+                        else if (world[j][i].south && world[j][i].north) {
                             mat[j][i] = 9;
                         }
-                        else if (world[j][i].west) {
+                        else if (world[j][i].east && world[j][i].west) {
                             mat[j][i] = 10;
                         }
-                        else if (world[j][i].east) {
+                        else if (world[j][i].north) {
                             mat[j][i] = 11;
                         }
-                        else if (world[j][i].south) {
+                        else if (world[j][i].west) {
                             mat[j][i] = 12;
+                        }
+                        else if (world[j][i].east) {
+                            mat[j][i] = 13;
+                        }
+                        else if (world[j][i].south) {
+                            mat[j][i] = 14;
                         }
                     }
                 }
     return mat;
             }
-
+function tileindex () {
+    var linea = [];
+    var matrix = arr();
+    for (var i = 0; i < size; i++){
+        line1 = new Array();
+        line2 = new Array();
+        line3 = new Array();
+        for (var j = 0; j < size; j++) {
+            switch(matrix[i][j]){
+                case 0:
+                    line1.push(6); line2.push(2); line3.push(5);
+                    line1.push(1); line2.push(0); line3.push(1);
+                    line1.push(4); line2.push(2); line3.push(3);
+                    break;
+                case 1:
+                    line1.push(11); line2.push(2); line3.push(5);
+                    line1.push(11); line2.push(0); line3.push(1);
+                    line1.push(11); line2.push(2); line3.push(3);
+                    break;
+                case 2:
+                    line1.push(6); line2.push(2); line3.push(13);
+                    line1.push(1); line2.push(0); line3.push(13);
+                    line1.push(4); line2.push(2); line3.push(13);
+                    break;
+                case 3:
+                    line1.push(14); line2.push(14); line3.push(14);
+                    line1.push(1); line2.push(0); line3.push(1);
+                    line1.push(4); line2.push(2); line3.push(3);
+                    break;
+                case 4:
+                    line1.push(6); line2.push(2); line3.push(5);
+                    line1.push(1); line2.push(0); line3.push(1);
+                    line1.push(12); line2.push(12); line3.push(12);
+                    break;
+                case 5:
+                    line1.push(6); line2.push(2); line3.push(13);
+                    line1.push(1); line2.push(0); line3.push(13);
+                    line1.push(12); line2.push(12); line3.push(9);
+                    break;
+                case 6:
+                    line1.push(14); line2.push(14); line3.push(10);
+                    line1.push(1); line2.push(0); line3.push(13);
+                    line1.push(4); line2.push(2); line3.push(13);
+                    break;
+                case 7:
+                    line1.push(7); line2.push(14); line3.push(14);
+                    line1.push(11); line2.push(0); line3.push(1);
+                    line1.push(11); line2.push(2); line3.push(3);
+                    break;
+                case 8:
+                    line1.push(11); line2.push(2); line3.push(5);
+                    line1.push(11); line2.push(0); line3.push(1);
+                    line1.push(8); line2.push(12); line3.push(12);
+                    break;
+                case 9:
+                    line1.push(11); line2.push(2); line3.push(13);
+                    line1.push(11); line2.push(2); line3.push(13);
+                    line1.push(11); line2.push(2); line3.push(13);
+                    break;
+                case 10:
+                    line1.push(14); line2.push(14); line3.push(14);
+                    line1.push(1); line2.push(1); line3.push(1);
+                    line1.push(12); line2.push(12); line3.push(12);
+                    break;
+                case 11:
+                    line1.push(11); line2.push(2); line3.push(13);
+                    line1.push(11); line2.push(0); line3.push(13);
+                    line1.push(8); line2.push(12); line3.push(9);
+                    break;
+                case 12:
+                    line1.push(14); line2.push(14); line3.push(10);
+                    line1.push(1); line2.push(0); line3.push(13);
+                    line1.push(12); line2.push(12); line3.push(9);
+                    break;
+                case 13:
+                    line1.push(7); line2.push(14); line3.push(14);
+                    line1.push(11); line2.push(0); line3.push(1);
+                    line1.push(8); line2.push(12); line3.push(12);
+                    break;
+                case 14:
+                    line1.push(7); line2.push(14); line3.push(10);
+                    line1.push(11); line2.push(0); line3.push(13);
+                    line1.push(11); line2.push(2); line3.push(13);
+                    break;
+            }
+        }
+        for (var k = 0; k < line1.length; k++) {
+            linea.push(line1[k]);
+        }
+        for (var k = 0; k < line2.length; k++){
+            linea.push(line2[k]);
+        }
+        for (var k = 0; k < line3.length; k++){
+            linea.push(line3[k]);
+        }
+    };
+    return linea;
+    
+}
 function collisions() {
     var linea = [];
     
