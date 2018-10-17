@@ -16,8 +16,7 @@
 
         function preload () {
             
-            game.load.image('sky', 'assets/fire.png');
-            game.load.image('player', 'assets/Placeholder.png');
+            game.load.image('player', 'assets/char/Placeholder.png');
             game.load.image('tileo', 'assets/tilemap.png');
             
         }
@@ -26,82 +25,72 @@
         var tilecolision;
         var cursors;
         var player1;
-
+        var capa;
+        
         function create () {
             
+            cursors = game.input.keyboard.createCursorKeys(); //Creamos el manejo del teclado
             
-            
-            cursors = game.input.keyboard.createCursorKeys();
-            
-            game.stage.backgroundColor = '#2d2d2d';
-            
-            //game.add.sprite(0, 0, 'sky');
+            game.stage.backgroundColor = '#2d2d2d'; //Ponemos un color gris de fondo por si algo falla
             
             mapatiles = game.add.tilemap(); //Esto añade un mapa vacío al mundo
             
-            mapatiles.addTilesetImage('tileo');
+            mapatiles.addTilesetImage('tileo'); //Cargamos el mapa de sprites de tiles
             
+            capa = mapatiles.create('nivel', 45, 45, 32, 32); //Crea una capa de 45x45 tiles, cada tile 32x32 y la llama nivel1
+            capa.resizeWorld(); //Hace que el mundo sea del mismo tamaño que nuestra capa
             
-            var capa1 = mapatiles.create('nivel1', 45, 45, 32, 32); //Crea una capa de 45x45 tiles, cada tile 32x32 y la llama nivel1
-            capa1.resizeWorld(); //Hace que el mundo sea del mismo tamaño que nuestra capa
+            createworld(15); //Lanzamos el generador de laberintos con un tamaño de 15x15   
             
-            createworld(15);
-            
-            tilecolision = collisionlayer();
-           
-            for (var i = 0; i < 45; i++){
-                for (var j = 0; j < 45; j++){
-                    var pos = i*45+j;
-                    mapatiles.putTile(tilecolision[pos], i, j, capa1);
-                }
-            }
-            
-            
-            var capa2 = mapatiles.createBlankLayer('nivel2', 45, 45, 32, 32); //Añade al mundo la capa de colisiones
-            var muros = tileindex();
+            var muros = tileindex(); //Recuperamos del generador de laberintos el tileo del mapa
             
             for (var i = 0; i < 45; i++){
                 for (var j = 0; j < 45; j++){
                     var pos = (i*45)+j;
-                    mapatiles.putTile(muros[pos], i, j, capa2);
+                    mapatiles.putTile(muros[pos], i, j, capa); //Asignamos a la capa de tiles de Phaser nuestras tiles generadas
                 }
             }
-            mapatiles.setCollision(1, true, capa1); //Le dice que las tiles con 1 colisionan
-            capa1.renderable = false; //Hacemos que el mapa de colisiones no se renderice.
+            mapatiles.setCollisionBetween(3, 14, true, capa, true); //Le dice que las tiles de 3 a 14 colisionan
             
-            game.physics.startSystem(Phaser.Physics.P2JS);
+            game.physics.startSystem(Phaser.Physics.ARCADE); //Inicializamos el sistema de físicas para colisionar
             
-            player1 = game.add.sprite(32, 32, 'player');
+            player1 = game.add.sprite(32, 32, 'player'); //Cargamos al jugador
             
-            game.physics.p2.enable(player1);
+            game.physics.arcade.enable(player1); //Permitimos que interaccione con las físicas
+            player1.body.collideWorldBounds = true; //Para que no se salga de la pantalla
             
             game.camera.follow(player1);
-            
             game.camera.deadzone = new Phaser.Rectangle(100, 100, 400, 200);
+            //Hacemos que la cámara siga al jugador y se mueva por el mundo cuando el jugador se acerque a los límites
         }
         
-        function update () {
+function update () {
             
-            player1.body.setZeroVelocity();
+    game.physics.arcade.collide(player1, capa);
+    //Hacemos que el personaje colisione con la capa del tile
+    player1.body.velocity.x = 0;
+    player1.body.velocity.y = 0;
+    //El personaje por defecto aparece siempre parado excepto que se pulse una tecla
 
-    if (cursors.up.isDown)
-    {
-        player1.body.moveUp(300)
+    if (cursors.up.isDown) {
+        player1.body.velocity.y = -200;
     }
-    else if (cursors.down.isDown)
-    {
-        player1.body.moveDown(300);
+    else if (cursors.down.isDown) {
+        player1.body.velocity.y = 200;
     }
+    //Manejamos las teclas arriba/abajo
 
     if (cursors.left.isDown)
     {
-        player1.body.velocity.x = -300;
+        player1.body.velocity.x = -200;
     }
     else if (cursors.right.isDown)
     {
-        player1.body.moveRight(300);
+        player1.body.velocity.x = 200;
     }
-        }
+    //Manejamos las teclas izq/der
+    
+} //Cierre de update
 
     };
 

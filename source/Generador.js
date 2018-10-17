@@ -6,10 +6,6 @@ var line3;
 var size;
 var mat;
 
-function collisionlayer (){
-    return collisions();
-}
-
 function createworld(mysize) {
     size = mysize;
     world = new Array (size);
