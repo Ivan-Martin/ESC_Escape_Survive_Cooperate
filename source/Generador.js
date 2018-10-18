@@ -165,6 +165,80 @@ function print() {
     document.getElementById("lineadoc").innerText = linea;
 }
 
+function addloops (count) {
+    
+    var x;
+    var y;
+    var directions = ["N", "S", "E", "W"];
+    
+    for (var i = 0; i < count; i++){
+        x = Math.floor(Math.random() * size);
+        y = Math.floor(Math.random() * size);
+        directions = shuffle(directions);
+        var j = 0;
+        var flag = true;
+        var actual;
+        while (j < 4 && flag){
+            actual = directions[j];
+            if(actual == "N"){
+                flag = world[x][y].north;
+                if(!flag){
+                    if(y - 1 >= 0){
+                        world[x][y].list.push([x, y - 1]);
+                        world[x][y].north = true;
+                        world[x][y - 1].list.push([x, y]);
+                        world[x][y - 1].south = true;
+                    } else {
+                        flag = true;
+                    } 
+                }
+            } else if (actual == "S"){
+                flag = world[x][y].south;
+                if(!flag){
+                    if( y + 1 < size){
+                        world[x][y].list.push([x, y + 1]);
+                        world[x][y].south = true;
+                        world[x][y + 1].list.push([x, y]);
+                        world[x][y + 1].north = true;
+                    } else {
+                        flag = true;
+                    }
+
+                }
+            } else if (actual == "E") {
+                flag = world[x][y].east;
+                if(!flag){
+                    if (x + 1 < size){
+                        world[x][y].list.push([x + 1, y]);
+                        world[x][y].east = true;
+                        world[x + 1][y].list.push([x, y]);
+                        world[x + 1][y].west = true;
+                    } else {
+                        flag = true;
+                    }
+                    
+                }
+            } else {
+                flag = world[x][y].west;
+                if(!flag){
+                    if (x - 1 >= 0){
+                        world[x][y].list.push([x - 1, y]);
+                        world[x][y].west = true;
+                        world[x - 1][y].list.push([x, y]);
+                        world[x - 1][y].east = true; 
+                    } else {
+                        flag = true;
+                    }
+                     
+                }
+            }
+            j++;
+        }
+        if(flag) count++;
+    }
+    
+}
+
 function arr() {
     mat = new Array(size);
     for (var x = 0; x < size; x++) {

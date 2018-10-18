@@ -3,8 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <title>ESC</title>
-        <script src="source/phaser.js"></script>
+        <script src="source/phaserCE.js"></script>
         <script src="source/Generador.js"></script>
+        <script src="source/Camera.js"></script>
     </head>
     <body>
 
@@ -16,6 +17,7 @@
 
         function preload () {
             
+            game.load.image('player2', 'assets/char/Placeholder2.png');
             game.load.image('player', 'assets/char/Placeholder.png');
             game.load.image('tileo', 'assets/tilemap.png');
             
@@ -25,11 +27,24 @@
         var tilecolision;
         var cursors;
         var player1;
+        var player2;
         var capa;
+        var worldsize = 20;
+        var worldtiles;
+        var wkey, akey, skey, dkey;
+        var muros;
+        var camara1;
+        var camara2;
         
         function create () {
             
+            worldtiles = worldsize*3;
+            
             cursors = game.input.keyboard.createCursorKeys(); //Creamos el manejo del teclado
+            wkey = game.input.keyboard.addKey(Phaser.Keyboard.W);
+            akey = game.input.keyboard.addKey(Phaser.Keyboard.A);
+            skey = game.input.keyboard.addKey(Phaser.Keyboard.S);
+            dkey = game.input.keyboard.addKey(Phaser.Keyboard.D);
             
             game.stage.backgroundColor = '#2d2d2d'; //Ponemos un color gris de fondo por si algo falla
             
@@ -37,16 +52,18 @@
             
             mapatiles.addTilesetImage('tileo'); //Cargamos el mapa de sprites de tiles
             
-            capa = mapatiles.create('nivel', 45, 45, 32, 32); //Crea una capa de 45x45 tiles, cada tile 32x32 y la llama nivel1
+            capa = mapatiles.create('nivel', worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
             capa.resizeWorld(); //Hace que el mundo sea del mismo tamaño que nuestra capa
             
-            createworld(15); //Lanzamos el generador de laberintos con un tamaño de 15x15   
+            createworld(worldsize); //Lanzamos el generador de laberintos con un tamaño de worldsize x worldsize
             
-            var muros = tileindex(); //Recuperamos del generador de laberintos el tileo del mapa
+            addloops(20);
             
-            for (var i = 0; i < 45; i++){
-                for (var j = 0; j < 45; j++){
-                    var pos = (i*45)+j;
+            muros = tileindex(); //Recuperamos del generador de laberintos el tileo del mapa
+            
+            for (var i = 0; i < worldtiles; i++){
+                for (var j = 0; j < worldtiles; j++){
+                    var pos = (i*worldtiles)+j;
                     mapatiles.putTile(muros[pos], i, j, capa); //Asignamos a la capa de tiles de Phaser nuestras tiles generadas
                 }
             }
@@ -59,9 +76,41 @@
             game.physics.arcade.enable(player1); //Permitimos que interaccione con las físicas
             player1.body.collideWorldBounds = true; //Para que no se salga de la pantalla
             
+            
             game.camera.follow(player1);
             game.camera.deadzone = new Phaser.Rectangle(100, 100, 400, 200);
             //Hacemos que la cámara siga al jugador y se mueva por el mundo cuando el jugador se acerque a los límites
+            
+            
+            player2 = game.add.sprite(64, 64, 'player2');
+            game.physics.arcade.enable(player2); //Permitimos que interaccione con las físicas
+            player2.body.collideWorldBounds = true; //Para que no se salga de la pantalla
+            
+            
+            
+            //Camaras
+            
+            /*
+            
+              // Create world stage, DON'T add it to the game's stage or world group
+            var worldStage = new Phaser.Group(game, null);
+            
+            camara1 = new Camera(game, 600, 400, 0, 0, 600, 400);
+            game.world.addChild(camara1.view);
+            
+            camara2 = new Camera(game, 600, 400, 600, 0, 600, 400);
+            game.world.addChild(camara2.view);
+            
+            camara1.bounds.width = 600;
+            camara1.bounds.height = 400;
+            
+            camara2.bounds.width = 600;
+            camara2.bounds.height = 400;
+            
+            // Set display target of the camera to the world stage
+            camara1.setDisplayTarget(worldStage);
+            camara2.setDisplayTarget(worldStage);
+            */
         }
         
 function update () {
@@ -71,27 +120,59 @@ function update () {
     player1.body.velocity.x = 0;
     player1.body.velocity.y = 0;
     //El personaje por defecto aparece siempre parado excepto que se pulse una tecla
+    
+    game.physics.arcade.collide(player2, capa);
+    //Hacemos que el personaje colisione con la capa del tile
+    player2.body.velocity.x = 0;
+    player2.body.velocity.y = 0;
+    //El personaje por defecto aparece siempre parado excepto que se pulse una tecla
 
     if (cursors.up.isDown) {
         player1.body.velocity.y = -200;
+        //camara1.move(0, -20);
     }
     else if (cursors.down.isDown) {
         player1.body.velocity.y = 200;
+        //camara1.move(0, 20);
     }
     //Manejamos las teclas arriba/abajo
 
     if (cursors.left.isDown)
     {
         player1.body.velocity.x = -200;
+        //camara1.move(-20, 0);
     }
     else if (cursors.right.isDown)
     {
         player1.body.velocity.x = 200;
+        //camara1.move(20, 0);
     }
     //Manejamos las teclas izq/der
     
-} //Cierre de update
+    if (wkey.isDown) {
+        player2.body.velocity.y = -200;
+    }
+    else if (skey.isDown) {
+        player2.body.velocity.y = 200;
+    }
+    //Manejamos las teclas arriba/abajo
 
+    if (akey.isDown)
+    {
+        player2.body.velocity.x = -200;
+    }
+    else if (dkey.isDown)
+    {
+        player2.body.velocity.x = 200;
+    }
+    //Manejamos las teclas izq/der
+    
+    /*
+    camara1.render();
+    camara2.render();
+    */
+    
+} //Cierre de update
     };
 
     </script>
