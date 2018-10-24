@@ -5,7 +5,6 @@
         <title>ESC</title>
         <script src="source/phaser3.js"></script>
         <script src="source/Generador.js"></script>
-        <script src="source/Camera.js"></script>
     </head>
     <body>
 
@@ -34,8 +33,8 @@
 
         function preload () {
             
-            this.load.image('player2', 'assets/char/Placeholder2.png');
-            this.load.image('player', 'assets/char/Placeholder.png');
+            this.load.image('player2', 'assets/char/Placeholder2Peq.png');
+            this.load.image('player', 'assets/char/PlaceholderPeq.png');
             this.load.image('tileo', 'assets/tilemap.png');
             
         }
@@ -52,9 +51,13 @@
         var muros;
         var camara1;
         var camara2;
+        var text;
+        var cuentatiempo;
+        var velocidadp2;
         
         function create () {
             
+            velocidadp2 = 150;
             
             worldtiles = worldsize*3;
             
@@ -114,6 +117,47 @@
             
             camara1.startFollow(player1);
             camara2.startFollow(player2);
+            
+            /**/
+            
+            var alertar = function () { alert("Colision")};
+            
+            this.physics.add.collider(player1, player2, alertar, null, this);
+            
+            /**/
+            
+            var alerta2 = function () {
+                alert ("Tiempo");
+            }
+            
+            cuentatiempo = this.time.addEvent({
+                delay: 180000,
+                callback: alerta2,
+                callbackScope: this
+            });
+            
+            //cuentatiempo tarda 3 minutos, tiempo general de Survive, para dar victoria a p1
+            
+            var actualizar1 = this.time.addEvent({
+                delay: 60000,
+                callback: function () {
+                    velocidadp2 = 200;
+                },
+                callbackScope: this
+            });
+            
+            //Actualizar1 actualiza la velocidad del p2 al finalizar el primer minuto, la equipara a la de p1
+            
+            var actualizar2 = this.time.addEvent({
+                delay: 120000,
+                callback: function () {
+                    velocidadp2 = 225;
+                },
+                callbackScope: this
+            });
+            
+            text = this.add.text(32, 32).setScrollFactor(0);
+            
         }
         
 function update () {
@@ -129,47 +173,48 @@ function update () {
     player2.body.velocity.x = 0;
     player2.body.velocity.y = 0;
     //El personaje por defecto aparece siempre parado excepto que se pulse una tecla
+    
 
     if (cursors.up.isDown) {
-        player1.body.velocity.y = -200;
+        player2.body.velocity.y = -velocidadp2;
     }
     else if (cursors.down.isDown) {
-        player1.body.velocity.y = 200;
-    } 
+        player2.body.velocity.y = velocidadp2;
+    } else
     //Manejamos las teclas arriba/abajo
 
     if (cursors.left.isDown)
     {
-        player1.body.velocity.x = -200;
+        player2.body.velocity.x = -velocidadp2;
     }
     else if (cursors.right.isDown)
+    {
+        player2.body.velocity.x = velocidadp2;
+    }
+    //Manejamos las teclas izq/der
+    
+    if (wkey.isDown) {
+        player1.body.velocity.y = -200;
+    }
+    else if (skey.isDown) {
+        player1.body.velocity.y = 200;
+    } else
+    //Manejamos las teclas arriba/abajo
+
+    if (akey.isDown)
+    {
+        player1.body.velocity.x = -200;
+    }
+    else if (dkey.isDown)
     {
         player1.body.velocity.x = 200;
     }
     //Manejamos las teclas izq/der
     
-    if (wkey.isDown) {
-        player2.body.velocity.y = -200;
-    }
-    else if (skey.isDown) {
-        player2.body.velocity.y = 200;
-    } 
-    //Manejamos las teclas arriba/abajo
-
-    if (akey.isDown)
-    {
-        player2.body.velocity.x = -200;
-    }
-    else if (dkey.isDown)
-    {
-        player2.body.velocity.x = 200;
-    }
-    //Manejamos las teclas izq/der
+    var number = cuentatiempo.getProgress().toString().substr(2, 2);
+    number = 100-number;
     
-    /*
-    camara1.render();
-    camara2.render();
-    */
+    text.setText('Tiempo: ' + number + "%");
     
 } //Cierre de update
     };
