@@ -33,7 +33,7 @@
 
         function preload () {
             
-            this.load.image('player2', 'assets/char/Placeholder2Peq.png');
+            this.load.spritesheet('player2', 'assets/char/pc2s.png', { frameWidth: 10, frameHeight: 24 });
             this.load.spritesheet('player', 'assets/char/pcs.png', { frameWidth: 10, frameHeight: 24 });
             this.load.image('tileo', 'assets/tilemap.png');
             this.load.spritesheet('powerup', 'assets/actors/ups.png', {frameWidth: 10, frameHeight: 10});
@@ -187,15 +187,17 @@
             
                 randomy = Math.floor(Math.random() * worldsize);
                 
-            } while (randomx <= 0 || randomy <= 0);
+                randomx--;
+                randomy--;
             
-            randomx--;
-            randomy--;
+                randomx*=32*3;
+                randomy*=32*3;
+                randomx+= 48;
+                randomy+= 48;
+                
+            } while (randomx <= 200 || randomy <= 200);
             
-            randomx*=32*3;
-            randomy*=32*3;
-            randomx+= 48;
-            randomy+= 48;
+            
             
             var poder = this.physics.add.sprite(randomx, randomy, 'powerup').play('powerupanimate');
             
