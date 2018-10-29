@@ -19,12 +19,11 @@
     var powerup = false;
     var usingpower = false;
     var mask, mask2;
+var p2;
             
         survive.create =function () {
             //console.log ("Modo survive");
-            var test = this.add.text(500,150,'SURVIVE',{fontSize: '50px', fill:'#0f0'});
             esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-            var test2 = this.add.text(400,250,'Pulsa ESC para volver',{fontSize: '30px', fill:'#0f0'});
             
             velocidadp2 = 150;
             
@@ -138,13 +137,44 @@
             
             
             var textureFrames = this.textures.get('powerup').getFrameNames();
-
             var animFrames = [];
-
+            
             textureFrames.forEach(function (frameName) {
 
                 animFrames.push({ key: 'powerup', frame: frameName });
 
+            });
+            
+            this.anims.create({
+                key:'downwards2', frames:this.anims.generateFrameNumbers('player2',{start:0, end:3}), repeat:0, frameRate:4
+            });
+            
+            this.anims.create({
+                key:'upwards2', frames:this.anims.generateFrameNumbers('player2',{start:4, end:7}), repeat:0, frameRate:4
+            });
+            
+            this.anims.create({
+                key:'right2', frames:this.anims.generateFrameNumbers('player2',{start:12, end:15}), repeat:0, frameRate:4
+            });
+            
+            this.anims.create({
+                key:'left2', frames:this.anims.generateFrameNumbers('player2',{start:8, end:11}), repeat:0, frameRate:4
+            });
+            
+            this.anims.create({
+                key:'left', frames:this.anims.generateFrameNumbers('player',{start:8, end:11}), repeat:0, frameRate:4
+            });
+            
+            this.anims.create({
+                key:'right', frames:this.anims.generateFrameNumbers('player',{start:12, end:15}), repeat:0, frameRate:4
+            });
+            
+            this.anims.create({
+                key:'up', frames:this.anims.generateFrameNumbers('player',{start:4, end:7}), repeat:0, frameRate:4
+            });
+            
+            this.anims.create({
+                key:'down', frames:this.anims.generateFrameNumbers('player',{start:0, end:3}), repeat:0, frameRate:4
             });
             
             this.anims.create({ key: 'powerupanimate', frames: animFrames, frameRate: 6, repeat: -1 });
@@ -198,41 +228,48 @@
     player2.body.velocity.x = 0;
     player2.body.velocity.y = 0;
     //El personaje por defecto aparece siempre parado excepto que se pulse una tecla
-    
 
     if (cursors.up.isDown) {
         player2.body.velocity.y = -velocidadp2;
+        player2.play('upwards2',true);
     }
     else if (cursors.down.isDown) {
         player2.body.velocity.y = velocidadp2;
+        player2.play('downwards2',true);
     } else
     //Manejamos las teclas arriba/abajo
 
     if (cursors.left.isDown)
     {
         player2.body.velocity.x = -velocidadp2;
+        player2.play('left2',true);
     }
     else if (cursors.right.isDown)
     {
         player2.body.velocity.x = velocidadp2;
+        player2.play('right2',true);
     }
     //Manejamos las teclas izq/der
     
     if (wkey.isDown) {
         player1.body.velocity.y = -200;
+        player1.play('up',true);
     }
     else if (skey.isDown) {
         player1.body.velocity.y = 200;
+        player1.play('down',true);
     } else
     //Manejamos las teclas arriba/abajo
 
     if (akey.isDown)
     {
         player1.body.velocity.x = -200;
+        player1.play('left',true);
     }
     else if (dkey.isDown)
     {
         player1.body.velocity.x = 200;
+        player1.play('right',true);
     }
     //Manejamos las teclas izq/der
     
