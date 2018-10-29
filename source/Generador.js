@@ -34,6 +34,47 @@ function node (ix, iy) {
     this.north = false;
 }
 
+function casillalejana (num1, num2) {
+    var cola = [];
+    cola.push([num1, num2]);
+    var actual;
+    for (var i = 0; i < size; i++){
+        visited[i] = new Array(size);
+        for (var j = 0; j < size; j++){
+            visited[i][j] = false;
+        }
+    }  
+    visited[num1][num2] = true;
+    while(cola.length > 0){
+        actual = cola.shift();
+        if(world[actual[0]][actual[1]].east){
+            if(!visited[actual[0]+1][actual[1]]){
+                cola.push([actual[0]+1, actual[1]]);
+                visited[actual[0]+1][actual[1]] = true;
+            }
+        }
+        if(world[actual[0]][actual[1]].north){
+            if(!visited[actual[0]][actual[1]-1]){
+                cola.push([actual[0], actual[1]-1]);
+                visited[actual[0]][actual[1]-1] = true;
+            }
+        }
+        if(world[actual[0]][actual[1]].south){
+            if(!visited[actual[0]][actual[1]+1]){
+                cola.push([actual[0], actual[1]+1]);
+                visited[actual[0]][actual[1]+1] = true;
+            }
+        }
+        if(world[actual[0]][actual[1]].west){
+            if(!visited[actual[0]-1][actual[1]]){
+                cola.push([actual[0]-1, actual[1]]);
+                visited[actual[0]-1][actual[1]] = true;
+            }
+        }
+    }
+    return actual;
+}
+
 function shuffle(array) {
   var currentIndex = array.length;
   var auxiliar, randomIndex;
