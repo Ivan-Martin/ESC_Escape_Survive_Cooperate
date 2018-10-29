@@ -2,7 +2,7 @@
         menu.init=function(){};
         menu.preload=function () {
             
-            this.load.image('player2', 'assets/char/Placeholder2Peq.png');
+            this.load.spritesheet('player2', 'assets/char/pc2s.png', { frameWidth: 10, frameHeight: 24 });
             this.load.spritesheet('player', 'assets/char/pcs.png', { frameWidth: 10, frameHeight: 24 });
             this.load.image('tileo', 'assets/tilemap.png');
             this.load.spritesheet('powerup', 'assets/actors/ups.png', {frameWidth: 10, frameHeight: 10});
@@ -11,6 +11,7 @@
             this.load.spritesheet('survive','assets/menu/surs.png',{frameWidth:96,frameHeight:32});
             this.load.spritesheet('alone','assets/menu/alos.png',{frameWidth:72,frameHeight:32});
             this.load.spritesheet('cooperate','assets/menu/coos.png',{frameWidth:136,frameHeight:32});
+            this.load.image('borde', 'assets/actors/borde.png');
         };
         
         menu.create=function(){
