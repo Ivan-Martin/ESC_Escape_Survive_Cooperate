@@ -16,8 +16,11 @@ var camara1;
 var camara2;
 var velocidadp2;
 var flag;
-        
+var music;
+
         mirror.create=function() {
+            music = this.sound.add('escmusic');
+            music.play();
             flag=false;
             /*
             console.log ("Modo mirrored");
@@ -276,6 +279,7 @@ var flag;
         
         mirror.update=function () {
             if(esc.isDown){
+                music.stop();
                 var t=mirror.scene.transition({target:'menu',duration:'10'});
             }
             this.physics.world.collide(player1, capa);
