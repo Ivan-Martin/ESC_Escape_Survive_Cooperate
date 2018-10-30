@@ -19,8 +19,10 @@
     var powerup = false;
     var usingpower = false;
     var mask, mask2;
-var p2;
+    var p2;
     var flag;
+    var flash;
+
         survive.create =function () {
             flag=false;
             //console.log ("Modo survive");
@@ -235,6 +237,22 @@ var p2;
             player1.setSize(10, 16).setOffset(0, 8);
             player2.setSize(10, 16).setOffset(0, 8);
           
+            flash=this.time.addEvent({
+                delay:60000,
+                callback:function(){
+                         camara1.fadeOut(250,255);
+                camara2.fadeOut(250,255);
+                camara1.once('camerafadeoutcomplete',function(){
+                    camara1.fadeIn(250,255);
+                },this);
+                camara2.once('camerafadeoutcomplete',function(){
+                    camara2.fadeIn(250,255);
+                },this)
+                },
+                callbackScope:this,
+                repeat:1
+            })
+            
         }
         
         survive.update=function () {
