@@ -78,7 +78,7 @@ var flag;
             
             for (var i = worldsize*3; i < worldsize*3+12; i++){
                 for (var j = 0; j < worldsize*3+12; j++){
-                    mapatiles.putTileAt(15, i, j, true, capa); //Asignamos a la capa de tiles de Phaser nuestro borde
+                    mapatiles.putTileAt(30, i, j, true, capa); //Asignamos a la capa de tiles de Phaser nuestro borde
                 }
             }
             
@@ -109,7 +109,7 @@ var flag;
             
             for (var i = worldsize*3+12+centralsize*3; i < worldsize*3+24+centralsize*3; i++){
                 for (var j = 0; j < worldsize*3+12; j++){
-                    mapatiles.putTileAt(15, i, j, true, capa); //Asignamos a la capa de tiles de Phaser nuestro borde
+                    mapatiles.putTileAt(30, i, j, true, capa); //Asignamos a la capa de tiles de Phaser nuestro borde
                 }
             }
             
@@ -285,7 +285,7 @@ var flag;
             this.physics.add.collider(player1, goldenstairs, gana1, null, this);
             
             var gana2 = function () {
-                this.add.image(300,200,'gana1').setScrollFactor(0);
+                this.add.image(300,200,'gana2').setScrollFactor(0);
                 goldenstairs.destroy();
                 flag=true;
                 var t=escape.scene.transition({target:'menu',duration:3000});
