@@ -3,7 +3,7 @@
             
             this.load.spritesheet('player2', 'assets/char/pc2s.png', { frameWidth: 10, frameHeight: 24 });
             this.load.spritesheet('player', 'assets/char/pcs.png', { frameWidth: 10, frameHeight: 24 });
-            this.load.image('tileo', 'assets/tilemap.png');
+            this.load.spritesheet('playerpower', 'assets/char/ens.png', { frameWidth: 10, frameHeight: 24 });
             this.load.spritesheet('powerup', 'assets/actors/ups.png', {frameWidth: 10, frameHeight: 10});
             this.load.spritesheet('escape','assets/menu/escs.png',{frameWidth:200,frameHeight:32});
             this.load.spritesheet('mirror','assets/menu/mirs.png',{frameWidth:200,frameHeight:32});
@@ -21,6 +21,20 @@
             this.load.image('LOGO','assets/menu/LOGO.png');
             this.load.image('stairs', 'assets/actors/sta.png');
             this.load.image('goldenstairs', 'assets/actors/goldsta.png');
+            this.load.image('ganahumano', 'assets/ghum.png');
+            this.load.image('ganasombra', 'assets/gsom.png');
+            this.load.audio('menumusic', ['assets/menu/menutheme.wav']);
+            
+            var randomtile = Math.random();
+            if(randomtile < 0.25){
+                this.load.image('tileo', 'assets/tilemap.png');
+            } else if (randomtile < 0.5) {
+                this.load.image('tileo', 'assets/tilemap2.png');
+            } else if (randomtile < 0.75){
+                this.load.image('tileo', 'assets/tilemap3.png');
+            } else {
+                this.load.image('tileo', 'assets/tilemap4.png');
+            }
         };
         logo.create=function(){
             var l=logo.add.image(600,200,'LOGO');

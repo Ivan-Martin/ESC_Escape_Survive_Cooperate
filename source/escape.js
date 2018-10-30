@@ -242,6 +242,8 @@ var velocidadp2;
             }
             
             this.physics.add.collider(player2, goldenstairs, gana2, null, this);
+            player1.setSize(10, 16).setOffset(0, 8);
+            player2.setSize(10, 16).setOffset(0, 8);
           
         }
         

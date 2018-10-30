@@ -95,19 +95,21 @@ var p2;
             
             /**/
             
-            var alertar = function () { alert("Colision")};
+            var ganasomb = function () {
+                this.add.image(300, 200, 'ganasombra').setScrollFactor(0);
+            };
             
-            this.physics.add.collider(player1, player2, alertar, null, this);
+            this.physics.add.collider(player1, player2, ganasomb, null, this);
             
             /**/
             
-            var alerta2 = function () {
-                alert ("Tiempo");
+            var ganahuma = function () {
+                this.add.image(300, 200, 'ganahumano').setScrollFactor(0);
             }
             
             cuentatiempo = this.time.addEvent({
                 delay: 180000,
-                callback: alerta2,
+                callback: ganahuma,
                 callbackScope: this
             });
             
@@ -176,6 +178,21 @@ var p2;
             this.anims.create({
                 key:'down', frames:this.anims.generateFrameNumbers('player',{start:0, end:3}), repeat:0, frameRate:4
             });
+            this.anims.create({
+                key:'leftpower', frames:this.anims.generateFrameNumbers('playerpower',{start:8, end:11}), repeat:0, frameRate:4
+            });
+            
+            this.anims.create({
+                key:'rightpower', frames:this.anims.generateFrameNumbers('playerpower',{start:12, end:15}), repeat:0, frameRate:4
+            });
+            
+            this.anims.create({
+                key:'uppower', frames:this.anims.generateFrameNumbers('playerpower',{start:4, end:7}), repeat:0, frameRate:4
+            });
+            
+            this.anims.create({
+                key:'downpower', frames:this.anims.generateFrameNumbers('playerpower',{start:0, end:3}), repeat:0, frameRate:4
+            });
             
             this.anims.create({ key: 'powerupanimate', frames: animFrames, frameRate: 6, repeat: -1 });
             
@@ -209,6 +226,9 @@ var p2;
             this.add.image(0, 0, 'borde').setScrollFactor(0);
             
             text = this.add.text(32, 32).setScrollFactor(0);
+            
+            player1.setSize(10, 16).setOffset(0, 8);
+            player2.setSize(10, 16).setOffset(0, 8);
           
         }
         
@@ -253,23 +273,27 @@ var p2;
     
     if (wkey.isDown) {
         player1.body.velocity.y = -200;
-        player1.play('up',true);
+        if(!usingpower)player1.play('up',true);
+        else player1.play('uppower', true);
     }
     else if (skey.isDown) {
         player1.body.velocity.y = 200;
-        player1.play('down',true);
+        if(!usingpower)player1.play('down', true);
+        else player1.play('downpower', true);
     } else
     //Manejamos las teclas arriba/abajo
 
     if (akey.isDown)
     {
         player1.body.velocity.x = -200;
-        player1.play('left',true);
+        if(!usingpower)player1.play('left',true);
+        else player1.play('leftpower', true);
     }
     else if (dkey.isDown)
     {
         player1.body.velocity.x = 200;
-        player1.play('right',true);
+        if(!usingpower)player1.play('right',true);
+        else player1.play('rightpower', true);
     }
     //Manejamos las teclas izq/der
     

@@ -1,5 +1,8 @@
         var menu= new Phaser.Scene('menu');
         menu.create=function(){
+            var music = this.sound.add('menumusic');
+            music.play();
+            
             var f=menu.add.image(350,325,'arr');
             var f2=menu.add.image(400,185,'arr4');
             var f3=menu.add.image(670,125,'arr3');
