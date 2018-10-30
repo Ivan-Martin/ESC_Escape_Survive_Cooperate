@@ -231,6 +231,14 @@ var music;
                     ease:'Sine.easeInOut',
                     onComplete:function(){
                     tAux();
+                    camara1.fadeOut(250,255);
+                    camara2.fadeOut(250,255);
+                    camara1.once('camerafadeoutcomplete',function(){
+                         camara1.fadeIn(250,255);
+                    })
+                    camara2.once('camerafadeoutcomplete',function(){
+                         camara2.fadeIn(250,255);
+                    })
                 }});
                 };
             function tAux(){
@@ -263,6 +271,14 @@ var music;
                     ease:'Sine.easeInOut',
                     onComplete:function(){
                     tAux2();
+                    camara1.fadeOut(250,255);
+                    camara2.fadeOut(250,255);
+                    camara1.once('camerafadeoutcomplete',function(){
+                         camara1.fadeIn(250,255);
+                    })
+                     camara2.once('camerafadeoutcomplete',function(){
+                         camara2.fadeIn(250,255);
+                    })
                 }});
             }
             function tAux2(){

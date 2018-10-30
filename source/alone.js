@@ -105,7 +105,7 @@ var sound;
             var ganasomb = function () {
                 this.add.image(300, 200, 'ganasombra').setScrollFactor(0);
                 flag=true;
-                var t=survive.scene.transition({target:'menu',duration:3000});
+                var t=alone.scene.transition({target:'menu',duration:3000});
             };
             
             this.physics.add.collider(player1, player2, ganasomb, null, this);
@@ -115,7 +115,7 @@ var sound;
             var ganahuma = function () {
                 this.add.image(300, 200, 'ganahumano').setScrollFactor(0);
                 flag=true;
-                var t=survive.scene.transition({target:'menu',duration:3000});
+                var t=alone.scene.transition({target:'menu',duration:3000});
             }
             
             cuentatiempo = this.time.addEvent({
