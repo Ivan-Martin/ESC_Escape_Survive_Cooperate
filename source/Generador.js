@@ -1,5 +1,6 @@
 var world;
 var visited;
+var values;
 var line1;
 var line2;
 var line3;
@@ -33,16 +34,118 @@ function node (ix, iy) {
     this.south = false;
     this.north = false;
 }
-/*
+
+
+function randomfinding (startx, starty){
+    this.dirs = ["N", "S", "E", "W"];
+    dirs = shuffle(this.dirs);
+    for (var i = 0; i < 4; i++){
+        if(dirs[i] == "E" && world[startx][starty].east) return "E";
+        if(dirs[i] == "S" && world[startx][starty].south) return "S";
+        if(dirs[i] == "W" && world[startx][starty].west) return "W";
+        if(dirs[i] == "N" && world[startx][starty].north) return "N";
+    }
+}
+
 function pathfinding (startx, starty, targetx, targety){
+    visited = new Array ();
+    values = new Array ();
+    var x = startx;
+    var y = starty;
     
+    var arriba = 100000;
+    var abajo = 100000;
+    var derecha = 100000;
+    var izquierda = 100000;
+    
+    if(world[startx][starty].north){
+        for (var i = 0; i < size; i++){
+        visited[i] = new Array ();
+        values[i] = new Array ();
+        for (var j = 0; j < size; j++){
+            visited[i][j] = false;
+            values[i][j] = 100000;
+        }
+    }
+        visited[startx][starty] = true;
+        arriba = recursivefind(x, y+1, targetx, targety);
+    }
+    if(world[x][y].south){
+        for (var i = 0; i < size; i++){
+        visited[i] = new Array ();
+        values[i] = new Array ();
+        for (var j = 0; j < size; j++){
+            visited[i][j] = false;
+            values[i][j] = 100000;
+        }
+    }
+        visited[startx][starty] = true;
+        abajo = recursivefind(x, y-1, targetx, targety);
+    }
+    if(world[x][y].east){
+        for (var i = 0; i < size; i++){
+        visited[i] = new Array ();
+        values[i] = new Array ();
+        for (var j = 0; j < size; j++){
+            visited[i][j] = false;
+            values[i][j] = 100000;
+        }
+    }
+        visited[startx][starty] = true;
+        derecha = recursivefind(x+1, y, targetx, targety);
+    }
+    if(world[x][y].west){
+        for (var i = 0; i < size; i++){
+        visited[i] = new Array ();
+        values[i] = new Array ();
+        for (var j = 0; j < size; j++){
+            visited[i][j] = false;
+            values[i][j] = 100000;
+        }
+    }
+        visited[startx][starty] = true;
+        izquierda = recursivefind(x-1, y, targetx, targety);
+    }
+    console.log(arriba); console.log(abajo); console.log(derecha); console.log(izquierda);
+    if(arriba <= abajo && arriba <= derecha && arriba <= izquierda) return "N";
+    if(abajo <= arriba && abajo <= izquierda && abajo <= derecha) return "S";
+    if(izquierda <= arriba && izquierda <= derecha && izquierda <= abajo) return "W";
+    if(derecha <= izquierda && derecha <= arriba && derecha <= abajo) return "E";
+    return "N";
 }
 
-function recursivefind (){
+function recursivefind (x, y, targetx, targety){
+    var min = 100000;
+    if(x == targetx && y == targety){
+        console.log("!encontrado");
+        return 0;
+    } 
+    if(visited[x][y]) return values[x][y];
     
+    if(world[x][y].north && !visited[x][y-1]){
+        visited[x][y-1] = true;
+        min = Math.min(min, recursivefind(x, y-1, targetx, targety)+1);
+        values[x][y-1] = min;
+    }
+    if(world[x][y].south && !visited[x][y+1]){
+        visited[x][y+1] = true;
+        min = Math.min(min, recursivefind(x, y+1, targetx, targety)+1);
+        values[x][y+1] = min;
+    }
+    if(world[x][y].east && !visited[x+1][y]){
+        visited[x+1][y] = true;
+        min = Math.min(min, recursivefind(x+1, y, targetx, targety)+1);
+        values[x+1][y] = min;
+    }
+    if(world[x][y].west && !visited[x-1][y]){
+        visited[x-1][y] = true;
+        min = Math.min(min, recursivefind(x-1, y, targetx, targety)+1);
+        values[x-1][y] = min;
+    }
+    
+    return min;
 }
 
-*/
 function casillalejana (num1, num2) {
     var cola = [];
     cola.push([num1, num2]);
