@@ -23,8 +23,10 @@
     var flag;
     var flash;
     var music;
+    var sound;
 
         survive.create =function () {
+            sound = this.sound.add('spup');
             music = this.sound.add('surmusic');
             music.play();
             flag=false;
@@ -335,6 +337,7 @@
     if(spacekey.isDown && powerup){
         powerup = false;
         usingpower = true;
+        sound.play();
         this.time.addEvent({
                 delay: 800,
                 callback: function () {
