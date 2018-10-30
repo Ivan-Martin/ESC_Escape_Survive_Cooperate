@@ -2,7 +2,7 @@
 var esc;
 var cooperate = new Phaser.Scene('cooperate');
 var worldtiles;
-var worldsize = 15;
+var worldsize = 12;
 var puerta1;
 var puerta2;
 var puerta3;
@@ -97,15 +97,15 @@ var player2;
             
             randomx = Math.floor(Math.random()*worldsize)+1;
             
-            mapatiles.putTileAt(2, randomx*3+1+worldsize*3, worldsize*3, true, capa);
-            mapatiles.putTileAt(2, randomx*3+1+worldsize*3, worldsize*3-1, true, capa);
+            mapatiles.putTileAt(2, randomx*3+4+worldsize*3, worldsize*3, true, capa);
+            mapatiles.putTileAt(2, randomx*3+4+worldsize*3, worldsize*3-1, true, capa);
             
             
             randomx*=32*3;
             
             randomx+=48;
             
-            randomx+= worldsize*32*3;
+            randomx+= worldsize*32*3 + 32*3;
             
             puerta2 = this.physics.add.staticSprite(randomx, worldsize*32*3, 'puerta2');
             

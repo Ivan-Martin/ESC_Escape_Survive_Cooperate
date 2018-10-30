@@ -3,10 +3,11 @@
     var alone= new Phaser.Scene('alone');
 
         alone.create=function() {
-            console.log ("Modo alone");
+            /*console.log ("Modo alone");
             var test = this.add.text(520,150,'ALONE',{fontSize: '50px', fill:'#0f0'});
+            var test2 = this.add.text(400,250,'Pulsa ESC para volver',{fontSize: '30px', fill:'#0f0'});*/
+            
             esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-            var test2 = this.add.text(400,250,'Pulsa ESC para volver',{fontSize: '30px', fill:'#0f0'});
         }
 
         alone.update=function(){        
