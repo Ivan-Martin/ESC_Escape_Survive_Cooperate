@@ -211,7 +211,7 @@ var p2;
                 
             } while (randomx <= 200 || randomy <= 200);
             
-            console.log(randomx); console.log(randomy);
+            //console.log(randomx); console.log(randomy);
             
             
             var poder = this.physics.add.sprite(randomx, randomy, 'powerup').play('powerupanimate');

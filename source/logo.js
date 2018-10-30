@@ -10,6 +10,15 @@
             this.load.spritesheet('survive','assets/menu/surs.png',{frameWidth:200,frameHeight:32});
             this.load.spritesheet('alone','assets/menu/alos.png',{frameWidth:200,frameHeight:32});
             this.load.spritesheet('cooperate','assets/menu/coos.png',{frameWidth:200,frameHeight:32});
+            this.load.spritesheet('puerta1', 'assets/actors/puervs.png', {frameWidth:32,frameHeight:21});
+            this.load.spritesheet('puerta2', 'assets/actors/puer2vs.png', {frameWidth:32,frameHeight:21});
+            this.load.spritesheet('puerta3', 'assets/actors/puer3vs.png', {frameWidth:32,frameHeight:21});
+            this.load.spritesheet('key1', 'assets/actors/nkey.png', {frameWidth:10,frameHeight:25});
+            this.load.spritesheet('key2', 'assets/actors/nkey2.png', {frameWidth:10,frameHeight:25});
+            this.load.spritesheet('key3', 'assets/actors/nkey3.png', {frameWidth:10,frameHeight:25});
+            this.load.spritesheet('puertah1', 'assets/actors/puerhs.png', {frameWidth:5,frameHeight:48});
+            this.load.spritesheet('puertah2', 'assets/actors/puer2hs.png', {frameWidth:5,frameHeight:48});
+            this.load.spritesheet('puertah3', 'assets/actors/puer3hs.png', {frameWidth:5,frameHeight:48});
             this.load.image('borde', 'assets/actors/borde.png');
             this.load.image('luz','assets/menu/luz.png');
             this.load.image('ESC','assets/menu/fondo.png');
@@ -23,6 +32,7 @@
             this.load.image('goldenstairs', 'assets/actors/goldsta.png');
             this.load.image('ganahumano', 'assets/ghum.png');
             this.load.image('ganasombra', 'assets/gsom.png');
+            this.load.image('pierden', 'assets/gatr.png');
             this.load.audio('menumusic', ['assets/menu/menutheme.wav']);
             
             var randomtile = Math.random();
