@@ -22,8 +22,11 @@
     var p2;
     var flag;
     var flash;
+    var music;
 
         survive.create =function () {
+            music = this.sound.add('surmusic');
+            music.play();
             flag=false;
             //console.log ("Modo survive");
             esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
@@ -257,6 +260,7 @@
         
         survive.update=function () {
             if(esc.isDown){
+                music.stop();
                 var t=survive.scene.transition({target:'menu',duration:'10'});
             }
             

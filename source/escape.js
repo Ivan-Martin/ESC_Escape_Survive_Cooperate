@@ -16,8 +16,11 @@ var camara1;
 var camara2;
 var velocidadp2;
 var flag;
+var music;
     
         escape.create =function () {
+            music = this.sound.add('escmusic');
+            music.play();
             flag=false;
             /*
             console.log ("Modo escape");
@@ -299,6 +302,7 @@ var flag;
         
         escape.update=function () {
             if(esc.isDown){
+                music.stop();
                 var t=escape.scene.transition({target:'menu',duration:'10'});
             }
             this.physics.world.collide(player1, capa);

@@ -19,6 +19,7 @@ var mapatiles;
 var player1;
 var player2;
 var flag;
+var music;
         cooperate.create=function () {
             /*
             console.log ("Modo cooperate");
@@ -26,6 +27,9 @@ var flag;
             esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
             var test2 = this.add.text(400,250,'Pulsa ESC para volver',{fontSize: '30px', fill:'#0f0'});
             */
+            music = this.sound.add('coomusic');
+            music.play();
+            
             flag=false;
             esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
             cursors = this.input.keyboard.createCursorKeys(); //Creamos el manejo del teclado
@@ -375,6 +379,7 @@ var flag;
     
     text.setText('Tiempo: ' + number + "%");
             if(esc.isDown){
+                music.stop();
                 var t=cooperate.scene.transition({target:'menu',duration:'10'});
             }
             this.physics.world.collide(player1, capa);

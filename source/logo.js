@@ -35,6 +35,10 @@
             this.load.image('ganasombra', 'assets/gsom.png');
             this.load.image('pierden', 'assets/gatr.png');
             this.load.audio('menumusic', ['assets/menu/menutheme.wav']);
+            this.load.audio('escmusic', ['assets/escape.mp3']);
+            this.load.audio('surmusic', ['assets/survive.mp3']);
+            this.load.audio('coomusic', ['assets/cooperate.mp3']);
+            this.load.audio('click', ['assets/click.mp3']);
             this.load.image('gana1','assets/gp1.png');
             this.load.image('gana2','assets/gp2.png');
             this.load.image('ganan','assets/gesc.png');

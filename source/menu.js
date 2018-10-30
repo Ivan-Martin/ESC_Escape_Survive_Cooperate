@@ -76,6 +76,7 @@
                 duration:2000,
                 ease:'Sine.easeInOut',
                 onComplete:function(){
+                    music.stop();
                     if(str==="escape"){
                         var t=menu.scene.transition({target:'escape',duration:'10'});
                     }
