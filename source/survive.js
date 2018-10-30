@@ -102,6 +102,7 @@
             /**/
             
             var ganasomb = function () {
+                music.stop();
                 this.add.image(300, 200, 'ganasombra').setScrollFactor(0);
                 flag=true;
                 var t=survive.scene.transition({target:'menu',duration:3000});
@@ -112,6 +113,7 @@
             /**/
             
             var ganahuma = function () {
+                music.stop();
                 this.add.image(300, 200, 'ganahumano').setScrollFactor(0);
                 flag=true;
                 var t=survive.scene.transition({target:'menu',duration:3000});
