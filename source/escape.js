@@ -86,6 +86,18 @@ var velocidadp2;
             
             muros = tileindex(); //Recuperamos del generador de laberintos el tileo del mapa
             
+            var posiciones = casillalejana(0, 0);
+            console.log(posiciones);
+            var escalerax = posiciones[0];
+            var escaleray = posiciones[1];
+            escalerax*=3*32;
+            escaleray*=3*32;
+            escalerax+= worldsize*3*32 + 12*32;
+            escalerax+=48;
+            escaleray+=48;
+            
+            var goldenstairs = this.physics.add.sprite(escalerax, escaleray, 'goldenstairs');
+            
             
             for (var i = worldsize*3+12, k = 0; i < worldsize*3+12+centralsize*3; i++, k++){
                 for (var l = 0; l < centralsize*3; l++){
@@ -216,6 +228,20 @@ var velocidadp2;
             }
             
             this.physics.add.collider(player2, stairs2, transportp2, null, this);
+            
+            var gana1 = function () {
+                goldenstairs.destroy();
+                alert("Gana p1");
+            }
+            
+            this.physics.add.collider(player1, goldenstairs, gana1, null, this);
+            
+            var gana2 = function () {
+                goldenstairs.destroy();
+                alert("Gana p2");
+            }
+            
+            this.physics.add.collider(player2, goldenstairs, gana2, null, this);
           
         }
         

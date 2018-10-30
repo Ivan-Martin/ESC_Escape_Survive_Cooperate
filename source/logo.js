@@ -20,6 +20,7 @@
             this.load.image('arr5','assets/menu/flecha5.png');
             this.load.image('LOGO','assets/menu/LOGO.png');
             this.load.image('stairs', 'assets/actors/sta.png');
+            this.load.image('goldenstairs', 'assets/actors/goldsta.png');
         };
         logo.create=function(){
             var l=logo.add.image(600,200,'LOGO');
