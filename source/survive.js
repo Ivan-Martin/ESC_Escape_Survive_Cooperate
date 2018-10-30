@@ -79,7 +79,7 @@
                 
             } while (randomx <= 200 || randomy <= 200);
             
-            player2 = this.physics.add.sprite(randomx, randomy, 'player2');
+            player2 = this.physics.add.sprite(randomx, randomy, 'enemy');
             
             
             
