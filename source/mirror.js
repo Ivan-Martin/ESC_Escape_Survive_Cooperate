@@ -37,8 +37,6 @@ var flag;
             
             worldtiles += centralsize*3; //Tamaño de la sala central
             
-            console.log(worldtiles);
-            
             cursors = this.input.keyboard.createCursorKeys(); //Creamos el manejo del teclado
             wkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
             akey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -59,7 +57,6 @@ var flag;
             muros = tileindex(); //Recuperamos del generador de laberintos el tileo del mapa
             
             var posiciones = casillalejana(0, 0);
-            console.log(posiciones);
             var escalerax = posiciones[0];
             var escaleray = posiciones[1];
             escalerax*=3*32;
@@ -140,10 +137,7 @@ var flag;
             escaleray*=32*3;
             escaleray+= 48;
             
-            console.log("Exdef = " + escalerax); console.log("Eydef = "+ escaleray);
             var stairs2 = this.physics.add.image(escalerax, escaleray, 'stairs');
-            
-            console.log("Pos player2 = " + randomx);
             
             player2 = this.physics.add.sprite(randomx, randomy, 'player2');
             
@@ -199,13 +193,13 @@ var flag;
                 
                 player1.body.velocity.x = 0;
                 player1.body.velocity.y = 0;
-                escape.add.tween({
+                mirror.add.tween({
                     targets:stairs1,
                     alpha:0,
                     duration:1,
                     ease:'Sine.easeInOut'
                 });
-                escape.add.tween({
+                mirror.add.tween({
                     targets:player1,
                     alpha:0,
                     duration: 1000,
@@ -218,11 +212,11 @@ var flag;
                    stairs1.destroy();
                     player1.x=(worldsize*3*32)+48+(12*32);
                     player1.y=48;
-                escape.add.tween({
+                mirror.add.tween({
                     targets:player1,
                     alpha:1,
                     duration: 50,
-                    ease:'Sine.easeInOut'})
+                    ease:'Sine.easeInOut'});
             }
             
             this.physics.add.collider(player1, stairs1, transportp1, null, this);
@@ -231,13 +225,13 @@ var flag;
               
                 player2.body.velocity.x = 0;
                 player2.body.velocity.y = 0;
-                    escape.add.tween({
+                mirror.add.tween({
                     targets:stairs2,
                     alpha:0,
                     duration:1,
                     ease:'Sine.easeInOut'
                 });
-                escape.add.tween({
+                mirror.add.tween({
                     targets:player2,
                     alpha:0,
                     duration: 1000,
@@ -250,11 +244,11 @@ var flag;
                     stairs2.destroy();
                     player2.x=(worldsize*3*32)+48+(12*32);
                     player2.y=48;
-                escape.add.tween({
+                mirror.add.tween({
                     targets:player2,
                     alpha:1,
                     duration: 100,
-                    ease:'Sine.easeInOut'})
+                    ease:'Sine.easeInOut'});
             }
             
             this.physics.add.collider(player2, stairs2, transportp2, null, this);
@@ -263,7 +257,7 @@ var flag;
                 this.add.image(300,200,'gana1').setScrollFactor(0);
                 goldenstairs.destroy();
                 flag=true;
-                var t=escape.scene.transition({target:'menu',duration:3000});
+                var t=mirror.scene.transition({target:'menu',duration:3000});
             }
             
             this.physics.add.collider(player1, goldenstairs, gana1, null, this);
@@ -272,7 +266,7 @@ var flag;
                 this.add.image(300,200,'gana2').setScrollFactor(0);
                 goldenstairs.destroy();
                 flag=true;
-                var t=escape.scene.transition({target:'menu',duration:3000});
+                var t=mirror.scene.transition({target:'menu',duration:3000});
             }
             
             this.physics.add.collider(player2, goldenstairs, gana2, null, this);
