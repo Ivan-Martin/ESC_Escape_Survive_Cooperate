@@ -20,8 +20,9 @@
     var usingpower = false;
     var mask, mask2;
 var p2;
-            
+    var flag;
         survive.create =function () {
+            flag=false;
             //console.log ("Modo survive");
             esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
             
@@ -97,6 +98,8 @@ var p2;
             
             var ganasomb = function () {
                 this.add.image(300, 200, 'ganasombra').setScrollFactor(0);
+                flag=true;
+                var t=survive.scene.transition({target:'menu',duration:3000});
             };
             
             this.physics.add.collider(player1, player2, ganasomb, null, this);
@@ -105,6 +108,8 @@ var p2;
             
             var ganahuma = function () {
                 this.add.image(300, 200, 'ganahumano').setScrollFactor(0);
+                flag=true;
+                var t=survive.scene.transition({target:'menu',duration:3000});
             }
             
             cuentatiempo = this.time.addEvent({
@@ -249,6 +254,7 @@ var p2;
     player2.body.velocity.y = 0;
     //El personaje por defecto aparece siempre parado excepto que se pulse una tecla
 
+    if(!flag){
     if (cursors.up.isDown) {
         player2.body.velocity.y = -velocidadp2;
         player2.play('upwards2',true);
@@ -301,7 +307,7 @@ var p2;
     number = 100-number;
     
     text.setText('Tiempo: ' + number + "%");
-    
+    }
     if(spacekey.isDown && powerup){
         powerup = false;
         usingpower = true;
