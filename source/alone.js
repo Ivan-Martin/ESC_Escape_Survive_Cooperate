@@ -22,7 +22,9 @@ var p2;
     var flag;
 var sombramoviendose = false;
 var music;
+var sound;
         alone.create=function() {
+            sound = this.sound.add('spup');
             music = this.sound.add('surmusic');
             music.play();
             /*console.log ("Modo alone");
@@ -307,6 +309,7 @@ var music;
     if(spacekey.isDown && powerup){
         powerup = false;
         usingpower = true;
+        sound.play();
         this.time.addEvent({
                 delay: 800,
                 callback: function () {
