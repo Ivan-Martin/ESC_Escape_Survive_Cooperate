@@ -21,7 +21,10 @@
 var p2;
     var flag;
 var sombramoviendose = false;
+var music;
         alone.create=function() {
+            music = this.sound.add('surmusic');
+            music.play();
             /*console.log ("Modo alone");
             var test = this.add.text(520,150,'ALONE',{fontSize: '50px', fill:'#0f0'});
             var test2 = this.add.text(400,250,'Pulsa ESC para volver',{fontSize: '30px', fill:'#0f0'});*/
@@ -217,6 +220,7 @@ var sombramoviendose = false;
 
         alone.update=function(){        
             if(esc.isDown){
+                music.stop();
                 var t=alone.scene.transition({target:'menu',duration:'10'});
             }
             if(!sombramoviendose){
