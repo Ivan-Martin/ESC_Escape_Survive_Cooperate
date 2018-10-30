@@ -232,7 +232,7 @@ var flag;
                 };
             function tAux(){
                    stairs1.destroy();
-                    player1.x=48;
+                    player1.x=(worldsize*3*32)+48+(12*32);
                     player1.y=48;
                 escape.add.tween({
                     targets:player1,
@@ -264,7 +264,7 @@ var flag;
             }
             function tAux2(){
                     stairs2.destroy();
-                    player2.x=48;
+                    player2.x=(worldsize*3*32)+48+(12*32);
                     player2.y=48;
                 escape.add.tween({
                     targets:player2,
@@ -276,7 +276,7 @@ var flag;
             this.physics.add.collider(player2, stairs2, transportp2, null, this);
             
             var gana1 = function () {
-                this.add.image(600,400,'gana1').setScrollFactor(0);
+                this.add.image(300,200,'gana1').setScrollFactor(0);
                 goldenstairs.destroy();
                 flag=true;
                 var t=escape.scene.transition({target:'menu',duration:3000});
@@ -285,7 +285,7 @@ var flag;
             this.physics.add.collider(player1, goldenstairs, gana1, null, this);
             
             var gana2 = function () {
-                this.add.image(600,400,'gana1').setScrollFactor(0);
+                this.add.image(300,200,'gana1').setScrollFactor(0);
                 goldenstairs.destroy();
                 flag=true;
                 var t=escape.scene.transition({target:'menu',duration:3000});

@@ -33,7 +33,16 @@ function node (ix, iy) {
     this.south = false;
     this.north = false;
 }
+/*
+function pathfinding (startx, starty, targetx, targety){
+    
+}
 
+function recursivefind (){
+    
+}
+
+*/
 function casillalejana (num1, num2) {
     var cola = [];
     cola.push([num1, num2]);
