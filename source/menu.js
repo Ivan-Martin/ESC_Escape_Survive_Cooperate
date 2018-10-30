@@ -1,5 +1,6 @@
         var menu= new Phaser.Scene('menu');
         menu.create=function(){
+            var sound = this.sound.add('click')
             var music = this.sound.add('menumusic');
             music.play();
             
@@ -33,23 +34,23 @@
             menu.sys.backgroundColor = '#000000';
             botonE.on('pointerover',function(){this.setFrame(2);}); //cuando estemos encima cambia el frame
             botonE.on('pointerout',function(){this.setFrame(0);});  //cuando salgamos volvemos al inicial
-            botonE.on('pointerdown',function(){this.setFrame(1); transition("escape");}); //al hacer click lo resaltamos
+            botonE.on('pointerdown',function(){this.setFrame(1); transition("escape");sound.play();}); //al hacer click lo resaltamos
                 //boton mirror
             botonM.on('pointerover',function(){this.setFrame(2);}); //cuando estemos encima cambia el frame
             botonM.on('pointerout',function(){this.setFrame(0);});  //cuando salgamos volvemos al inicial
-            botonM.on('pointerdown',function(){this.setFrame(1); transition("mirror");}); //al hacer click lo resaltamos
+            botonM.on('pointerdown',function(){this.setFrame(1); transition("mirror");sound.play();}); //al hacer click lo resaltamos
                 //boton survive
             botonS.on('pointerover',function(){this.setFrame(2);}); //cuando estemos encima cambia el frame
             botonS.on('pointerout',function(){this.setFrame(0);});  //cuando salgamos volvemos al inicial
-            botonS.on('pointerdown',function(){this.setFrame(1); transition("survive");}); //al hacer click lo resaltamos
+            botonS.on('pointerdown',function(){this.setFrame(1); transition("survive");sound.play();}); //al hacer click lo resaltamos
                 //boton alone
             botonA.on('pointerover',function(){this.setFrame(2);}); //cuando estemos encima cambia el frame
             botonA.on('pointerout',function(){this.setFrame(0);});  //cuando salgamos volvemos al inicial
-            botonA.on('pointerdown',function(){this.setFrame(1); transition("alone");}); //al hacer click lo resaltamos
+            botonA.on('pointerdown',function(){this.setFrame(1); transition("alone");sound.play();}); //al hacer click lo resaltamos
                 //boton cooperate
             botonC.on('pointerover',function(){this.setFrame(2);}); //cuando estemos encima cambia el frame
             botonC.on('pointerout',function(){this.setFrame(0);});  //cuando salgamos volvemos al inicial
-            botonC.on('pointerdown',function(){this.setFrame(1); transition("cooperate");}); //al hacer click lo resaltamos      
+            botonC.on('pointerdown',function(){this.setFrame(1); transition("cooperate");sound.play();}); //al hacer click lo resaltamos      
             
             var foco=this.add.sprite(200,200,'luz');
             var escenaM=menu.add.container();
