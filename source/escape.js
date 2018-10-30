@@ -211,20 +211,65 @@ var velocidadp2;
             });
             
             var transportp1 = function () {
-                stairs1.destroy();
-                alert("escaleras");
+                
                 player1.body.velocity.x = 0;
                 player1.body.velocity.y = 0;
-                
+                escape.add.tween({
+                    targets:stairs1,
+                    alpha:0,
+                    duration:1,
+                    ease:'Sine.easeInOut'
+                });
+                escape.add.tween({
+                    targets:player1,
+                    alpha:0,
+                    duration: 1000,
+                    ease:'Sine.easeInOut',
+                    onComplete:function(){
+                    tAux();
+                }});
+                };
+            function tAux(){
+                   stairs1.destroy();
+                    player1.x=48;
+                    player1.y=48;
+                escape.add.tween({
+                    targets:player1,
+                    alpha:1,
+                    duration: 50,
+                    ease:'Sine.easeInOut'})
             }
             
             this.physics.add.collider(player1, stairs1, transportp1, null, this);
             
             var transportp2 = function () {
-                stairs2.destroy();
-                alert("escaleras2");
+              
                 player2.body.velocity.x = 0;
                 player2.body.velocity.y = 0;
+                    escape.add.tween({
+                    targets:stairs2,
+                    alpha:0,
+                    duration:1,
+                    ease:'Sine.easeInOut'
+                });
+                escape.add.tween({
+                    targets:player2,
+                    alpha:0,
+                    duration: 1000,
+                    ease:'Sine.easeInOut',
+                    onComplete:function(){
+                    tAux2();
+                }});
+            }
+            function tAux2(){
+                    stairs2.destroy();
+                    player2.x=48;
+                    player2.y=48;
+                escape.add.tween({
+                    targets:player2,
+                    alpha:1,
+                    duration: 100,
+                    ease:'Sine.easeInOut'})
             }
             
             this.physics.add.collider(player2, stairs2, transportp2, null, this);
