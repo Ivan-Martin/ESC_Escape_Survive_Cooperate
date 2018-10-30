@@ -20,6 +20,7 @@ var player1;
 var player2;
 var flag;
 var music;
+var sound;
         cooperate.create=function () {
             /*
             console.log ("Modo cooperate");
@@ -27,6 +28,7 @@ var music;
             esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
             var test2 = this.add.text(400,250,'Pulsa ESC para volver',{fontSize: '30px', fill:'#0f0'});
             */
+            sound = this.sound.add('sdoor');
             music = this.sound.add('coomusic');
             music.play();
             
@@ -199,6 +201,7 @@ var music;
             
             var getllave1 = function () {
                 llave1.destroy();
+                sound.play();
                 puerta1abierta = true;
                 puerta1.setFrame(1);
             }
@@ -235,6 +238,7 @@ var music;
             
             var getllave2 = function () {
                 llave2.destroy();
+                sound.play();
                 puerta2abierta = true;
                 puerta2.setFrame(1);
             }
@@ -314,6 +318,7 @@ var music;
             
             var getllave3 = function () {
                 llave3.destroy();
+                sound.play();
                 llave3cogida = true;
                 if(llave4cogida) {
                     puerta3abierta = true;
@@ -346,6 +351,7 @@ var music;
             
             var getllave4 = function () {
                 llave4.destroy();
+                sound.play();
                 llave4cogida = true;
                 if(llave3cogida) {
                     puerta3.setFrame(1);
