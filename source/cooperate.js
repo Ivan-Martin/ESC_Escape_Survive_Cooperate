@@ -18,7 +18,7 @@ var capa;
 var mapatiles;
 var player1;
 var player2;
-
+var flag;
         cooperate.create=function () {
             /*
             console.log ("Modo cooperate");
@@ -26,6 +26,7 @@ var player2;
             esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
             var test2 = this.add.text(400,250,'Pulsa ESC para volver',{fontSize: '30px', fill:'#0f0'});
             */
+            flag=false;
             esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
             cursors = this.input.keyboard.createCursorKeys(); //Creamos el manejo del teclado
             wkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -258,13 +259,19 @@ var player2;
             var goldenstairs = this.physics.add.staticImage(worldsize*3*32+22-11+32, randomy, 'goldenstairs');
             
             var salvado1 = function () {
-                alert("Sale p1");
+                flag=true;
+                cooperate.add.image(600,400,'ganan');
+                var t=cooperate.scene.transition({target:'menu',duration:3000});
+
             }
             
             this.physics.add.collider(player1, goldenstairs, salvado1, null, this);
             
             var salvado2 = function () {
-                alert("Sale p2");
+                flag=true;
+                  cooperate.add.image(600,400,'ganan');
+                var t=cooperate.scene.transition({target:'menu',duration:3000});
+
             }
             
             this.physics.add.collider(player2, goldenstairs, salvado2, null, this);
@@ -347,6 +354,8 @@ var player2;
             
             var pierden = function () {
                 this.add.image(300, 200, 'pierden').setScrollFactor(0);
+                flag=true;
+                var t=cooperate.scene.transition({target:'menu',duration:3000});
             }
             
             cuentatiempo = this.time.addEvent({
@@ -384,7 +393,7 @@ var player2;
     player2.body.velocity.y = 0;
     //El personaje por defecto aparece siempre parado excepto que se pulse una tecla
     
-
+    if(!flag){
     if (cursors.up.isDown) {
         player2.body.velocity.y = -velocidadp2;
         player2.play('upwards2',true);
@@ -406,7 +415,6 @@ var player2;
         player2.play('right2',true);
     }
     //Manejamos las teclas izq/der
-    
     if (wkey.isDown) {
         player1.body.velocity.y = -200;
         player1.play('up',true);
@@ -427,4 +435,5 @@ var player2;
         player1.body.velocity.x = 200;
         player1.play('right',true);
     }
+        }
         }

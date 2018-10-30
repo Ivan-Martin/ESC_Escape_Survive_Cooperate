@@ -15,9 +15,10 @@ var muros;
 var camara1;
 var camara2;
 var velocidadp2;
+var flag;
     
         escape.create =function () {
-            
+            flag=false;
             /*
             console.log ("Modo escape");
             var test = this.add.text(500,150,'ESCAPE',{fontSize: '50px', fill:'#0f0'});
@@ -173,7 +174,7 @@ var velocidadp2;
             
             camara1.startFollow(player1);
             camara2.startFollow(player2);
-            
+
             /**/
             
             this.add.image(0, 0, 'borde').setScrollFactor(0);
@@ -275,15 +276,19 @@ var velocidadp2;
             this.physics.add.collider(player2, stairs2, transportp2, null, this);
             
             var gana1 = function () {
+                this.add.image(600,400,'gana1').setScrollFactor(0);
                 goldenstairs.destroy();
-                alert("Gana p1");
+                flag=true;
+                var t=escape.scene.transition({target:'menu',duration:3000});
             }
             
             this.physics.add.collider(player1, goldenstairs, gana1, null, this);
             
             var gana2 = function () {
+                this.add.image(600,400,'gana1').setScrollFactor(0);
                 goldenstairs.destroy();
-                alert("Gana p2");
+                flag=true;
+                var t=escape.scene.transition({target:'menu',duration:3000});
             }
             
             this.physics.add.collider(player2, goldenstairs, gana2, null, this);
@@ -309,7 +314,7 @@ var velocidadp2;
     player2.body.velocity.y = 0;
     //El personaje por defecto aparece siempre parado excepto que se pulse una tecla
     
-
+    if(!flag){
     if (cursors.up.isDown) {
         player2.body.velocity.y = -velocidadp2;
         player2.play('upwards2',true);
@@ -353,4 +358,5 @@ var velocidadp2;
         player1.play('right',true);
     }
     //Manejamos las teclas izq/der
+        }
         }
