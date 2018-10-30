@@ -2,6 +2,7 @@
         logo.preload=function () {
             
             this.load.spritesheet('player2', 'assets/char/pc2s.png', { frameWidth: 10, frameHeight: 24 });
+            this.load.spritesheet('enemy', 'assets/char/somb.png', { frameWidth: 10, frameHeight: 24 });
             this.load.spritesheet('player', 'assets/char/pcs.png', { frameWidth: 10, frameHeight: 24 });
             this.load.spritesheet('playerpower', 'assets/char/ens.png', { frameWidth: 10, frameHeight: 24 });
             this.load.spritesheet('powerup', 'assets/actors/ups.png', {frameWidth: 10, frameHeight: 10});
