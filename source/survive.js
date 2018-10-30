@@ -155,19 +155,19 @@
             });
             
             this.anims.create({
-                key:'downwards2', frames:this.anims.generateFrameNumbers('player2',{start:1, end:3}), repeat:0, frameRate:6
+                key:'downwards2', frames:this.anims.generateFrameNumbers('enemy',{start:1, end:3}), repeat:0, frameRate:6
             });
             
             this.anims.create({
-                key:'upwards2', frames:this.anims.generateFrameNumbers('player2',{start:5, end:7}), repeat:0, frameRate:6
+                key:'upwards2', frames:this.anims.generateFrameNumbers('enemy',{start:5, end:7}), repeat:0, frameRate:6
             });
             
             this.anims.create({
-                key:'right2', frames:this.anims.generateFrameNumbers('player2',{start:13, end:15}), repeat:0, frameRate:6
+                key:'right2', frames:this.anims.generateFrameNumbers('enemy',{start:13, end:15}), repeat:0, frameRate:6
             });
             
             this.anims.create({
-                key:'left2', frames:this.anims.generateFrameNumbers('player2',{start:9, end:11}), repeat:0, frameRate:6
+                key:'left2', frames:this.anims.generateFrameNumbers('enemy',{start:9, end:11}), repeat:0, frameRate:6
             });
             
             this.anims.create({
