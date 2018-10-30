@@ -179,35 +179,35 @@ var velocidadp2;
             this.add.image(0, 0, 'borde').setScrollFactor(0);
             
             this.anims.create({
-                key:'downwards2', frames:this.anims.generateFrameNumbers('player2',{start:0, end:3}), repeat:0, frameRate:6
+                key:'downwards2', frames:this.anims.generateFrameNumbers('player2',{start:1, end:3}), repeat:0, frameRate:6
             });
             
             this.anims.create({
-                key:'upwards2', frames:this.anims.generateFrameNumbers('player2',{start:4, end:7}), repeat:0, frameRate:6
+                key:'upwards2', frames:this.anims.generateFrameNumbers('player2',{start:5, end:7}), repeat:0, frameRate:6
             });
             
             this.anims.create({
-                key:'right2', frames:this.anims.generateFrameNumbers('player2',{start:12, end:15}), repeat:0, frameRate:6
+                key:'right2', frames:this.anims.generateFrameNumbers('player2',{start:13, end:15}), repeat:0, frameRate:6
             });
             
             this.anims.create({
-                key:'left2', frames:this.anims.generateFrameNumbers('player2',{start:8, end:11}), repeat:0, frameRate:6
+                key:'left2', frames:this.anims.generateFrameNumbers('player2',{start:9, end:11}), repeat:0, frameRate:6
             });
             
             this.anims.create({
-                key:'left', frames:this.anims.generateFrameNumbers('player',{start:8, end:11}), repeat:0, frameRate:6
+                key:'left', frames:this.anims.generateFrameNumbers('player',{start:9, end:11}), repeat:0, frameRate:6
             });
             
             this.anims.create({
-                key:'right', frames:this.anims.generateFrameNumbers('player',{start:12, end:15}), repeat:0, frameRate:6
+                key:'right', frames:this.anims.generateFrameNumbers('player',{start:13, end:15}), repeat:0, frameRate:6
             });
             
             this.anims.create({
-                key:'up', frames:this.anims.generateFrameNumbers('player',{start:4, end:7}), repeat:0, frameRate:6
+                key:'up', frames:this.anims.generateFrameNumbers('player',{start:5, end:7}), repeat:0, frameRate:6
             });
             
             this.anims.create({
-                key:'down', frames:this.anims.generateFrameNumbers('player',{start:0, end:3}), repeat:0, frameRate:6
+                key:'down', frames:this.anims.generateFrameNumbers('player',{start:1, end:3}), repeat:0, frameRate:6
             });
             
             var transportp1 = function () {
