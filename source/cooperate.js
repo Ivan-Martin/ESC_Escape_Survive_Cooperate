@@ -93,8 +93,61 @@ var sound;
             
             var randomx = Math.floor(Math.random()*worldsize)+1;
             
+            /*
+            * Colocamos las tiles correspondientes al pasillo que conectará la puerta.
+            */
+            
             mapatiles.putTileAt(2, randomx*3+1, worldsize*3, true, capa);
             mapatiles.putTileAt(2, randomx*3+1, worldsize*3-1, true, capa);
+
+            mapatiles.putTileAt(0, randomx*3+1,worldsize*3-2, true, capa);
+
+            mapatiles.putTileAt(0, randomx*3+1,worldsize*3+1, true, capa);
+
+            
+            //Abajo izquierda
+
+            var numtile = mapatiles.getTileAt(randomx*3, worldsize*3);
+
+            var nuevatile = 0;
+            
+            if (numtile.index == 7) nuevatile = 11;
+            if (numtile.index == 14) nuevatile = 6;
+            
+            mapatiles.putTileAt(nuevatile, randomx*3, worldsize*3, true, capa);
+            
+            
+
+            //Abajo derecha
+
+            numtile = mapatiles.getTileAt(randomx*3+2, worldsize*3);
+
+            nuevatile = 0;
+            if (numtile.index == 10) nuevatile = 13;
+            if (numtile.index == 14) nuevatile = 5;
+            
+            mapatiles.putTileAt(nuevatile, randomx*3+2, worldsize*3, true, capa);
+
+            //Arriba izquierda
+
+            numtile = mapatiles.getTileAt(randomx*3, worldsize*3-1);
+
+            nuevatile = 0;
+            if (numtile.index == 8) nuevatile = 11;
+            if (numtile.index == 12) nuevatile = 4;
+            
+            mapatiles.putTileAt(nuevatile, randomx*3, worldsize*3-1, true, capa);
+
+            //Arriba derecha
+
+            numtile = mapatiles.getTileAt(randomx*3+2, worldsize*3-1);
+
+            nuevatile = 0;
+            if (numtile.index == 9) nuevatile = 13;
+            if (numtile.index == 12) nuevatile = 3;
+            
+            mapatiles.putTileAt(nuevatile, randomx*3+2, worldsize*3-1, true, capa);
+            
             
             randomx*=32*3;
             
@@ -102,11 +155,53 @@ var sound;
             
             puerta1 = this.physics.add.staticSprite(randomx, worldsize*32*3, 'puerta1');
             
-            randomx = Math.floor(Math.random()*worldsize)+1;
+            randomx = Math.floor(Math.random()*worldsize);
             
             mapatiles.putTileAt(2, randomx*3+4+worldsize*3, worldsize*3, true, capa);
             mapatiles.putTileAt(2, randomx*3+4+worldsize*3, worldsize*3-1, true, capa);
             
+            //Abajo izquierda
+            
+            numtile = mapatiles.getTileAt(randomx*3+4+worldsize*3-1, worldsize*3);
+
+            nuevatile = 0;
+            
+            if (numtile.index == 7) nuevatile = 11;
+            if (numtile.index == 14) nuevatile = 6;
+            
+            mapatiles.putTileAt(nuevatile, randomx*3+4+worldsize*3-1, worldsize*3, true, capa);
+            
+            
+
+            //Abajo derecha
+
+            numtile = mapatiles.getTileAt(randomx*3+4+worldsize*3+1, worldsize*3);
+
+            nuevatile = 0;
+            if (numtile.index == 10) nuevatile = 13;
+            if (numtile.index == 14) nuevatile = 5;
+            
+            mapatiles.putTileAt(nuevatile, randomx*3+4+worldsize*3+1, worldsize*3, true, capa);
+
+            //Arriba izquierda
+
+            numtile = mapatiles.getTileAt(randomx*3+4+worldsize*3-1, worldsize*3-1);
+
+            nuevatile = 0;
+            if (numtile.index == 8) nuevatile = 11;
+            if (numtile.index == 12) nuevatile = 4;
+            
+            mapatiles.putTileAt(nuevatile, randomx*3+4+worldsize*3-1, worldsize*3-1, true, capa);
+
+            //Arriba derecha
+
+            numtile = mapatiles.getTileAt(randomx*3+4+worldsize*3+1, worldsize*3-1);
+
+            nuevatile = 0;
+            if (numtile.index == 9) nuevatile = 13;
+            if (numtile.index == 12) nuevatile = 3;
+            
+            mapatiles.putTileAt(nuevatile, randomx*3+4+worldsize*3+1, worldsize*3-1, true, capa);
             
             randomx*=32*3;
             

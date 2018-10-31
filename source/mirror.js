@@ -1,6 +1,6 @@
 //definimos una nueva escena de phaser, nos aseguramos de que se carga al cambiar a este modo con la impresion en consola, ponemos un texto para hacernos una idea, y definimos que si pulsamos la tecla ESC hacemos una transicion de vuelta al menu
-    var esc;
-    var mirror = new Phaser.Scene('mirror');
+var esc;
+var mirror = new Phaser.Scene('mirror');
 var mapatiles;
 var tilecolision;
 var cursors;
@@ -22,15 +22,6 @@ var music;
             music = this.sound.add('escmusic');
             music.play();
             flag=false;
-            /*
-            console.log ("Modo mirrored");
-            var test = this.add.text(500,150,'MIRRORED',{fontSize: '50px', fill:'#0f0'});
-            esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-            var test2 = this.add.text(400,250,'Pulsa ESC para volver',{fontSize: '30px', fill:'#0f0'});
-            
-            */
-            
-            esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
             
             velocidadp2 = 200;
             
@@ -45,6 +36,7 @@ var music;
             akey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
             skey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
             dkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+            esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
             
             mapatiles = this.make.tilemap({ tileWidth: 32, tileHeight: 32, width: 2*worldtiles*32+centralsize*32+24*32, heigth: 2*worldtiles*32+centralsize*32+24*32}); //Esto añade un mapa vacío al mundo
             
@@ -355,5 +347,5 @@ var music;
         player1.play('right',true);
     }
     //Manejamos las teclas izq/der
-        }
-        }
+    }
+}

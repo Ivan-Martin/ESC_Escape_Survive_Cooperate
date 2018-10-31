@@ -36,14 +36,19 @@ function node (ix, iy) {
 }
 
 
-function randomfinding (startx, starty){
+function randomfinding (startx, starty, moverse){
     this.dirs = ["N", "S", "E", "W"];
     dirs = shuffle(this.dirs);
+    if(world[startx][starty].east && !world[startx][starty].south && !world[startx][starty].west && !world[startx][starty].north) return "E";
+    if(!world[startx][starty].east && world[startx][starty].south && !world[startx][starty].west && !world[startx][starty].north) return "S";
+    if(!world[startx][starty].east && !world[startx][starty].south && world[startx][starty].west && !world[startx][starty].north) return "W";
+    if(!world[startx][starty].east && !world[startx][starty].south && !world[startx][starty].west && world[startx][starty].north) return "N";
+    
     for (var i = 0; i < 4; i++){
-        if(dirs[i] == "E" && world[startx][starty].east) return "E";
-        if(dirs[i] == "S" && world[startx][starty].south) return "S";
-        if(dirs[i] == "W" && world[startx][starty].west) return "W";
-        if(dirs[i] == "N" && world[startx][starty].north) return "N";
+        if(dirs[i] == "E" && world[startx][starty].east && moverse != "W") return "E";
+        if(dirs[i] == "S" && world[startx][starty].south && moverse != "N") return "S";
+        if(dirs[i] == "W" && world[startx][starty].west && moverse != "E") return "W";
+        if(dirs[i] == "N" && world[startx][starty].north && moverse != "S") return "N";
     }
 }
 

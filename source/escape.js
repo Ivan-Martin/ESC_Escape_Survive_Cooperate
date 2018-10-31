@@ -22,13 +22,6 @@ var music;
             music = this.sound.add('escmusic');
             music.play();
             flag=false;
-            /*
-            console.log ("Modo escape");
-            var test = this.add.text(500,150,'ESCAPE',{fontSize: '50px', fill:'#0f0'});
-            esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-            var test2 = this.add.text(400,250,'Pulsa ESC para volver',{fontSize: '30px', fill:'#0f0'});
-            
-            */
             
             esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
             
