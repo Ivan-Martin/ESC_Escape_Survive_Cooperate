@@ -44,6 +44,7 @@
             this.load.image('gana1','assets/gp1.png');
             this.load.image('gana2','assets/gp2.png');
             this.load.image('ganan','assets/gesc.png');
+            this.load.image('lobby','assets/menu/fondolobby.png');
             
             var randomtile = Math.random();
             if(randomtile < 0.25){
