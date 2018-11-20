@@ -36,7 +36,7 @@ public class UsersController {
 	Map<String, User> allusers = new ConcurrentHashMap<> ();
 	
 	public UsersController () throws IOException {
-		BufferedReader input = new BufferedReader (new FileReader (new File ("src/main/java/data.txt")));
+		BufferedReader input = new BufferedReader (new FileReader (new File ("classes/data.txt")));
 		String linea;
 		long id = 0;
 		while((linea = input.readLine()) != null) {
@@ -142,7 +142,7 @@ public class UsersController {
 	
 	@GetMapping("/logros")
 	public Collection<User> guardarDatos () throws IOException {
-		PrintWriter pw = new PrintWriter ("src/main/java/data.txt");
+		PrintWriter pw = new PrintWriter ("classes/data.txt");
 		Collection <User> c = new LinkedList <> ();
 		for (String s : allusers.keySet()) {
 			User usuario = allusers.get(s);

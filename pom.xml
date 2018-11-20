@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>es.urjc.code.juegosenred</groupId>
-	<artifactId>items-backend-and-frontend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>ESCGame</artifactId>
+	<version>0.4</version>
 	<packaging>jar</packaging>
 
 	<name>ESC Game</name>

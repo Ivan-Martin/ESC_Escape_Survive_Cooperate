@@ -1,11 +1,10 @@
 Manifest-Version: 1.0
 Implementation-Title: ESC Game
-Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Version: 0.4
 Built-By: ivanm
 Implementation-Vendor-Id: es.urjc.code.juegosenred
 Build-Jdk: 1.8.0_144
-Implementation-URL: http://projects.spring.io/spring-boot/items-backen
- d-and-frontend/
+Implementation-URL: http://projects.spring.io/spring-boot/ESCGame/
 Created-By: Maven Integration for Eclipse
 Implementation-Vendor: Pivotal Software, Inc.
 
