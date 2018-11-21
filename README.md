@@ -67,6 +67,12 @@ Cada uno de los temas está especialmente pensado para el modo para el que se di
 # Motor de juego
 
 Todo el juego está desarrollado en javascript con el motor de juego [Phaser 3][phaserlink]
+
+# Navegación
+
+La distribuición de los menús es de la siguente manera:
+![No se pudo cargar la imagen](https://i.imgur.com/ga4IrE9.png "Captura de pantalla del modo Escape")
+
 - - -
 
 Equipo de desarrollo de ESC:
