@@ -18,26 +18,19 @@ var velocidadp2;
 var flag;
 var music;
 
-var logros = function (user) {
-	if(user.partidasjugadas[1] == 1){
-		var log=mirror.add.image(500,340,'mirror1').setScrollFactor(0);
-		mirror.add.tween({
-	        	targets:log,
-	        	alpha:0,
-	        	duration:2500,
-	        	ease:'Sine.easeInOut'});
-	} else if (user.partidasjugadas[1] == 5){
-		var log=mirror.add.image(500,350,'mirror2').setScrollFactor(0);
-		mirror.add.tween({
-	        	targets:log,
-	        	alpha:0,
-	        	duration:2500,
-	        	ease:'Sine.easeInOut'
-		});
-	}
-}
+var log;
+var log2;
 
         mirror.create=function() {
+        	var logros = function (user) {
+        		if(user.partidasjugadas[0] == 1){
+        			log=mirror.add.image(500,340,'mirror1').setScrollFactor(0);
+        		       
+        		} else if (user.partidasjugadas[0] == 5){
+        		
+        			log2=mirror.add.image(500,340,'mirror2').setScrollFactor(0);
+        		}
+        	}
         	updateMode(globalid, 'Mirrored Escape');
             music = this.sound.add('escmusic');
             music.play();

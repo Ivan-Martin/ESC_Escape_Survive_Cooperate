@@ -1,6 +1,6 @@
 //Load items from server
-//var ip = 'http://10.0.19.169:8080';
-var ip = 'http://192.168.1.40:8080';
+var ip = 'http://10.0.4.82:8080';
+//var ip = 'http://192.168.1.40:8080';
 function loadUsers(callback) {
     $.ajax({
         url: ip + '/users'

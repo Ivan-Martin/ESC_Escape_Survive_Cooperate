@@ -25,25 +25,19 @@
     var music;
     var sound;
 
-    var logros = function (user) {
-    	if(user.partidasjugadas[2] == 1){
-    		var log=survive.add.image(500,340,'survive1').setScrollFactor(0);
-    		survive.add.tween({
-    	        	targets:log,
-    	        	alpha:0,
-    	        	duration:2500,
-    	        	ease:'Sine.easeInOut'});
-    	} else if (user.partidasjugadas[2] == 5){
-    		var log=survive.add.image(500,350,'survive2').setScrollFactor(0);
-    		survive.add.tween({
-    	        	targets:log,
-    	        	alpha:0,
-    	        	duration:2500,
-    	        	ease:'Sine.easeInOut'});
-    	}
-    }
+    var log;
+    var log2;
     
         survive.create =function () {
+        	var logros = function (user) {
+        		if(user.partidasjugadas[0] == 1){
+        			log=survive.add.image(500,340,'survive1').setScrollFactor(0);
+        		       
+        		} else if (user.partidasjugadas[0] == 5){
+        		
+        			log2=survive.add.image(500,340,'survive2').setScrollFactor(0);
+        		}
+        	}
         	updateMode(globalid, 'Survive');
             sound = this.sound.add('spup');
             music = this.sound.add('surmusic');
