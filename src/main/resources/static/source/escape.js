@@ -18,28 +18,22 @@ var velocidadp2;
 var flag;
 var music;
 
-var logros = function (user) {
-	if(user.partidasjugadas[0] == 1){
-		console.log("Logro escape 1");
-		var log=escape.add.image(500,340,'escape1').setScrollFactor(0);
-	       escape.add.tween({
-	        	targets:log,
-	        	alpha:0,
-	        	duration:2500,
-	        	ease:'Sine.easeInOut'})
-	
-	} else if (user.partidasjugadas[0] == 5){
-		var log=escape.add.image(500,340,'escape2').setScrollFactor(0);
-	       escape.add.tween({
-	        	targets:log,
-	        	alpha:0,
-	        	duration:2500,
-	        	ease:'Sine.easeInOut'
-	        	});
-	}
-}
-    
+
+var log;
+var log2;
+
+  
         escape.create =function () {
+        	var logros = function (user) {
+        		if(user.partidasjugadas[0] == 1){
+        			log=escape.add.image(500,340,'escape1').setScrollFactor(0);
+        		       
+        		} else if (user.partidasjugadas[0] == 5){
+        		
+        			log2=escape.add.image(500,340,'escape2').setScrollFactor(0);
+        		}
+        	}
+
         	updateMode(globalid, 'Escape');
             music = this.sound.add('escmusic');
             music.play();
@@ -321,6 +315,7 @@ var logros = function (user) {
                 goldenstairs.destroy();
                 flag=true;
                 addGame(globalid, 'Escape', "Player1", logros);
+              
                 var t=escape.scene.transition({target:'menu',duration:3000});
             }
             

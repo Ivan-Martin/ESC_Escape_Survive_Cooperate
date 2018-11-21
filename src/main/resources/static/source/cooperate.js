@@ -21,24 +21,21 @@ var player2;
 var flag;
 var music;
 var sound;
-var logros = function (user) {
-	if(user.partidasjugadas[4] == 1){
-		var log=cooperate.add.image(500,340,'cooperate1').setScrollFactor(0);
-		cooperate.add.tween({
-	        	targets:log,
-	        	alpha:0,
-	        	duration:2500,
-	        	ease:'Sine.easeInOut'});
-	} else if (user.partidasjugadas[4] == 5){
-		var log=cooperate.add.image(500,350,'cooperate2').setScrollFactor(0);
-		cooperate.add.tween({
-	        	targets:log,
-	        	alpha:0,
-	        	duration:2500,
-	        	ease:'Sine.easeInOut'});
-	}
-}
+
+var log;
+var log2;
+
+
         cooperate.create=function () {
+        	var logros = function (user) {
+        		if(user.partidasjugadas[0] == 1){
+        			log=cooperate.add.image(500,340,'cooperate1').setScrollFactor(0);
+        		       
+        		} else if (user.partidasjugadas[0] == 5){
+        		
+        			log2=cooperate.add.image(500,340,'cooperate2').setScrollFactor(0);
+        		}
+        	}
         	updateMode(globalid, 'Cooperate');
             /*
             console.log ("Modo cooperate");
