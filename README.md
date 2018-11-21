@@ -71,7 +71,11 @@ Todo el juego está desarrollado en javascript con el motor de juego [Phaser 3][
 # Navegación
 
 La distribuición de los menús es de la siguente manera:
-![No se pudo cargar la imagen](https://i.imgur.com/ga4IrE9.png "Captura de pantalla del modo Escape")
+![No se pudo cargar la imagen](https://i.imgur.com/ga4IrE9.png "Diagrama de Navegación")
+
+# Diagrama del backend APIRest
+![No se pudo cargar la imagen](https://fotos.subefotos.com/2716a4f4d7a1aa39317a92abb0a305feo.png "Diagrama de clases del backend de APIRest")
+
 
 - - -
 
