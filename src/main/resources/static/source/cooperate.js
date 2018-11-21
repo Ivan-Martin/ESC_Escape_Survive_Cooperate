@@ -21,6 +21,23 @@ var player2;
 var flag;
 var music;
 var sound;
+var logros = function (user) {
+	if(user.partidasjugadas[4] == 1){
+		var log=cooperate.add.image(500,340,'cooperate1').setScrollFactor(0);
+		cooperate.add.tween({
+	        	targets:log,
+	        	alpha:0,
+	        	duration:2500,
+	        	ease:'Sine.easeInOut'});
+	} else if (user.partidasjugadas[4] == 5){
+		var log=cooperate.add.image(500,350,'cooperate2').setScrollFactor(0);
+		cooperate.add.tween({
+	        	targets:log,
+	        	alpha:0,
+	        	duration:2500,
+	        	ease:'Sine.easeInOut'});
+	}
+}
         cooperate.create=function () {
         	updateMode(globalid, 'Cooperate');
             /*
@@ -365,6 +382,7 @@ var sound;
             var salvado1 = function () {
                 flag=true;
                 cooperate.add.image(600,400,'ganan');
+                addGame(globalid, 'Cooperate', "Player1", logros);
                 var t=cooperate.scene.transition({target:'menu',duration:3000});
 
             }
@@ -374,6 +392,7 @@ var sound;
             var salvado2 = function () {
                 flag=true;
                   cooperate.add.image(600,400,'ganan');
+                  addGame(globalid, 'Cooperate', "Player1", logros);
                 var t=cooperate.scene.transition({target:'menu',duration:3000});
 
             }

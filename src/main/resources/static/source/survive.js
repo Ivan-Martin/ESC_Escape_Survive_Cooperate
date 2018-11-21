@@ -25,6 +25,24 @@
     var music;
     var sound;
 
+    var logros = function (user) {
+    	if(user.partidasjugadas[2] == 1){
+    		var log=survive.add.image(500,340,'survive1').setScrollFactor(0);
+    		survive.add.tween({
+    	        	targets:log,
+    	        	alpha:0,
+    	        	duration:2500,
+    	        	ease:'Sine.easeInOut'});
+    	} else if (user.partidasjugadas[2] == 5){
+    		var log=survive.add.image(500,350,'survive2').setScrollFactor(0);
+    		survive.add.tween({
+    	        	targets:log,
+    	        	alpha:0,
+    	        	duration:2500,
+    	        	ease:'Sine.easeInOut'});
+    	}
+    }
+    
         survive.create =function () {
         	updateMode(globalid, 'Survive');
             sound = this.sound.add('spup');
@@ -108,6 +126,7 @@
                 music.stop();
                 this.add.image(300, 200, 'ganasombra').setScrollFactor(0);
                 flag=true;
+                addGame(globalid, 'Survive', "Player2", logros);
                 var t=survive.scene.transition({target:'menu',duration:3000});
             };
             
@@ -119,6 +138,7 @@
                 music.stop();
                 this.add.image(300, 200, 'ganahumano').setScrollFactor(0);
                 flag=true;
+                addGame(globalid, 'Survive', "Player1", logros);
                 var t=survive.scene.transition({target:'menu',duration:3000});
             }
             

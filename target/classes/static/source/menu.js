@@ -9,6 +9,7 @@
             var f3=menu.add.image(670,125,'arr3');
             var f4=menu.add.image(880,275,'arr5');
             var f5=menu.add.image(1140,180,'arr2');
+            
             var fs=menu.add.container();
             fs.add(f);
             fs.add(f2);
@@ -17,6 +18,7 @@
             fs.add(f5);
             fs.alpha=0.25;
             var fondo=this.add.image(600,200,'ESC');
+            var test=menu.add.image(1140,500,'escape1');
             var botones;
             //creamos un contenedor para los botones, los creamos y los introducimos en el. 
             botones = this.add.container();
@@ -26,7 +28,7 @@
             var botonA=this.add.sprite(770,275,'alone').setInteractive({useHandCursor:true});
             var botonC=this.add.sprite(1100,225,'cooperate').setInteractive({useHandCursor:true});
             var
-            botonO=this.add.text(950,100,'ONLINE',{fontStyle:'bold',fontSize:'50px',fill:'#0f0'}).setInteractive({useHandCursor:true});
+            botonO=this.add.sprite(1080,50,'onlone').setInteractive({useHandCursor:true});
             botones.add(botonE);
             botones.add(botonM);
             botones.add(botonS);
@@ -55,7 +57,9 @@
             botonC.on('pointerout',function(){this.setFrame(0);});  //cuando salgamos volvemos al inicial
             botonC.on('pointerdown',function(){this.setFrame(1); transition("cooperate");sound.play();}); //al hacer click lo resaltamos      
             
-            botonO.on('pointerdown',function(){null; transition("m_online");sound.play();});
+            botonO.on('pointerover',function(){this.setFrame(2);});
+            botonO.on('pointerout',function(){this.setFrame(0);});
+            botonO.on('pointerdown',function(){this.setFrame(1); transition("m_online");sound.play();});
             
             var foco=this.add.sprite(200,200,'luz');
             var escenaM=menu.add.container();
@@ -74,6 +78,8 @@
             loop:-1,
             yoyo: true
         });
+ 
+
        //hacemos un fade out con un tween en el que el objetivo es el contenedor de los botones, cuando se completa iniciamos una escena diferente.
         function transition(str) {
             menu.add.tween({

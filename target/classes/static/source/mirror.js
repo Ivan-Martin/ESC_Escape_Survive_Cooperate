@@ -18,6 +18,25 @@ var velocidadp2;
 var flag;
 var music;
 
+var logros = function (user) {
+	if(user.partidasjugadas[1] == 1){
+		var log=mirror.add.image(500,340,'mirror1').setScrollFactor(0);
+		mirror.add.tween({
+	        	targets:log,
+	        	alpha:0,
+	        	duration:2500,
+	        	ease:'Sine.easeInOut'});
+	} else if (user.partidasjugadas[1] == 5){
+		var log=mirror.add.image(500,350,'mirror2').setScrollFactor(0);
+		mirror.add.tween({
+	        	targets:log,
+	        	alpha:0,
+	        	duration:2500,
+	        	ease:'Sine.easeInOut'
+		});
+	}
+}
+
         mirror.create=function() {
         	updateMode(globalid, 'Mirrored Escape');
             music = this.sound.add('escmusic');
@@ -269,6 +288,7 @@ var music;
                 this.add.image(300,200,'gana1').setScrollFactor(0);
                 goldenstairs.destroy();
                 flag=true;
+                addGame(globalid, 'Mirrored Escape', "Player1", logros);
                 var t=mirror.scene.transition({target:'menu',duration:3000});
             }
             
@@ -278,6 +298,7 @@ var music;
                 this.add.image(300,200,'gana2').setScrollFactor(0);
                 goldenstairs.destroy();
                 flag=true;
+                addGame(globalid, 'Mirrored Escape', "Player2", logros);
                 var t=mirror.scene.transition({target:'menu',duration:3000});
             }
             

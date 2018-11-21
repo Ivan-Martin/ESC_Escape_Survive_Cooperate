@@ -45,6 +45,17 @@
             this.load.image('gana2','assets/gp2.png');
             this.load.image('ganan','assets/gesc.png');
             this.load.image('lobby','assets/menu/fondolobby.png');
+            this.load.spritesheet('onlone','assets/menu/OnlineLobby.png', {frameWidth:200,frameHeight:35});
+            this.load.image('alone1','assets/menu/Achivments/achivalo1.png');
+            this.load.image('alone2','assets/menu/Achivments/achivalo2.png');
+            this.load.image('cooperate1','assets/menu/Achivments/achivcoop1.png');
+            this.load.image('cooperate2','assets/menu/Achivments/achivcoop2.png');
+            this.load.image('escape1','assets/menu/Achivments/achivesc1.png');
+            this.load.image('escape2','assets/menu/Achivments/achivesc2.png');
+            this.load.image('mirror1','assets/menu/Achivments/achivmir1.png');
+            this.load.image('mirror2','assets/menu/Achivments/achivmir2.png');
+            this.load.image('survive1','assets/menu/Achivments/achivsur1.png');
+            this.load.image('survive2','assets/menu/Achivments/achivsur2.png');
             
             var randomtile = Math.random();
             if(randomtile < 0.25){

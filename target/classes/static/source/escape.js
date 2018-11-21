@@ -20,9 +20,22 @@ var music;
 
 var logros = function (user) {
 	if(user.partidasjugadas[0] == 1){
-		console.log("Logro: Primera vez jugada a Escape");
+		console.log("Logro escape 1");
+		var log=escape.add.image(500,340,'escape1').setScrollFactor(0);
+	       escape.add.tween({
+	        	targets:log,
+	        	alpha:0,
+	        	duration:2500,
+	        	ease:'Sine.easeInOut'})
+	
 	} else if (user.partidasjugadas[0] == 5){
-		console.log("Logro: Maestro de Escape");
+		var log=escape.add.image(500,340,'escape2').setScrollFactor(0);
+	       escape.add.tween({
+	        	targets:log,
+	        	alpha:0,
+	        	duration:2500,
+	        	ease:'Sine.easeInOut'
+	        	});
 	}
 }
     
@@ -317,7 +330,7 @@ var logros = function (user) {
                 this.add.image(300,200,'gana2').setScrollFactor(0);
                 goldenstairs.destroy();
                 flag=true;
-                addGame(globalid, 'Escape', "Player1", logros);
+                addGame(globalid, 'Escape', "Player2", logros);
                 var t=escape.scene.transition({target:'menu',duration:3000});
             }
             

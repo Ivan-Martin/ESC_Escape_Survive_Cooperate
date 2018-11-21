@@ -13,7 +13,7 @@ m_online.create = function () {
 }
 m_online.update=function(){
     if(esc.isDown){
-        var t=alone.scene.transition({target:'menu',duration:'10'});
+        var t=m_online.scene.transition({target:'menu',duration:'10'});
     }
     loadUsers(function (users) {
             usersconnected = users.length;

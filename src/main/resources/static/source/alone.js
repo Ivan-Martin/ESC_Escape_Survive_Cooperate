@@ -24,6 +24,26 @@ var sombramoviendose = false;
 var music;
 var sound;
 var moverse = "N";
+
+var logros = function (user) {
+	console.log("dsd");
+	if(user.partidasjugadas[3] == 1){
+		console.log("ddd");
+		var log=alone.add.image(500,340,'alone1').setScrollFactor(0);
+		alone.add.tween({
+	        	targets:log,
+	        	alpha:0,
+	        	duration:2500,
+	        	ease:'Sine.easeInOut'});
+	} else if (user.partidasjugadas[3] == 5){
+		var log=alone.add.image(500,340,'alone2').setScrollFactor(0);
+		alone.add.tween({
+	        	targets:log,
+	        	alpha:0,
+	        	duration:2500,
+	        	ease:'Sine.easeInOut'});
+	}
+}
         alone.create=function() {
         	updateMode(globalid, 'Survive Alone');
             sound = this.sound.add('spup');
@@ -103,6 +123,7 @@ var moverse = "N";
             var ganasomb = function () {
                 this.add.image(300, 200, 'ganasombra').setScrollFactor(0);
                 flag=true;
+                addGame(globalid, 'Survive Alone', "Player2", logros);
                 var t=alone.scene.transition({target:'menu',duration:3000});
             };
             //Evento que se lanza cuando sombra gana el juego
@@ -112,6 +133,7 @@ var moverse = "N";
             var ganahuma = function () {
                 this.add.image(300, 200, 'ganahumano').setScrollFactor(0);
                 flag=true;
+                addGame(globalid, 'Survive Alone', "Player1", logros);
                 var t=alone.scene.transition({target:'menu',duration:3000});
             };
             //Evento que se lanza cuando el humano gana el juego
