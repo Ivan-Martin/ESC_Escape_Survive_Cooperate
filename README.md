@@ -76,6 +76,11 @@ La distribuición de los menús es de la siguente manera:
 # Diagrama del backend APIRest
 ![No se pudo cargar la imagen](https://fotos.subefotos.com/2716a4f4d7a1aa39317a92abb0a305feo.png "Diagrama de clases del backend de APIRest")
 
+# Ejecutando el servidor
+
+Para ejecutar el servidor, se deben descargar las carpetas de github, y ejecutar el jar "ESCGame-0.6.jar" mediante el comando java -jar. Para acceder al servidor desde otro ordenador, se debe utilizar la IP Local de la red, que es donde Spring aloja el juego.
+
+Alternativamente, se puede depurar el servidor descargandose las carpetas de Github, donde se puede ver el código fuente. En caso de existir problemas con las conexiones de servidor, pueden provenir de la IP escrita en el fichero "script.js", puesto que puede mandar las peticiones a una dirección equivocada.
 
 - - -
 
