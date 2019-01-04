@@ -1,6 +1,8 @@
 //Load items from server
-var ip = 'http://10.0.4.82:8080';
+//var ip = 'http://10.0.4.82:8080';
 //var ip = 'http://192.168.1.40:8080';
+var ip = 'http://192.168.1.46:8080';
+var connection = new WebSocket('ws://192.168.1.46:8080/echo');
 function loadUsers(callback) {
     $.ajax({
         url: ip + '/users'
