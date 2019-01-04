@@ -27,6 +27,7 @@ var mensajedimensiones = {};
 var velrivalx = 0, velrivaly = 0;
 var rival;
 var mivelx = 0, mively = 0;
+var gameready = false;
 
 escape.create = function () {
 	imhost = (globalid == 4);
@@ -80,6 +81,9 @@ escape.create = function () {
 				goldenstairspos = datos.goldenstairs;
 				player2pos = datos.player2pos;
 				render();
+				var mundolisto = {}; mundolisto.userid = globalid; mundolisto.id = "comenzarPartida";
+				connection.send(JSON.stringify(mundolisto));
+				gameready = true;
 			} else if (datos.id == "player2ready") {
 				player2ready = true;
 				console.log("Recibido que el jugador 2 está listo");
@@ -92,6 +96,8 @@ escape.create = function () {
 			} else if (datos.id == "velocidad"){
 				velrivalx = datos.velocidadx;
 				velrivaly = datos.velocidady;
+			} else if (datos.id == "comenzarPartida"){
+				gameready = true;
 			}
 		}
 		
@@ -430,7 +436,6 @@ escape.update=function () {
 	}
 	
 	if(player2ready){
-		connection.send(JSON.stringify(enviarmensaje));
 		console.log("Enviando mundo a jugador 2");
 		for (var i = 0; i < worldtiles; i++){
 			var enviarmensajedim = {};
@@ -440,15 +445,22 @@ escape.update=function () {
 			enviarmensajedim.relleno = mensajedimensiones[i];
 			connection.send(JSON.stringify(enviarmensajedim));
 		}
+		connection.send(JSON.stringify(enviarmensaje));
 		player2ready = false;
 	}
 	
-	var enviarvelocidad = {}
-	enviarvelocidad.userid = globalid;
-	enviarvelocidad.id = 'velocidad';
-	enviarvelocidad.velocidadx = mivelx;
-	enviarvelocidad.velocidady = mively;
-	connection.send(JSON.stringify(enviarvelocidad));
+	if(gameready){
+		var mijugador;
+		
+		if(imhost) {
+			mijugador = player1;
+		} else {
+			mijugador = player2;
+		}
+		
+		var mivelanteriorx = mijugador.body.velocity.x;
+		var mivelanteriory = mijugador.body.velocity.y;
+	}
 	
 	this.physics.world.collide(player1, capa);
 
@@ -473,6 +485,7 @@ escape.update=function () {
 		else{
 			mijugador = player2;
 			rival = player1;
+			
 		}
 		
 		rival.body.velocity.x = velrivalx;
@@ -533,5 +546,14 @@ escape.update=function () {
 		//Manejamos las teclas izq/der
 		mivelx = mijugador.body.velocity.x;
 		mively = mijugador.body.velocity.y;
+		
+		if(gameready && (mivelx != mivelanteriorx || mively != mivelanteriory)){
+			var enviarvelocidad = {}
+			enviarvelocidad.userid = globalid;
+			enviarvelocidad.id = 'velocidad';
+			enviarvelocidad.velocidadx = mivelx;
+			enviarvelocidad.velocidady = mively;
+			connection.send(JSON.stringify(enviarvelocidad));
+		}
 	}
 }
