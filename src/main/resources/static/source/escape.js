@@ -31,7 +31,6 @@ var gameready = false;
 var posrivalx, posrivaly;
 
 escape.create = function () {
-	imhost = (globalid == 4);
 	var logros = function (user) {
 		if(user.partidasjugadas[0] == 1){
 			log=escape.add.image(500,340,'escape1').setScrollFactor(0);
@@ -107,11 +106,6 @@ escape.create = function () {
 		}
 		
 	};
-	
-	var establecerconexion = {}
-	establecerconexion.id = 'conectarServidor';
-	
-	connection.send(JSON.stringify(establecerconexion));
 	
 	if(imhost){
 

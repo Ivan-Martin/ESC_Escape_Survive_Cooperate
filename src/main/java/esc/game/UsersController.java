@@ -96,7 +96,7 @@ public class UsersController {
 		modo = modo.replaceAll("\"", "");
 		User usuario = connectedusers.get(id);
 		if(usuario != null) {
-			if(modo.equals("escape") || modo.equals("survive") || modo.equals("mirrored") || modo.equals("cooperate")) {
+			if(modo.equals("Escape") || modo.equals("Survive") || modo.equals("Mirrored") || modo.equals("Cooperate")) {
 				usuario.setModo(modo);
 			} else if (modo.equals("offescape")) {
 				usuario.setModo("Escape");
@@ -116,61 +116,81 @@ public class UsersController {
 			connectedusers.put(id, usuario);
 			allusers.put(usuario.getName(), usuario);
 			
-			if(modo.equals("escape")) {
+			if(modo.equals("Escape")) {
 				Set <User> jugadores = escape.keySet();
 				boolean emparejado = false;
 				for (User u : jugadores) {
 					if (!emparejado) {
-						emparejado = (escape.get(u) == null);
+						User posiblerival = escape.get(u);
+						emparejado = (posiblerival.getName() == null);
 						if (emparejado) {
 							escape.put(u, usuario);
 							escape.put(usuario, u);
 						}
 					}
 				}
-				if(!emparejado) escape.put(usuario, null);
-			} else if (modo.equals("mirrored")) {
+				if(!emparejado) {
+					User nulo = new User();
+					usuario.setIshost(true);
+					escape.put(usuario, nulo);
+				}
+			} else if (modo.equals("Mirrored")) {
 				Set <User> jugadores = mirrored.keySet();
 				boolean emparejado = false;
 				for (User u : jugadores) {
 					if (!emparejado) {
-						emparejado = (mirrored.get(u) == null);
+						User posiblerival = mirrored.get(u);
+						emparejado = (posiblerival.getName() == null);
 						if (emparejado) {
 							mirrored.put(u, usuario);
 							mirrored.put(usuario, u);
 						}
 					}
 				}
-				if(!emparejado) mirrored.put(usuario, null);
+				if(!emparejado) {
+					User nulo = new User();
+					usuario.setIshost(true);
+					mirrored.put(usuario, nulo);
+				}
 				
-			} else if (modo.equals("survive")) {
+			} else if (modo.equals("Survive")) {
 				
 				Set <User> jugadores = survive.keySet();
 				boolean emparejado = false;
 				for (User u : jugadores) {
 					if (!emparejado) {
-						emparejado = (survive.get(u) == null);
+						User posiblerival = survive.get(u);
+						emparejado = (posiblerival.getName() == null);
 						if (emparejado) {
 							survive.put(u, usuario);
 							survive.put(usuario, u);
 						}
 					}
 				}
-				if(!emparejado) survive.put(usuario, null);
+				if(!emparejado) {
+					User nulo = new User();
+					usuario.setIshost(true);
+					survive.put(usuario, nulo);
+				}
 				
-			} else if (modo.equals("cooperate")) {
+			} else if (modo.equals("Cooperate")) {
 				Set <User> jugadores = cooperate.keySet();
 				boolean emparejado = false;
 				for (User u : jugadores) {
 					if (!emparejado) {
-						emparejado = (cooperate.get(u) == null);
+						User posiblerival = cooperate.get(u);
+						emparejado = (posiblerival.getName() == null);
 						if (emparejado) {
 							cooperate.put(u, usuario);
 							cooperate.put(usuario, u);
 						}
 					}
 				}
-				if(!emparejado) survive.put(usuario, null);
+				if(!emparejado) {
+					User nulo = new User();
+					usuario.setIshost(true);
+					cooperate.put(usuario, nulo);
+				}
 			} else {
 				if(escape.containsKey(usuario)) {
 					User rival = escape.get(usuario);
@@ -204,16 +224,16 @@ public class UsersController {
 	public ResponseEntity<User> comprobarModo(@PathVariable long id, @PathVariable String mode){
 		User usuario = connectedusers.get(id);
 		if(usuario != null) {
-			if(mode.equals("escape")) {
+			if(mode.equals("Escape")) {
 				User rival = escape.get(usuario);
 				return new ResponseEntity<>(rival, HttpStatus.OK);
-			} else if (mode.equals("mirrored")) {
+			} else if (mode.equals("Mirrored")) {
 				User rival = mirrored.get(usuario);
 				return new ResponseEntity<>(rival, HttpStatus.OK);
-			} else if (mode.equals("survive")) {
+			} else if (mode.equals("Survive")) {
 				User rival = survive.get(usuario);
 				return new ResponseEntity<>(rival, HttpStatus.OK);
-			} else if (mode.equals("cooperate")) {
+			} else if (mode.equals("Cooperate")) {
 				User rival = cooperate.get(usuario);
 				return new ResponseEntity<>(rival, HttpStatus.OK);
 			}

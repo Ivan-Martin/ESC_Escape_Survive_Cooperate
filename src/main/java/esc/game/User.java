@@ -6,6 +6,7 @@ public class User {
 	private long id;
 	private String modo;
 	private int [] partidasjugadas = new int [5];
+	private boolean ishost = false;
 	
 	public User () {
 	}
@@ -70,6 +71,14 @@ public class User {
 			partidas = partidasjugadas[4];
 		}
 		return partidas;
+	}
+
+	public boolean getIshost() {
+		return ishost;
+	}
+
+	public void setIshost(boolean ishost) {
+		this.ishost = ishost;
 	}
 
 }
