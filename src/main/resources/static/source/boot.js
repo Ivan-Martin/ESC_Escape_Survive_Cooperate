@@ -9,8 +9,7 @@ function start(){
             physics: {
                 default: 'arcade'
             },
-            //scene:[logo,selection,offmenu,alone,offsurvive,offmirror,offescape,offcooperate,menu,elobby,survive,mirror,escape,cooperate]
-     scene:[logo,selection,offmenu,alone,menu,elobby]
+            scene:[logo,selection,offmenu,alone,offsurvive,offmirror,offescape,offcooperate,menu,elobby,survive,mirror,escape,cooperate]
         };
         
         let game = new Phaser.Game(config);

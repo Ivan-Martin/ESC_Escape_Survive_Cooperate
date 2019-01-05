@@ -1,6 +1,6 @@
 //definimos una nueva escena de phaser, nos aseguramos de que se carga al cambiar a este modo con la impresion en consola, ponemos un texto para hacernos una idea, y definimos que si pulsamos la tecla ESC hacemos una transicion de vuelta al menu
 var esc;
-var escape = new Phaser.Scene('escape');
+var offescape = new Phaser.Scene('offescape');
 var mapatiles;
 var tilecolision;
 var cursors;
@@ -23,14 +23,14 @@ var log;
 var log2;
 
   
-        escape.create =function () {
+        offescape.create =function () {
         	var logros = function (user) {
         		if(user.partidasjugadas[0] == 1){
-        			log=escape.add.image(500,340,'escape1').setScrollFactor(0);
+        			log=offescape.add.image(500,340,'escape1').setScrollFactor(0);
         		       
         		} else if (user.partidasjugadas[0] == 5){
         		
-        			log2=escape.add.image(500,340,'escape2').setScrollFactor(0);
+        			log2=offescape.add.image(500,340,'escape2').setScrollFactor(0);
         		}
         	}
 
@@ -234,13 +234,13 @@ var log2;
                 
                 player1.body.velocity.x = 0;
                 player1.body.velocity.y = 0;
-                escape.add.tween({
+                offescape.add.tween({
                     targets:stairs1,
                     alpha:0,
                     duration:1,
                     ease:'Sine.easeInOut'
                 });
-                escape.add.tween({
+                offescape.add.tween({
                     targets:player1,
                     alpha:0,
                     duration: 1000,
@@ -261,7 +261,7 @@ var log2;
                    stairs1.destroy();
                     player1.x=(worldsize*3*32)+48+(12*32);
                     player1.y=48;
-                escape.add.tween({
+                offescape.add.tween({
                     targets:player1,
                     alpha:1,
                     duration: 50,
@@ -274,13 +274,13 @@ var log2;
               
                 player2.body.velocity.x = 0;
                 player2.body.velocity.y = 0;
-                    escape.add.tween({
+                    offescape.add.tween({
                     targets:stairs2,
                     alpha:0,
                     duration:1,
                     ease:'Sine.easeInOut'
                 });
-                escape.add.tween({
+                offescape.add.tween({
                     targets:player2,
                     alpha:0,
                     duration: 1000,
@@ -301,7 +301,7 @@ var log2;
                     stairs2.destroy();
                     player2.x=(worldsize*3*32)+48+(12*32);
                     player2.y=48;
-                escape.add.tween({
+                offescape.add.tween({
                     targets:player2,
                     alpha:1,
                     duration: 100,
@@ -316,7 +316,7 @@ var log2;
                 flag=true;
                 addGame(globalid, 'Escape', "Player1", logros);
                 music.stop();
-                var t=escape.scene.transition({target:'menu',duration:3000});
+                var t=offescape.scene.transition({target:'menu',duration:3000});
             }
             
             this.physics.add.collider(player1, goldenstairs, gana1, null, this);
@@ -327,7 +327,7 @@ var log2;
                 flag=true;
                 addGame(globalid, 'Escape', "Player2", logros);
                  music.stop();
-                var t=escape.scene.transition({target:'menu',duration:3000});
+                var t=offescape.scene.transition({target:'menu',duration:3000});
             }
             
             this.physics.add.collider(player2, goldenstairs, gana2, null, this);
@@ -336,10 +336,10 @@ var log2;
           
         }
         
-        escape.update=function () {
+        offescape.update=function () {
             if(esc.isDown){
                 music.stop();
-                var t=escape.scene.transition({target:'menu',duration:'10'});
+                var t=offescape.scene.transition({target:'menu',duration:'10'});
             }
             this.physics.world.collide(player1, capa);
             
