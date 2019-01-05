@@ -59,13 +59,13 @@
             
             var randomtile = Math.random();
             if(randomtile < 0.25){
-                this.load.image('tileo', 'assets/tilemap.png');
+                this.load.image('tileo', 'assets/tilemap6.png');
             } else if (randomtile < 0.5) {
-                this.load.image('tileo', 'assets/tilemap2.png');
+                this.load.image('tileo', 'assets/tilemap6.png');
             } else if (randomtile < 0.75){
-                this.load.image('tileo', 'assets/tilemap3.png');
+                this.load.image('tileo', 'assets/tilemap6.png');
             } else {
-                this.load.image('tileo', 'assets/tilemap4.png');
+                this.load.image('tileo', 'assets/tilemap6.png');
             }
         };
         logo.create=function(){

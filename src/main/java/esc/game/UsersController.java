@@ -34,6 +34,10 @@ public class UsersController {
 	Map<Long, User> connectedusers = new ConcurrentHashMap<>(); 
 	AtomicLong nextId;
 	Map<String, User> allusers = new ConcurrentHashMap<> ();
+	Map <User, User> escape = new ConcurrentHashMap <> ();
+	Map <User, User> mirrored = new ConcurrentHashMap <> ();
+	Map <User, User> survive = new ConcurrentHashMap <> ();
+	Map <User, User> cooperate = new ConcurrentHashMap <> ();
 	
 	public UsersController () throws IOException {
 		BufferedReader input = new BufferedReader (new FileReader (new File ("src/main/java/data.txt")));
@@ -92,13 +96,133 @@ public class UsersController {
 		modo = modo.replaceAll("\"", "");
 		User usuario = connectedusers.get(id);
 		if(usuario != null) {
-			usuario.setModo(modo);
+			if(modo.equals("escape") || modo.equals("survive") || modo.equals("mirrored") || modo.equals("cooperate")) {
+				usuario.setModo(modo);
+			} else if (modo.equals("offescape")) {
+				usuario.setModo("Escape");
+				escape.put(usuario, usuario);
+			} else if (modo.equals("offmirrored")) {
+				usuario.setModo("Mirrored Escape");
+				mirrored.put(usuario, usuario);
+			} else if (modo.equals("offsurvive")) {
+				usuario.setModo("Survive");
+				survive.put(usuario, usuario);
+			} else if (modo.equals("offcooperate")) {
+				usuario.setModo("Cooperate");
+				cooperate.put(usuario, usuario);
+			} else if (modo.equals("alone")) {
+				usuario.setModo("Alone");
+			}
 			connectedusers.put(id, usuario);
 			allusers.put(usuario.getName(), usuario);
+			
+			if(modo.equals("escape")) {
+				Set <User> jugadores = escape.keySet();
+				boolean emparejado = false;
+				for (User u : jugadores) {
+					if (!emparejado) {
+						emparejado = (escape.get(u) == null);
+						if (emparejado) {
+							escape.put(u, usuario);
+							escape.put(usuario, u);
+						}
+					}
+				}
+				if(!emparejado) escape.put(usuario, null);
+			} else if (modo.equals("mirrored")) {
+				Set <User> jugadores = mirrored.keySet();
+				boolean emparejado = false;
+				for (User u : jugadores) {
+					if (!emparejado) {
+						emparejado = (mirrored.get(u) == null);
+						if (emparejado) {
+							mirrored.put(u, usuario);
+							mirrored.put(usuario, u);
+						}
+					}
+				}
+				if(!emparejado) mirrored.put(usuario, null);
+				
+			} else if (modo.equals("survive")) {
+				
+				Set <User> jugadores = survive.keySet();
+				boolean emparejado = false;
+				for (User u : jugadores) {
+					if (!emparejado) {
+						emparejado = (survive.get(u) == null);
+						if (emparejado) {
+							survive.put(u, usuario);
+							survive.put(usuario, u);
+						}
+					}
+				}
+				if(!emparejado) survive.put(usuario, null);
+				
+			} else if (modo.equals("cooperate")) {
+				Set <User> jugadores = cooperate.keySet();
+				boolean emparejado = false;
+				for (User u : jugadores) {
+					if (!emparejado) {
+						emparejado = (cooperate.get(u) == null);
+						if (emparejado) {
+							cooperate.put(u, usuario);
+							cooperate.put(usuario, u);
+						}
+					}
+				}
+				if(!emparejado) survive.put(usuario, null);
+			} else {
+				if(escape.containsKey(usuario)) {
+					User rival = escape.get(usuario);
+					escape.remove(usuario);
+					escape.remove(rival);
+				}
+				if(mirrored.containsKey(usuario)) {
+					User rival = mirrored.get(usuario);
+					mirrored.remove(usuario);
+					mirrored.remove(rival);
+				}
+				if(survive.containsKey(usuario)) {
+					User rival = survive.get(usuario);
+					survive.remove(usuario);
+					survive.remove(rival);
+				}
+				if(cooperate.containsKey(usuario)) {
+					User rival = cooperate.get(usuario);
+					cooperate.remove(usuario);
+					cooperate.remove(rival);
+				}
+			}
+			
 			return new ResponseEntity<>(usuario, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	@GetMapping("/{id}/{mode}")
+	public ResponseEntity<User> comprobarModo(@PathVariable long id, @PathVariable String mode){
+		User usuario = connectedusers.get(id);
+		if(usuario != null) {
+			if(mode.equals("escape")) {
+				User rival = escape.get(usuario);
+				return new ResponseEntity<>(rival, HttpStatus.OK);
+			} else if (mode.equals("mirrored")) {
+				User rival = mirrored.get(usuario);
+				return new ResponseEntity<>(rival, HttpStatus.OK);
+			} else if (mode.equals("survive")) {
+				User rival = survive.get(usuario);
+				return new ResponseEntity<>(rival, HttpStatus.OK);
+			} else if (mode.equals("cooperate")) {
+				User rival = cooperate.get(usuario);
+				return new ResponseEntity<>(rival, HttpStatus.OK);
+			}
+			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+		
+		
 	}
 	
 	@GetMapping("/{id}")

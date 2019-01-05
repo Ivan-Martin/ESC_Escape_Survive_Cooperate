@@ -66,6 +66,18 @@ function updateMode(userId, mode){
 	})
 }
 
+function comprobarModo(mode, callback){
+	$.ajax({
+		method: 'GET',
+		url: ip + '/users/' + globalid + '/' + mode
+	}).done(function (user){
+		console.log(user);
+		callback(user);
+	}).fail(function (){
+		alert("Ups! Algo salió mal");
+	})
+}
+
 //Show item in page
 function showUser(user) {
 

@@ -28,6 +28,7 @@ var velrivalx = 0, velrivaly = 0;
 var rival;
 var mivelx = 0, mively = 0;
 var gameready = false;
+var posrivalx, posrivaly;
 
 escape.create = function () {
 	imhost = (globalid == 4);
@@ -96,6 +97,10 @@ escape.create = function () {
 			} else if (datos.id == "velocidad"){
 				velrivalx = datos.velocidadx;
 				velrivaly = datos.velocidady;
+				posrivalx = Math.round(datos.x);
+				posrivaly = Math.round(datos.y);
+				rival.setPosition(posrivalx, posrivaly);
+				console.log("Rival position = " + rival.x);
 			} else if (datos.id == "comenzarPartida"){
 				gameready = true;
 			}
@@ -277,9 +282,19 @@ escape.create = function () {
 		
 		stairs2 = escape.physics.add.image(stairs2pos.x, stairs2pos.y, 'stairs');
 		
-		player1 = escape.physics.add.sprite(48, 48, 'player'); //Cargamos al jugador
+		var frasesprite;
+		
+		if(imhost){
+			frasesprite = 'player';
+			frasesprite2 = 'player2';
+		} else {
+			frasesprite = 'player2';
+			frasesprite2 = 'player';
+		}
+		
+		player1 = escape.physics.add.sprite(48, 48, frasesprite); //Cargamos al jugador
 
-		player2 = escape.physics.add.sprite(player2pos.x, player2pos.y, 'player2');
+		player2 = escape.physics.add.sprite(player2pos.x, player2pos.y, frasesprite2);
 		
 		escape.physics.world.enable([player1, player2]);
 		
@@ -327,6 +342,8 @@ escape.create = function () {
 
 			player1.body.velocity.x = 0;
 			player1.body.velocity.y = 0;
+			mivelx = 0;
+			mively = 0;
 			escape.add.tween({
 				targets:stairs1,
 				alpha:0,
@@ -364,7 +381,6 @@ escape.create = function () {
 		escape.physics.add.collider(player1, stairs1, transportp1, null, escape);
 
 		var transportp2 = function () {
-
 			player2.body.velocity.x = 0;
 			player2.body.velocity.y = 0;
 			escape.add.tween({
@@ -492,13 +508,13 @@ escape.update=function () {
 		rival.body.velocity.y = velrivaly;
 		
 		if(velrivalx > 0){
-			rival.play('left2', true);
-		} else if (velrivalx < 0){
 			rival.play('right2', true);
+		} else if (velrivalx < 0){
+			rival.play('left2', true);
 		} else if (velrivaly < 0){
-			rival.play('downwards2', true);
-		} else if (velrivaly > 0){
 			rival.play('upwards2', true);
+		} else if (velrivaly > 0){
+			rival.play('downwards2', true);
 		}
 		
 		if (cursors.up.isDown) {
@@ -553,6 +569,9 @@ escape.update=function () {
 			enviarvelocidad.id = 'velocidad';
 			enviarvelocidad.velocidadx = mivelx;
 			enviarvelocidad.velocidady = mively;
+			enviarvelocidad.x = mijugador.x;
+			enviarvelocidad.y = mijugador.y;
+			console.log("mi jugador position = " + mijugador.x);
 			connection.send(JSON.stringify(enviarvelocidad));
 		}
 	}
