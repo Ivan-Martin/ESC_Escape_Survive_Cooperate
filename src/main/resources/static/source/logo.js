@@ -56,16 +56,18 @@
             this.load.image('mirror2','assets/menu/Achivments/achivmir2.png');
             this.load.image('survive1','assets/menu/Achivments/achivsur1.png');
             this.load.image('survive2','assets/menu/Achivments/achivsur2.png');
+            this.load.spritesheet('OfflineMode','assets/Fase4/OfflineMode.png',{frameWidth:200,frameHeight:70});
+            this.load.spritesheet('OnlineMode','assets/Fase4/OnlineMode.png',{frameWidth:200,frameHeight:70});
             
             var randomtile = Math.random();
             if(randomtile < 0.25){
-                this.load.image('tileo', 'assets/tilemap6.png');
+                this.load.image('tileo', 'assets/tilemap.png');
             } else if (randomtile < 0.5) {
-                this.load.image('tileo', 'assets/tilemap6.png');
+                this.load.image('tileo', 'assets/tilemap2.png');
             } else if (randomtile < 0.75){
-                this.load.image('tileo', 'assets/tilemap6.png');
+                this.load.image('tileo', 'assets/tilemap3.png');
             } else {
-                this.load.image('tileo', 'assets/tilemap6.png');
+                this.load.image('tileo', 'assets/tilemap4.png');
             }
         };
         logo.create=function(){
@@ -76,7 +78,7 @@
                 duration:2500,
                 ease:'Sine.easeInOut',
                 onComplete:function(){
-                   var t=logo.scene.transition({target:'menu',duration:'10'});
+                   var t=logo.scene.transition({target:'selection',duration:'10'});
                 }
             })
         };
