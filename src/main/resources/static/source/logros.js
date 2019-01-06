@@ -14,6 +14,7 @@ achievs.create=function(){
     var survive2=this.add.image(1080,280,'survive2c');
     var select=this.add.sprite(90,100,'barr').setInteractive({useHandCursor:true});
     achesc=this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    var botones = this.add.container();
     botones.add(alone1);
     botones.add(alone2);
     botones.add(cooperate1);
@@ -30,48 +31,48 @@ achievs.create=function(){
     select.on('pointerdown',function(){this.setFrame(1);transition();}); 
     cargarUsuario(function(user){       
         for(var i=0;i<5;i++){
-            if(user.partidasjugadas[i]==1){
+            if(user.partidasjugadas[i]>=1){
                 switch(i){
                     case 0:
-                        escape1=this.add.image(600,120,'escape1');
+                        escape1=achievs.add.image(600,120,'escape1');
                         break;
                     case 1:
-                        mirror1=this.add.image(840,120,'mirror1');
+                        mirror1=achievs.add.image(840,120,'mirror1');
                         break;
                     case 2:
-                        survive1=this.add.image(1080,120,'survive1');
+                        survive1=achievs.add.image(1080,120,'survive1');
                         break;
                     case 3:
-                        alone1=this.add.image(120,120,'alone1');
+                        alone1=achievs.add.image(120,120,'alone1');
                         break;
                     case 4:
-                        cooperate1=this.add.image(360,120,'cooperate1');
+                        cooperate1=achievs.add.image(360,120,'cooperate1');
                         break;
                 }
             }
-            else if(user.partidasjugadas[i]==5){
+            if(user.partidasjugadas[i]>=5){
                 switch(i){
                     case 0:
-                        escape2=this.add.image(600,280,'escape2');
+                        escape2=achievs.add.image(600,280,'escape2');
                         break;
                     case 1:
-                        mirror2=this.add.image(840,280,'mirror2');
+                        mirror2=achievs.add.image(840,280,'mirror2');
                         break;
                     case 2:
-                        survive2=this.add.image(1080,280,'survive2');
+                        survive2=achievs.add.image(1080,280,'survive2');
                         break;
                     case 3:
-                        alone2=this.add.image(120,120,'alone2');
+                        alone2=achievs.add.image(120,280,'alone2');
                         break;
                     case 4:
-                        cooperate2=this.add.image(360,120,'cooperate2');
+                        cooperate2=achievs.add.image(360,280,'cooperate2');
                         break;
                 }
         }
     }
     });
     function transition(){
-        logros.add.tween(){
+        logros.add.tween({
             targets:botones,
             alpha:0,
             duration:2000,
@@ -79,7 +80,7 @@ achievs.create=function(){
             onComplete:function(){
                 var t=transition.scene.transition({targets:'selection',duration:10});
             }
-        }
+        })
     } 
 }
 achievs.update=function(){
