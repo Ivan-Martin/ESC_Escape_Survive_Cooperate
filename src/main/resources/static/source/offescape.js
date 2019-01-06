@@ -315,7 +315,7 @@ offescape.create =function () {
 		flag=true;
 		addGame(globalid, 'Escape', "Player1", logros);
 		music.stop();
-		var t=offescape.scene.transition({target:'menu',duration:3000});
+		var t=offescape.scene.transition({target:'offmenu',duration:3000});
 	}
 
 	this.physics.add.collider(player1, goldenstairs, gana1, null, this);
@@ -326,7 +326,7 @@ offescape.create =function () {
 		flag=true;
 		addGame(globalid, 'Escape', "Player2", logros);
 		music.stop();
-		var t=offescape.scene.transition({target:'menu',duration:3000});
+		var t=offescape.scene.transition({target:'offmenu',duration:3000});
 	}
 
 	this.physics.add.collider(player2, goldenstairs, gana2, null, this);
@@ -338,7 +338,7 @@ offescape.create =function () {
 offescape.update=function () {
 	if(esc.isDown){
 		music.stop();
-		var t=offescape.scene.transition({target:'menu',duration:'10'});
+		var t=offescape.scene.transition({target:'offmenu',duration:'10'});
 	}
 	this.physics.world.collide(player1, capa);
 

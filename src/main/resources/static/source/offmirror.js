@@ -282,7 +282,7 @@ var log2;
                 goldenstairs.destroy();
                 flag=true;
                 addGame(globalid, 'Mirrored Escape', "Player1", logros);
-                var t=offmirror.scene.transition({target:'menu',duration:3000});
+                var t=offmirror.scene.transition({target:'offmenu',duration:3000});
             }
             
             this.physics.add.collider(player1, goldenstairs, gana1, null, this);
@@ -292,7 +292,7 @@ var log2;
                 goldenstairs.destroy();
                 flag=true;
                 addGame(globalid, 'Mirrored Escape', "Player2", logros);
-                var t=offmirror.scene.transition({target:'menu',duration:3000});
+                var t=offmirror.scene.transition({target:'offmenu',duration:3000});
             }
             
             this.physics.add.collider(player2, goldenstairs, gana2, null, this);
@@ -303,7 +303,7 @@ var log2;
         offmirror.update=function () {
             if(esc.isDown){
                 music.stop();
-                var t=offmirror.scene.transition({target:'menu',duration:'10'});
+                var t=offmirror.scene.transition({target:'offmenu',duration:'10'});
             }
             this.physics.world.collide(player1, capa);
             
