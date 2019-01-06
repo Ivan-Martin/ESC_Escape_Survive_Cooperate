@@ -121,7 +121,7 @@
                 this.add.image(300, 200, 'ganasombra').setScrollFactor(0);
                 flag=true;
                 addGame(globalid, 'Survive', "Player2", logros);
-                var t=offsurvive.scene.transition({target:'menu',duration:3000});
+                var t=offsurvive.scene.transition({target:'offmenu',duration:3000});
             };
             
             this.physics.add.collider(player1, player2, ganasomb, null, this);
@@ -133,7 +133,7 @@
                 this.add.image(300, 200, 'ganahumano').setScrollFactor(0);
                 flag=true;
                 addGame(globalid, 'Survive', "Player1", logros);
-                var t=offsurvive.scene.transition({target:'menu',duration:3000});
+                var t=offsurvive.scene.transition({target:'offmenu',duration:3000});
             }
             
             cuentatiempo = this.time.addEvent({
@@ -280,7 +280,7 @@
         offsurvive.update=function () {
             if(esc.isDown){
                 music.stop();
-                var t=offsurvive.scene.transition({target:'menu',duration:'10'});
+                var t=offsurvive.scene.transition({target:'offmenu',duration:'10'});
             }
             
             if(!usingpower) this.physics.world.collide(player1, capa);

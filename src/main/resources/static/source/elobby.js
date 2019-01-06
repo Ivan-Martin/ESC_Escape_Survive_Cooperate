@@ -42,7 +42,8 @@ elobby.update=function(){
 			if(user.name == null || user.name == undefined){
 				//Si no hemos encontrado rival, esperamos
 				console.log("esperando");
-				text2=elobby.add.text(600,300,'Esperando a otro jugador.',{fontFamily:'monospace', fontSize:'30px',fill:'#ffffff'});
+				//text2=elobby.add.text(600,300,'Esperando a otro jugador.',{fontFamily:'monospace', fontSize:'30px',fill:'#ffffff'});
+				text2.setText("Esperando a otro jugador");
 			}
 			else{
 				//Si hemos encontrado rival, transicionamos a escape
@@ -51,8 +52,8 @@ elobby.update=function(){
 				console.log(user);
 				globalidrival = user.id;
 				imhost = !(user.ishost);
-				
-				text2=elobby.add.text(600,300,'JUGADOR ENCONTRADO',{fontFamily:'monospace',fontSize:'30px',fill:'#ffffff'});
+
+				text2.setText("JUGADOR ENCONTRADO");
 			}
 		}
 		//Definimos funcion a llamar despues del GET de jugadores

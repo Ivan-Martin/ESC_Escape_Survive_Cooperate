@@ -117,7 +117,7 @@ alone.create=function() {
 		this.add.image(300, 200, 'ganasombra').setScrollFactor(0);
 		if(!flag) addGame(globalid, 'Survive Alone', "Player2", logros);
 		flag=true;
-		var t=alone.scene.transition({target:'menu',duration:3000});
+		var t=alone.scene.transition({target:'offmenu',duration:3000});
 	};
 	//Evento que se lanza cuando sombra gana el juego
 
@@ -127,7 +127,7 @@ alone.create=function() {
 		this.add.image(300, 200, 'ganahumano').setScrollFactor(0);
 		flag=true;
 		addGame(globalid, 'Survive Alone', "Player1", logros);
-		var t=alone.scene.transition({target:'menu',duration:3000});
+		var t=alone.scene.transition({target:'offmenu',duration:3000});
 	};
 	//Evento que se lanza cuando el humano gana el juego
 
@@ -241,7 +241,7 @@ alone.create=function() {
 alone.update=function(){        
 	if(esc.isDown){
 		music.stop();
-		var t=alone.scene.transition({target:'menu',duration:'10'});
+		var t=alone.scene.transition({target:'offmenu',duration:'10'});
 	} //Salimos del modo
 
 	if(!sombramoviendose){

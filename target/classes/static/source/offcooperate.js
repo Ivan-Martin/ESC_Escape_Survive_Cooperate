@@ -380,7 +380,7 @@ var log2;
                 flag=true;
                 offcooperate.add.image(600,400,'ganan');
                 addGame(globalid, 'Cooperate', "Player1", logros);
-                var t=offcooperate.scene.transition({target:'menu',duration:3000});
+                var t=offcooperate.scene.transition({target:'offmenu',duration:3000});
 
             }
             
@@ -390,7 +390,7 @@ var log2;
                 flag=true;
                   offcooperate.add.image(600,400,'ganan');
                   addGame(globalid, 'Cooperate', "Player1", logros);
-                var t=offcooperate.scene.transition({target:'menu',duration:3000});
+                var t=offcooperate.scene.transition({target:'offmenu',duration:3000});
 
             }
             

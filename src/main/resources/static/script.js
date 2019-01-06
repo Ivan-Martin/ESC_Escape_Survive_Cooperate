@@ -100,6 +100,18 @@ function comenzar (str) {
 	
 };
 
+function cargarUsuario (callback) {
+	$.ajax({
+		method: 'GET',
+		url: ip + '/users/' + globalid
+	}).done(function (user){
+		callback(user);
+	}).fail(function (){
+		alert("Ups! Algo salió mal");
+	})
+	
+};
+
 window.onbeforeunload = function () {
 	deleteUser(globalid);
 	console.log("saliendito" + globalid);

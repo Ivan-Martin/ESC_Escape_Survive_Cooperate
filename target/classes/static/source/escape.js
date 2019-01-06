@@ -15,22 +15,48 @@ var muros;
 var camara1;
 var camara2;
 var velocidadp2;
-var movimiento;
+var nomovimiento;
 var escapemusic;
 var log;
 var log2;
 var imhost;
 var player2ready = false;
 var enviarmensaje = {};
-var rellenocapa;
+var rellenocapa = [];
 var mensajedimensiones = {};
 var velrivalx = 0, velrivaly = 0;
 var rival;
 var mivelx = 0, mively = 0;
 var gameready = false;
 var posrivalx, posrivaly;
+var esperandopaquete = false;
+
+function comprobarMundoListo () {
+	//Función para comprobar que no se haya perdido ningún paquete al enviar el mundo al otro jugador
+	var booleanodim = true;
+	for (var i = 0; i < worldtiles; i++){
+		booleanodim = (booleanodim && rellenocapa[i]);
+		if(!rellenocapa[i]){
+			var msgmapaincompleto = {};
+			msgmapaincompleto.userid = globalid;
+			msgmapaincompleto.id = "mundoIncompleto";
+			msgmapaincompleto.dim = i;
+			connection.send(msgmapaincompleto);
+			esperandopaquete = true;
+		}
+	}
+	if(booleanodim){
+		esperandopaqute = false;
+		var mundolisto = {}; mundolisto.userid = globalid; mundolisto.id = "comenzarPartida";
+		connection.send(JSON.stringify(mundolisto));
+		gameready = true;
+	}
+	return booleanodim;
+}
 
 escape.create = function () {
+	
+	//Definición de los logros para mostrar al completar suficientes partidas
 	var logros = function (user) {
 		if(user.partidasjugadas[0] == 1){
 			log=escape.add.image(500,340,'escape1').setScrollFactor(0);
@@ -40,18 +66,75 @@ escape.create = function () {
 			log2=escape.add.image(500,340,'escape2').setScrollFactor(0);
 		}
 	}
+	
+	
 
-	updateMode(globalid, 'Escape');
+	updateMode(globalid, 'Escape'); //Avisamos al servidor de que cambiamos de modo
+	
 	escapemusic = this.sound.add('escmusic');
-	escapemusic.play();
-	movimiento=true;
+	escapemusic.play(); //Añadimos la musica
+	
+	nomovimiento=true; //Prohibimos el movimiento hasta que estemos listos para empezar
 
+	//Creación de controles y teclado.
 	esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-	cursors = this.input.keyboard.createCursorKeys(); //Creamos el manejo del teclado
+	cursors = this.input.keyboard.createCursorKeys();
 	wkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 	akey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
 	skey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 	dkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+	
+	//Definición del mensaje de conexión de websockets
+	connection.onmessage = function (msg) {
+		console.log("Websocket = " + msg.data);
+		var datos = JSON.parse(msg.data);
+		if(datos.userid != globalid){
+			console.log("Recibido mensaje de otro jugador");
+			console.log("Datos.user id = " + datos.userid + " globalid = " + globalid);
+			if (datos.id == "setEscape") {
+				//ID: setEscape. Recibimos del host la definición del mundo generado.
+				stairs1pos = datos.stairs1;
+				stairs2pos = datos.stairs2;
+				goldenstairspos = datos.goldenstairs;
+				player2pos = datos.player2pos;
+				if (!imhost){
+					//Este es el último paquete que tengo que enviar; Así que compruebo si tengo
+					//todos los datos o se ha perdido alguno.
+					if(comprobarMundoListo()){render();}
+				}
+			} else if (datos.id == "player2ready") {
+				player2ready = true;
+				console.log("Recibido que el jugador 2 está listo");
+			} else if (datos.id == "rellenoMapa") {
+				var dimensionrelleno = datos.dim;
+				rellenocapa[dimensionrelleno] = true;
+				for (var i = 0; i < worldtiles; i++){
+					mapatiles.putTileAt(datos.relleno[i], dimensionrelleno, i, true, capa);
+				}
+				if(esperandopaquete){render ();}
+			} else if (datos.id == "velocidad"){
+				velrivalx = datos.velocidadx;
+				velrivaly = datos.velocidady;
+				posrivalx = datos.x;
+				posrivaly = datos.y;
+				rival.setPosition(posrivalx, posrivaly);
+				console.log("Rival position = " + rival.x);
+			} else if (datos.id == "comenzarPartida"){
+				gameready = true;
+			} else if (datos.id == "mundoIncompleto"){
+				var mensajemundo = {};
+				mensajemundo.userid = globalid;
+				mensajemundo.id = "rellenoMapa";
+				mensajemundo.relleno = [];
+				mensajemundo.dim = datos.dim;
+				for (var j = 0; j < worldtiles; j++){
+					mensajemundo.dim[j] = capa.getTileAt(datos.dim, j, true).index;
+				}
+				
+			}
+		}
+
+	};
 
 	mapatiles = this.make.tilemap({ tileWidth: 32, tileHeight: 32, width: 2*worldtiles*32+centralsize*32+24*32, heigth: 2*worldtiles*32+centralsize*32+24*32}); //Esto añade un mapa vacío al mundo
 
@@ -66,50 +149,18 @@ escape.create = function () {
 
 	velocidadp2 = 200;
 
-	var stairs1pos = {}, stairs2pos = {}, goldenstairspos = {}, player2pos = {}, rellenocapa = {};
+	var stairs1pos = {}, stairs2pos = {}, goldenstairspos = {}, player2pos = {};
 	var stairs1 = {}, stairs2 = {}, goldenstairs = {};
 
-	connection.onmessage = function (msg) {
-		console.log("Websocket = " + msg.data);
-		var datos = JSON.parse(msg.data);
-		if(datos.userid != globalid){
-			console.log("Recibido mensaje de otro jugador");
-			console.log("Datos.user id = " + datos.userid + " globalid = " + globalid);
-			if (datos.id == "setEscape") {
-				stairs1pos = datos.stairs1;
-				stairs2pos = datos.stairs2;
-				goldenstairspos = datos.goldenstairs;
-				player2pos = datos.player2pos;
-				render();
-				var mundolisto = {}; mundolisto.userid = globalid; mundolisto.id = "comenzarPartida";
-				connection.send(JSON.stringify(mundolisto));
-				gameready = true;
-			} else if (datos.id == "player2ready") {
-				player2ready = true;
-				console.log("Recibido que el jugador 2 está listo");
-			} else if (datos.id == "rellenoMapa") {
-				var dimensionrelleno = datos.dim;
-				rellenocapa[dimensionrelleno] = [];
-				for (var i = 0; i < worldtiles; i++){
-					mapatiles.putTileAt(datos.relleno[i], dimensionrelleno, i, true, capa);
-				}
-			} else if (datos.id == "velocidad"){
-				velrivalx = datos.velocidadx;
-				velrivaly = datos.velocidady;
-				posrivalx = datos.x;
-				posrivaly = datos.y;
-				rival.setPosition(posrivalx, posrivaly);
-				console.log("Rival position = " + rival.x);
-			} else if (datos.id == "comenzarPartida"){
-				gameready = true;
-			}
-		}
-
-	};
-
 	if(imhost){
-
-		console.log(worldtiles);
+		/*
+		 * CREACIÓN DEL MUNDO: Llama 3 veces al generador de laberintos e incluye las tiles necesarias
+		 * para el tilemap.
+		 * La 1º vez se crea el mundo izquierdo (Jugador 1)
+		 * La 2º vez se crea el mundo central (Donde están las escaleras doradas)
+		 * La 3º vez se crea el mundo derecho (Jugador 2)
+		 * También se genera la posición del jugador 2 y las escaleras.
+		 */
 
 		createworld(worldsize); //Lanzamos el generador de laberintos con un tamaño de worldsize x worldsize
 
@@ -233,16 +284,17 @@ escape.create = function () {
 		enviarstairs2.y = stairs2pos.y;
 		player2pos.x = randomx;
 		player2pos.y = randomy;
+		
+		//FIN DEL BLOQUE DE CÓDIGO CORRESPONDIENTE A LA GENERACIÓN DEL MUNDO
 
+		//Preparo el mensaje para enviar las características del mundo al otro jugador:
+		//La posición de las escaleras y la aleatoria del jugador 2
 		enviarmensaje.id = 'setEscape';
 		enviarmensaje.userid = globalid;
 		enviarmensaje.stairs1 = enviarstairs1;
 		enviarmensaje.goldenstairs = enviargoldenstairs;
 		enviarmensaje.player2pos = enviarplayer2;
 		enviarmensaje.stairs2 = enviarstairs2;
-
-		console.log("Tamaño worldtiles = " + worldtiles*worldtiles);
-		console.log("Tamaño capa = " + capa.tilesTotal);
 
 		for (var i = 0; i < worldtiles; i++){
 			mensajedimensiones[i] = [];
@@ -251,9 +303,11 @@ escape.create = function () {
 			}
 		}
 
+		//Cuando he finalizado de generar el mundo, como host, lo renderizo
 		render();
 
 	} else {
+		//Si no soy host, al generar la escena "Escape", le digo al host que estoy listo para recibir los datos
 		var mensajelisto = {};
 		mensajelisto.id = 'player2ready';
 		mensajelisto.userid = globalid;
@@ -267,6 +321,12 @@ escape.create = function () {
 	//Camaras
 
 	function render () {
+		
+		/*
+		 * Función de renderizado: Solo se llama una vez por cliente
+		 * Renderiza la escena una vez tiene todos los datos necesarios para hacerlo
+		 * Añade los elementos
+		 */
 		camara1 = escape.cameras.main.setSize(600,400);
 		camara2 = escape.cameras.add(600, 0, 600, 400);
 
@@ -289,17 +349,28 @@ escape.create = function () {
 		player1 = escape.physics.add.sprite(48, 48, frasesprite); //Cargamos al jugador
 
 		player2 = escape.physics.add.sprite(player2pos.x, player2pos.y, frasesprite2);
+		
+		//Definimos quién es el jugador y quién el rival según seamos host o no
+		if(imhost){
+			mijugador = player1;
+			rival = player2;
+		}
+		else{
+			mijugador = player2;
+			rival = player1;
+
+		}
 
 		escape.physics.world.enable([player1, player2]);
 
-		camara1.startFollow(player1);
-		camara2.startFollow(player2);
-
-
-		/**/
+		camara1.startFollow(mijugador);
+		camara2.startFollow(rival);
 
 		escape.add.image(0, 0, 'borde').setScrollFactor(0);
-
+		
+		/*
+		 * Creamos las animaciones de los personajes andando
+		 */
 		escape.anims.create({
 			key:'downwards2', frames:escape.anims.generateFrameNumbers('player2',{start:1, end:3}), repeat:0, frameRate:6
 		});
@@ -331,9 +402,10 @@ escape.create = function () {
 		escape.anims.create({
 			key:'down', frames:escape.anims.generateFrameNumbers('player',{start:1, end:3}), repeat:0, frameRate:6
 		});
-
+		
+		//Definimos las funciones para transportar a los jugadores cuando toquen las escaleras
 		var transportp1 = function () {
-
+			if(imhost) nomovimiento = true;
 			player1.body.velocity.x = 0;
 			player1.body.velocity.y = 0;
 			mivelx = 0;
@@ -365,6 +437,7 @@ escape.create = function () {
 			stairs1.destroy();
 			player1.x=(worldsize*3*32)+48+(12*32);
 			player1.y=48;
+			if(imhost) nomovimiento = false;
 			escape.add.tween({
 				targets:player1,
 				alpha:1,
@@ -377,6 +450,7 @@ escape.create = function () {
 		var transportp2 = function () {
 			player2.body.velocity.x = 0;
 			player2.body.velocity.y = 0;
+			if(!imhost) nomovimiento = true;
 			escape.add.tween({
 				targets:stairs2,
 				alpha:0,
@@ -404,6 +478,7 @@ escape.create = function () {
 			stairs2.destroy();
 			player2.x=(worldsize*3*32)+48+(12*32);
 			player2.y=48;
+			if(!imhost) nomovimiento = false;
 			escape.add.tween({
 				targets:player2,
 				alpha:1,
@@ -416,7 +491,7 @@ escape.create = function () {
 		var gana1 = function () {
 			escape.add.image(300,200,'gana1').setScrollFactor(0);
 			goldenstairs.destroy();
-			movimiento=true;
+			nomovimiento=true;
 			addGame(globalid, 'Escape', "Player1", logros);
 
 			var t=escape.scene.transition({target:'menu',duration:3000});
@@ -427,7 +502,7 @@ escape.create = function () {
 		var gana2 = function () {
 			escape.add.image(300,200,'gana2').setScrollFactor(0);
 			goldenstairs.destroy();
-			movimiento=true;
+			nomovimiento=true;
 			addGame(globalid, 'Escape', "Player2", logros);
 			var t=escape.scene.transition({target:'menu',duration:3000});
 		}
@@ -435,8 +510,9 @@ escape.create = function () {
 		escape.physics.add.collider(player2, goldenstairs, gana2, null, escape);
 		player1.setSize(10, 16).setOffset(0, 8);
 		player2.setSize(10, 16).setOffset(0, 8);
-		movimiento=false;
+		nomovimiento=false;
 		
+		//Definimos el intervalo para mandar los websockets de posicion entre jugadores.
 		var intervalo = setInterval(function () {
 			if(imhost) {
 				mijugador = player1;
@@ -458,12 +534,15 @@ escape.create = function () {
 }
 
 escape.update=function () {
+	
 	if(esc.isDown){
+		//Nos salimos del modo de juego al menú
 		escapemusic.stop();
 		var t=escape.scene.transition({target:'menu',duration:'10'});
 	}
 
 	if(player2ready){
+		//Si somos el host, le mandamos al jugador 2 el mundo cuando esté listo
 		console.log("Enviando mundo a jugador 2");
 		for (var i = 0; i < worldtiles; i++){
 			var enviarmensajedim = {};
@@ -478,6 +557,7 @@ escape.update=function () {
 	}
 
 	if(gameready){
+		//Si podemos comenzar a jugar
 		var mijugador;
 
 		if(imhost) {
@@ -485,10 +565,7 @@ escape.update=function () {
 		} else {
 			mijugador = player2;
 		}
-
-		var mivelanteriorx = mijugador.body.velocity.x;
-		var mivelanteriory = mijugador.body.velocity.y;
-
+		//Miramos quien es mi jugador
 
 		this.physics.world.collide(player1, capa);
 
@@ -502,75 +579,37 @@ escape.update=function () {
 		player2.body.velocity.x = 0;
 		player2.body.velocity.y = 0;
 		//El personaje por defecto aparece siempre parado excepto que se pulse una tecla
-
-		if(!movimiento){
+		
+		rival.body.velocity.x = velrivalx;
+		rival.body.velocity.y = velrivaly;
+		
+		if(velrivalx > 0){
+			rival.play('right2', true);
+		} else if (velrivalx < 0){
+			rival.play('left2', true);
+		} else if (velrivaly < 0){
+			rival.play('upwards2', true);
+		} else if (velrivaly > 0){
+			rival.play('downwards2', true);
+		}
+		
+		if(!nomovimiento){
 			var mijugador;
 
-			if(imhost){
-				mijugador = player1;
-				rival = player2;
-			}
-			else{
-				mijugador = player2;
-				rival = player1;
-
-			}
-
-			rival.body.velocity.x = velrivalx;
-			rival.body.velocity.y = velrivaly;
-
-			if(velrivalx > 0){
-				rival.play('right2', true);
-			} else if (velrivalx < 0){
-				rival.play('left2', true);
-			} else if (velrivaly < 0){
-				rival.play('upwards2', true);
-			} else if (velrivaly > 0){
-				rival.play('downwards2', true);
-			}
-
-			if (cursors.up.isDown) {
-				mijugador.body.velocity.y = -velocidadp2;
-				mijugador.play('up',true);
-			}
-			else if (cursors.down.isDown) {
-				mijugador.body.velocity.y = velocidadp2;
-				mijugador.play('down',true);
-			} else
-				//Manejamos las teclas arriba/abajo
-
-				if (cursors.left.isDown)
-				{
-					mijugador.body.velocity.x = -velocidadp2;
-					mijugador.play('left',true);
-				}
-				else if (cursors.right.isDown)
-				{
-					mijugador.body.velocity.x = velocidadp2;
-					mijugador.play('right',true);
-				}
-			//Manejamos las teclas izq/der
-
-			if (wkey.isDown) {
+			if (cursors.up.isDown ||wkey.isDown) {
 				mijugador.body.velocity.y = -200;
 				mijugador.play('up',true);
-			}
-			else if (skey.isDown) {
+			} else if (cursors.down.isDown || skey.isDown) {
 				mijugador.body.velocity.y = 200;
 				mijugador.play('down',true);
-			} else
-				//Manejamos las teclas arriba/abajo
-
-				if (akey.isDown)
-				{
-					mijugador.body.velocity.x = -200;
-					mijugador.play('left',true);
-				}
-				else if (dkey.isDown)
-				{
-					mijugador.body.velocity.x = 200;
-					mijugador.play('right',true);
-				}
+			} else if (cursors.left.isDown || akey.isDown) {
+				mijugador.body.velocity.x = -200;
+				mijugador.play('left',true);
+			} else if (cursors.right.isDown || dkey.isDown) {
+				mijugador.body.velocity.x = 200;
+				mijugador.play('right',true);
+			}
+			//Manejamos las teclas izq/der
 			//Manejamos las teclas izq/der
 			mivelx = mijugador.body.velocity.x;
 			mively = mijugador.body.velocity.y;

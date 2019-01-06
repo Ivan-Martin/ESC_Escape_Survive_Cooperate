@@ -23,18 +23,50 @@
     <script src="source/selection.js"></script>
     <script src="source/boot.js"></script>
     <script src="script.js"></script>
-      
+    <link href='https://fonts.googleapis.com/css?family=VT323' rel='stylesheet'>
+    <style>
+        body {
+            font-family: 'VT323';font-size: 22px;
+        }
+    </style>
     </head>
     <body>
-	<div id='info'> </div>
-    <script type="text/javascript">
-
+    <!--<canvas id="c" width="1200" height="400"></canvas>-->
+    <center>
+	<div id='info'style="position:absolute">
+        <img src="assets/Fase4/txtbox2.png" alt="username field" id="im">
+        <div id='info2' style="position: absolute; top:30%; left:21%;">
+        <a id="tagh" style="font-size:50px">Input username (4 to 20 characters)</a>
+        </div>
+        <div id='info3' style="position:absolute;top:50%;left:28%;">
+        <input type="text" id="user" required minlength="4" maxlength="20" size="25" placeholder="AnonymousPlayer" onkeypress="enter(this)" style="text-align: center; font-family:VT323;background-color: darkgray;color:#069b34;font-weight:bold;font-size:50px;">
+        </div>
+        </div>
+        <script type="text/javascript">
+        //var canvas= document.getElementById('c');
+        //var context=canvas.getContext('2d');
+        function enter(inp){
+            if(event.key==='Enter'){
+               comenzar(inp.value);
+               //context.clearRect(0, 0, canvas.width, canvas.height);
+                var ini=document.getElementById("user");
+                var tags=document.getElementById("tagh");
+                var imgg=document.getElementById("im");
+                ini.parentNode.removeChild(ini);
+                imgg.parentNode.removeChild(imgg);
+                tags.parentNode.removeChild(tags);
+                start();
+               }
+        }
+    /*
     window.onload = function() {
     	comenzar();
         start();
         
     }
+    */
     </script>
+        </center>
 	
     </body>
 </html>

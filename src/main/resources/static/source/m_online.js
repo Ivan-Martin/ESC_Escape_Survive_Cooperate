@@ -16,16 +16,16 @@ m_online.create = function () {
     back.on('pointerout',function(){this.setFrame(0);});
     back.on('pointerdown',function(){this.setFrame(1);transition();});
     function transition(){
-        m_online.add.tween({
-                targets:back,
-                alpha:0,
-                duration:2000,
-                ease:'Sine.easeInOut',
-                onComplete:function(){
-                var t= m_online.scene.transition({targets:'menu',duration:10});
-                }
-                })
-    
+    	m_online.add.tween({
+    		targets:back,
+    		alpha:0,
+    		duration:2000,
+    		ease:'Sine.easeInOut',
+    		onComplete:function(){
+    			var t= m_online.scene.transition({targets:'menu',duration:10});
+    		}
+    	})
+
     }
 }
 m_online.update=function(){

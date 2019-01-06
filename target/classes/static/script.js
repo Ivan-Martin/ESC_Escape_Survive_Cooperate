@@ -89,17 +89,26 @@ function showUser(user) {
 
 var globalid;
 
-function comenzar () {
-	var nick = "";
-	do{
-		nick = prompt("Por favor introduce tu nombre. Debe tener entre 4 y 20 caracteres", "AnonymousPlayer");
-	}while (nick.length <= 3 || nick.length >= 20);
+function comenzar (str) {
+	var nick = str;
 	var user = {name: nick};
 	createUser(user, function (userCreated) {
         //When item with id is returned from server
         showUser(userCreated);
         globalid = userCreated.id;
     });
+	
+};
+
+function cargarUsuario (callback) {
+	$.ajax({
+		method: 'GET',
+		url: ip + '/users/' + globalid
+	}).done(function (user){
+		callback(user);
+	}).fail(function (){
+		alert("Ups! Algo salió mal");
+	})
 	
 };
 
