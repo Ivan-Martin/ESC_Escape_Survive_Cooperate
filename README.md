@@ -1,6 +1,6 @@
 # ESC: Escape. Survive. Cooperate.
 
-![No se pudo cargar la imagen](https://raw.githubusercontent.com/Ivan-Martin/ESC_Escape_Survive_Cooperate/master/src/main/resources/static/assets/menu/LOGO2.png  "Logo de ESC")
+![No se pudo cargar la imagen](https://raw.githubusercontent.com/Ivan-Martin/ESC_Escape_Survive_Cooperate/master/src/main/resources/static/assets/menu/LOGO.png  "Logo de ESC")
 
 ESC es un juego de puzzles con una estética retro, ambientado en una temática de terror, contando con tres principales modos de juego:
 
