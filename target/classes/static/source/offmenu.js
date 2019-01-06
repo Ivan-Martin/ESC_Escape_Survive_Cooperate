@@ -1,4 +1,4 @@
-   var offmenu= new Phaser.Scene('offmenu');
+var offmenu= new Phaser.Scene('offmenu');
        var selected;
         offmenu.create=function(){
             var sound = this.sound.add('click')
@@ -65,8 +65,9 @@
             escenaM.add(fondo);
             escenaM.add(botones);
         escenaM.mask=new Phaser.Display.Masks.BitmapMask(this,foco);
+        escenaM.mask.invertAlpha = true;
         offmenu.input.on('pointermove',function(pointer){
-            foco.x=pointer.x;
+        	foco.x=pointer.x;
             foco.y=pointer.y;
         });
         offmenu.add.tween({

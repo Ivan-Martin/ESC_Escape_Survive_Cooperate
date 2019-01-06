@@ -92,7 +92,7 @@ var globalid;
 function comenzar () {
 	var nick = "";
 	do{
-		nick = prompt("Por favor introduce tu nombre", "AnonymousPlayer");
+		nick = prompt("Por favor introduce tu nombre. Debe tener entre 4 y 20 caracteres", "AnonymousPlayer");
 	}while (nick.length <= 3 || nick.length >= 20);
 	var user = {name: nick};
 	createUser(user, function (userCreated) {

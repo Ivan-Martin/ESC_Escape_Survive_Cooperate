@@ -9,7 +9,7 @@
             var f2=menu.add.image(400,185,'arr4');
             var f3=menu.add.image(670,125,'arr3');
             var f5=menu.add.image(830,225,'arr2');
-            var empty=menu.add.image(600,200,'Empty');
+            
             var fs=menu.add.container();
             fs.add(f);
             fs.add(f2);
@@ -52,32 +52,24 @@
             botonO.on('pointerover',function(){this.setFrame(2);});
             botonO.on('pointerout',function(){this.setFrame(0);});
             botonO.on('pointerdown',function(){this.setFrame(1); transition("m_online");sound.play();});
-            var foco=this.add.sprite(200,200,'luz');   
+            var foco=this.add.sprite(200,200,'luz');
             var escenaM=menu.add.container();
             escenaM.add(fondo);
             escenaM.add(botones);
-        if(!lights){
-            escenaM.add(fondo);
-            escenaM.add(botones);
-            escenaM.mask=new Phaser.Display.Masks.BitmapMask(this,foco);
-            menu.input.on('pointermove',function(pointer){
+        escenaM.mask=new Phaser.Display.Masks.BitmapMask(this,foco);
+        menu.input.on('pointermove',function(pointer){
             foco.x=pointer.x;
             foco.y=pointer.y;
-        });        
-            menu.add.tween({
-                targets:foco,
-                alpha:0.25,
-                duration:2500,
-                ease:'Sine.easeInOut',
-                loop:-1,
-                yoyo: true
-            });
-       }
-            else{
-            escenaM.remove(fondo,false);
-            escenaM.remove(botones,false);  
-            escenaM.mask=new Phaser.Display.Masks.BitmapMask(this,empty);
-            }
+        });
+        menu.add.tween({
+           targets:foco,
+            alpha:0.25,
+            duration:2500,
+            ease:'Sine.easeInOut',
+            loop:-1,
+            yoyo: true
+        });
+ 
 
        //hacemos un fade out con un tween en el que el objetivo es el contenedor de los botones, cuando se completa iniciamos una escena diferente.
         function transition(str) {;
@@ -100,4 +92,3 @@
         }
    
     };
-   

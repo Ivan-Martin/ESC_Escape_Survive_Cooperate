@@ -1,18 +1,16 @@
-   var offmenu= new Phaser.Scene('offmenu');
+var offmenu= new Phaser.Scene('offmenu');
        var selected;
         offmenu.create=function(){
             var sound = this.sound.add('click')
             var music = this.sound.add('menumusic');
             music.play();
-            var lights=true;
+     
             var f=offmenu.add.image(350,325,'arr');
             var f2=offmenu.add.image(400,185,'arr4');
             var f3=offmenu.add.image(670,125,'arr3');
             var f4=offmenu.add.image(880,275,'arr5');
             var f5=offmenu.add.image(1140,180,'arr2');
-            var empty=offmenu.add.image(600,200,'Empty');
-            var lighter=offmenu.add.sprite(1000, 370, 'light').setInteractive({useHandCursor:true});
-            lighter.setFrame(1);
+            
             var fs=offmenu.add.container();
             fs.add(f);
             fs.add(f2);
@@ -25,7 +23,6 @@
             var botones;
             //creamos un contenedor para los botones, los creamos y los introducimos en el. 
             botones = this.add.container();
-            var meta=this.add.container();
             var botonE=this.add.sprite(400,125,'escape').setInteractive({useHandCursor:true});
             var botonM=this.add.sprite(400,275,'mirror').setInteractive({useHandCursor:true});
             var botonS=this.add.sprite(770,125,'survive').setInteractive({useHandCursor:true});      
@@ -39,21 +36,8 @@
             botones.add(botonA);
             botones.add(botonC);
             botones.add(botonO);
-            meta.add(botones);
-            meta.add(fondo);
-            meta.add(lighter);
             botones.alpha = 1;
             offmenu.sys.backgroundColor = '#000000';
-            lighter.on('pointerdown',function(){
-             if(lights){
-                lighter.setFrame(0);
-                 lights=false;
-                }
-                else{
-                lighter.setFrame(1);
-                 lights=true;  
-                }
-            })
             botonE.on('pointerover',function(){this.setFrame(2);}); //cuando estemos encima cambia el frame
             botonE.on('pointerout',function(){this.setFrame(0);});  //cuando salgamos volvemos al inicial
             botonE.on('pointerdown',function(){this.setFrame(1); transition("Escape");sound.play();}); //al hacer click lo resaltamos
@@ -76,23 +60,16 @@
             botonO.on('pointerover',function(){this.setFrame(2);});
             botonO.on('pointerout',function(){this.setFrame(0);});
             botonO.on('pointerdown',function(){this.setFrame(1); transition("m_online");sound.play();});
-            var escenaM=offmenu.add.container();
-            escenaM.add(fondo);  
-            escenaM.add(botones);  
-            escenaM.mask=new Phaser.Display.Masks.BitmapMask(this,foco);
             var foco=this.add.sprite(200,200,'luz');
-            if(!lights){
-            foco.alpha=1;
-            escenaM.add(botones);  
-            escenaM.mask=new Phaser.Display.Masks.BitmapMask(this,foco);
-            escenaM.add(fondo);  
-            escenaM.add(botones);  
-            escenaM.mask=new Phaser.Display.Masks.BitmapMask(this,foco);
-            offmenu.input.on('pointermove',function(pointer){
-            foco.x=pointer.x;
+            var escenaM=offmenu.add.container();
+            escenaM.add(fondo);
+            escenaM.add(botones);
+        escenaM.mask=new Phaser.Display.Masks.BitmapMask(this,foco);
+        escenaM.mask.invertAlpha = true;
+        offmenu.input.on('pointermove',function(pointer){
+        	foco.x=pointer.x;
             foco.y=pointer.y;
         });
-      
         offmenu.add.tween({
            targets:foco,
             alpha:0.25,
@@ -101,21 +78,10 @@
             loop:-1,
             yoyo: true
         });
-            }
-            else{
-                foco.alpha=0;
-              escenaM.add(fondo);  
-            escenaM.add(botones);  
-            escenaM.mask=new Phaser.Display.Masks.BitmapMask(this,foco);
-                escenaM.remove(fondo,false);
-                escenaM.remove(botones,false);
-                escenaM.mask=new Phaser.Display.Masks.BitmapMask(this,empty);
-            }
  
 
        //hacemos un fade out con un tween en el que el objetivo es el contenedor de los botones, cuando se completa iniciamos una escena diferente.
-        function transition(str) {
-            if(!lights){
+        function transition(str) {;
             offmenu.add.tween({
                 targets:botones,
                 alpha:0,
@@ -145,36 +111,6 @@
                 }
             })
         }
-                else{
-                offmenu.add.tween({
-                    targets:meta,
-                    alpha:0,
-                    duration:2000,
-                    ease:'Sine.easeInOut',
-                    onComplete:function(){
-                    selected=str;
-                    music.stop();
-                    if(str=="Escape"){
-                    var t=offmenu.scene.transition({target:'offescape',duration:10});
-                    }
-                    else if(str=="Alone"){
-                    var t=offmenu.scene.transition({target:'alone',duration:10});
-                    }
-                    else if(str=="Mirror"){
-                    var t=offmenu.scene.transition({target:'offmirror',duration:10});
-                    }
-                    else if(str=="Survive"){
-                    var t=offmenu.scene.transition({target:'offsurvive',duration:10});
-                    }
-                    else if(str=="Cooperate"){     
-                    var t=offmenu.scene.transition({target:'offcooperate',duration:10}); 
-                    }
-                    else if(str==="m_online"){
-                    var t=menu.scene.transition({target:'m_online',duration:'10'}); 
-                    }
-                }  
-            })
-        }
-    }
-};
+   
+    };
    

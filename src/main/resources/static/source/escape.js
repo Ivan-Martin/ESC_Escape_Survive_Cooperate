@@ -15,7 +15,7 @@ var muros;
 var camara1;
 var camara2;
 var velocidadp2;
-var flag;
+var movimiento;
 var music;
 var log;
 var log2;
@@ -44,7 +44,7 @@ escape.create = function () {
 	updateMode(globalid, 'Escape');
 	music = this.sound.add('escmusic');
 	music.play();
-	flag=false;
+	movimiento=true;
 
 	esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 	cursors = this.input.keyboard.createCursorKeys(); //Creamos el manejo del teclado
@@ -52,7 +52,7 @@ escape.create = function () {
 	akey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
 	skey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 	dkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-	
+
 	mapatiles = this.make.tilemap({ tileWidth: 32, tileHeight: 32, width: 2*worldtiles*32+centralsize*32+24*32, heigth: 2*worldtiles*32+centralsize*32+24*32}); //Esto añade un mapa vacío al mundo
 
 	worldtiles = worldsize*6; //Tamaño de dos laberintos
@@ -60,15 +60,15 @@ escape.create = function () {
 	worldtiles += 24; //Bordes necesarios a cada lado de la sala central
 
 	worldtiles += centralsize*3; //Tamaño de la sala central
-	
+
 	var tileset = mapatiles.addTilesetImage('tileo', 'tileo', 32, 32); //Cargamos el mapa de sprites de tiles
 	capa = mapatiles.createBlankDynamicLayer('nivel', tileset, 0, 0, worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
-	
+
 	velocidadp2 = 200;
-	
+
 	var stairs1pos = {}, stairs2pos = {}, goldenstairspos = {}, player2pos = {}, rellenocapa = {};
 	var stairs1 = {}, stairs2 = {}, goldenstairs = {};
-	
+
 	connection.onmessage = function (msg) {
 		console.log("Websocket = " + msg.data);
 		var datos = JSON.parse(msg.data);
@@ -96,17 +96,17 @@ escape.create = function () {
 			} else if (datos.id == "velocidad"){
 				velrivalx = datos.velocidadx;
 				velrivaly = datos.velocidady;
-				posrivalx = Math.round(datos.x);
-				posrivaly = Math.round(datos.y);
+				posrivalx = datos.x;
+				posrivaly = datos.y;
 				rival.setPosition(posrivalx, posrivaly);
 				console.log("Rival position = " + rival.x);
 			} else if (datos.id == "comenzarPartida"){
 				gameready = true;
 			}
 		}
-		
+
 	};
-	
+
 	if(imhost){
 
 		console.log(worldtiles);
@@ -123,7 +123,7 @@ escape.create = function () {
 		escaleray*=3*32;
 		escalerax+=48;
 		escaleray+=48;
-		
+
 		var enviarstairs1 = {};
 		enviarstairs1.x = escalerax;
 		enviarstairs1.y = escaleray;
@@ -190,7 +190,7 @@ escape.create = function () {
 				mapatiles.putTileAt(muros[pos], i, j, true, capa); //Asignamos a la capa de tiles de Phaser nuestras tiles generadas
 			}
 		}
-		
+
 		var randomx;
 		var randomy;
 
@@ -233,34 +233,34 @@ escape.create = function () {
 		enviarstairs2.y = stairs2pos.y;
 		player2pos.x = randomx;
 		player2pos.y = randomy;
-		
+
 		enviarmensaje.id = 'setEscape';
 		enviarmensaje.userid = globalid;
 		enviarmensaje.stairs1 = enviarstairs1;
 		enviarmensaje.goldenstairs = enviargoldenstairs;
 		enviarmensaje.player2pos = enviarplayer2;
 		enviarmensaje.stairs2 = enviarstairs2;
-		
+
 		console.log("Tamaño worldtiles = " + worldtiles*worldtiles);
 		console.log("Tamaño capa = " + capa.tilesTotal);
-		
+
 		for (var i = 0; i < worldtiles; i++){
 			mensajedimensiones[i] = [];
 			for (var j = 0; j < worldtiles; j++){
 				mensajedimensiones[i][j] = capa.getTileAt(i, j, true).index;
 			}
 		}
-		
+
 		render();
-		
+
 	} else {
 		var mensajelisto = {};
 		mensajelisto.id = 'player2ready';
 		mensajelisto.userid = globalid;
 		connection.send(JSON.stringify(mensajelisto));
 	}
-	
-	
+
+
 
 	mapatiles.setCollisionBetween(3, 14, true, true, capa); //Le dice que las tiles de 3 a 14 colisionan
 
@@ -271,13 +271,13 @@ escape.create = function () {
 		camara2 = escape.cameras.add(600, 0, 600, 400);
 
 		stairs1 = escape.physics.add.sprite(stairs1pos.x, stairs1pos.y, 'stairs');
-		
+
 		goldenstairs = escape.physics.add.sprite(goldenstairspos.x, goldenstairspos.y, 'goldenstairs');
-		
+
 		stairs2 = escape.physics.add.image(stairs2pos.x, stairs2pos.y, 'stairs');
-		
+
 		var frasesprite;
-		
+
 		if(imhost){
 			frasesprite = 'player';
 			frasesprite2 = 'player2';
@@ -285,16 +285,16 @@ escape.create = function () {
 			frasesprite = 'player2';
 			frasesprite2 = 'player';
 		}
-		
+
 		player1 = escape.physics.add.sprite(48, 48, frasesprite); //Cargamos al jugador
 
 		player2 = escape.physics.add.sprite(player2pos.x, player2pos.y, frasesprite2);
-		
+
 		escape.physics.world.enable([player1, player2]);
-		
+
 		camara1.startFollow(player1);
 		camara2.startFollow(player2);
-		
+
 
 		/**/
 
@@ -416,7 +416,7 @@ escape.create = function () {
 		var gana1 = function () {
 			escape.add.image(300,200,'gana1').setScrollFactor(0);
 			goldenstairs.destroy();
-			flag=true;
+			movimiento=true;
 			addGame(globalid, 'Escape', "Player1", logros);
 
 			var t=escape.scene.transition({target:'menu',duration:3000});
@@ -427,7 +427,7 @@ escape.create = function () {
 		var gana2 = function () {
 			escape.add.image(300,200,'gana2').setScrollFactor(0);
 			goldenstairs.destroy();
-			flag=true;
+			movimiento=true;
 			addGame(globalid, 'Escape', "Player2", logros);
 			var t=escape.scene.transition({target:'menu',duration:3000});
 		}
@@ -435,6 +435,24 @@ escape.create = function () {
 		escape.physics.add.collider(player2, goldenstairs, gana2, null, escape);
 		player1.setSize(10, 16).setOffset(0, 8);
 		player2.setSize(10, 16).setOffset(0, 8);
+		movimiento=false;
+		
+		var intervalo = setInterval(function () {
+			if(imhost) {
+				mijugador = player1;
+			} else {
+				mijugador = player2;
+			}
+			var enviarvelocidad = {}
+			enviarvelocidad.userid = globalid;
+			enviarvelocidad.id = 'velocidad';
+			enviarvelocidad.velocidadx = mivelx;
+			enviarvelocidad.velocidady = mively;
+			enviarvelocidad.x = mijugador.x;
+			enviarvelocidad.y = mijugador.y;
+			console.log("mi jugador position = " + mijugador.x);
+			connection.send(JSON.stringify(enviarvelocidad));
+		}, 50);
 	};
 
 }
@@ -444,7 +462,7 @@ escape.update=function () {
 		music.stop();
 		var t=escape.scene.transition({target:'menu',duration:'10'});
 	}
-	
+
 	if(player2ready){
 		console.log("Enviando mundo a jugador 2");
 		for (var i = 0; i < worldtiles; i++){
@@ -458,115 +476,106 @@ escape.update=function () {
 		connection.send(JSON.stringify(enviarmensaje));
 		player2ready = false;
 	}
-	
+
 	if(gameready){
 		var mijugador;
-		
+
 		if(imhost) {
 			mijugador = player1;
 		} else {
 			mijugador = player2;
 		}
-		
+
 		var mivelanteriorx = mijugador.body.velocity.x;
 		var mivelanteriory = mijugador.body.velocity.y;
-	}
-	
-	this.physics.world.collide(player1, capa);
 
-	//Hacemos que el personaje colisione con la capa del tile
-	player1.body.velocity.x = 0;
-	player1.body.velocity.y = 0;
-	//El personaje por defecto aparece siempre parado excepto que se pulse una tecla
 
-	this.physics.world.collide(player2, capa);
-	//Hacemos que el personaje colisione con la capa del tile
-	player2.body.velocity.x = 0;
-	player2.body.velocity.y = 0;
-	//El personaje por defecto aparece siempre parado excepto que se pulse una tecla
+		this.physics.world.collide(player1, capa);
 
-	if(!flag){
-		var mijugador;
-		
-		if(imhost){
-			mijugador = player1;
-			rival = player2;
-		}
-		else{
-			mijugador = player2;
-			rival = player1;
+		//Hacemos que el personaje colisione con la capa del tile
+		player1.body.velocity.x = 0;
+		player1.body.velocity.y = 0;
+		//El personaje por defecto aparece siempre parado excepto que se pulse una tecla
+
+		this.physics.world.collide(player2, capa);
+		//Hacemos que el personaje colisione con la capa del tile
+		player2.body.velocity.x = 0;
+		player2.body.velocity.y = 0;
+		//El personaje por defecto aparece siempre parado excepto que se pulse una tecla
+
+		if(!movimiento){
+			var mijugador;
+
+			if(imhost){
+				mijugador = player1;
+				rival = player2;
+			}
+			else{
+				mijugador = player2;
+				rival = player1;
+
+			}
+
+			rival.body.velocity.x = velrivalx;
+			rival.body.velocity.y = velrivaly;
+
+			if(velrivalx > 0){
+				rival.play('right2', true);
+			} else if (velrivalx < 0){
+				rival.play('left2', true);
+			} else if (velrivaly < 0){
+				rival.play('upwards2', true);
+			} else if (velrivaly > 0){
+				rival.play('downwards2', true);
+			}
+
+			if (cursors.up.isDown) {
+				mijugador.body.velocity.y = -velocidadp2;
+				mijugador.play('up',true);
+			}
+			else if (cursors.down.isDown) {
+				mijugador.body.velocity.y = velocidadp2;
+				mijugador.play('down',true);
+			} else
+				//Manejamos las teclas arriba/abajo
+
+				if (cursors.left.isDown)
+				{
+					mijugador.body.velocity.x = -velocidadp2;
+					mijugador.play('left',true);
+				}
+				else if (cursors.right.isDown)
+				{
+					mijugador.body.velocity.x = velocidadp2;
+					mijugador.play('right',true);
+				}
+			//Manejamos las teclas izq/der
+
+			if (wkey.isDown) {
+				mijugador.body.velocity.y = -200;
+				mijugador.play('up',true);
+			}
+			else if (skey.isDown) {
+				mijugador.body.velocity.y = 200;
+				mijugador.play('down',true);
+			} else
+				//Manejamos las teclas arriba/abajo
+
+				if (akey.isDown)
+				{
+					mijugador.body.velocity.x = -200;
+					mijugador.play('left',true);
+				}
+				else if (dkey.isDown)
+				{
+					mijugador.body.velocity.x = 200;
+					mijugador.play('right',true);
+				}
+			//Manejamos las teclas izq/der
+			mivelx = mijugador.body.velocity.x;
+			mively = mijugador.body.velocity.y;
+
 			
-		}
-		
-		rival.body.velocity.x = velrivalx;
-		rival.body.velocity.y = velrivaly;
-		
-		if(velrivalx > 0){
-			rival.play('right2', true);
-		} else if (velrivalx < 0){
-			rival.play('left2', true);
-		} else if (velrivaly < 0){
-			rival.play('upwards2', true);
-		} else if (velrivaly > 0){
-			rival.play('downwards2', true);
-		}
-		
-		if (cursors.up.isDown) {
-			mijugador.body.velocity.y = -velocidadp2;
-			mijugador.play('up',true);
-		}
-		else if (cursors.down.isDown) {
-			mijugador.body.velocity.y = velocidadp2;
-			mijugador.play('down',true);
-		} else
-			//Manejamos las teclas arriba/abajo
-
-			if (cursors.left.isDown)
-			{
-				mijugador.body.velocity.x = -velocidadp2;
-				mijugador.play('left',true);
-			}
-			else if (cursors.right.isDown)
-			{
-				mijugador.body.velocity.x = velocidadp2;
-				mijugador.play('right',true);
-			}
-		//Manejamos las teclas izq/der
-
-		if (wkey.isDown) {
-			mijugador.body.velocity.y = -200;
-			mijugador.play('up',true);
-		}
-		else if (skey.isDown) {
-			mijugador.body.velocity.y = 200;
-			mijugador.play('down',true);
-		} else
-			//Manejamos las teclas arriba/abajo
-
-			if (akey.isDown)
-			{
-				mijugador.body.velocity.x = -200;
-				mijugador.play('left',true);
-			}
-			else if (dkey.isDown)
-			{
-				mijugador.body.velocity.x = 200;
-				mijugador.play('right',true);
-			}
-		//Manejamos las teclas izq/der
-		mivelx = mijugador.body.velocity.x;
-		mively = mijugador.body.velocity.y;
-		
-		if(gameready && (mivelx != mivelanteriorx || mively != mivelanteriory)){
-			var enviarvelocidad = {}
-			enviarvelocidad.userid = globalid;
-			enviarvelocidad.id = 'velocidad';
-			enviarvelocidad.velocidadx = mivelx;
-			enviarvelocidad.velocidady = mively;
-			enviarvelocidad.x = mijugador.x;
-			enviarvelocidad.y = mijugador.y;
-			console.log("mi jugador position = " + mijugador.x);
-			connection.send(JSON.stringify(enviarvelocidad));
 		}
 	}
 }

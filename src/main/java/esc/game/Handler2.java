@@ -15,6 +15,7 @@ public class Handler2 extends TextWebSocketHandler {
 
 	private ObjectMapper mapper = new ObjectMapper();
 	private Map <Integer, WebSocketSession> sesiones = new ConcurrentHashMap <> ();
+	//En el mapa "sesiones" almacenamos como clave el identificador del usuario y como valor su sesión de websockets
 	private Map <Integer, Integer> emparejamientos = new ConcurrentHashMap <> ();
 	
 	@Override
