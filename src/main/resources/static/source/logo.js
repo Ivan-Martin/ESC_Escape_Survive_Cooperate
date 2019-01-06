@@ -58,8 +58,8 @@
             this.load.image('survive2','assets/menu/Achivments/achivsur2.png');
             this.load.spritesheet('OfflineMode','assets/Fase4/OfflineMode.png',{frameWidth:200,frameHeight:70});
             this.load.spritesheet('OnlineMode','assets/Fase4/OnlineMode.png',{frameWidth:200,frameHeight:70});
-            this.load.spritesheet('light','assets/Fase4/switch.png',{frameWidth:40,frameHeight:70});
-            this.load.image('Empty','assets/Fase4/empty.png');
+            this.load.spritesheet('light','assets/Fase4/switch.png',{frameWidth:60,frameHeight:105});
+            this.load.spritesheet('barr','assets/Fase4/back.png',{frameWidth:80,frameHeight:70});
             var randomtile = Math.random();
             if(randomtile < 0.25){
                 this.load.image('tileo', 'assets/tilemap.png');
