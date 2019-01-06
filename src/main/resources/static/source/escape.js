@@ -103,6 +103,7 @@ escape.create = function () {
 					if(comprobarMundoListo()){render();}
 				}
 			} else if (datos.id == "player2ready") {
+				//ID: play
 				player2ready = true;
 				console.log("Recibido que el jugador 2 está listo");
 			} else if (datos.id == "rellenoMapa") {
