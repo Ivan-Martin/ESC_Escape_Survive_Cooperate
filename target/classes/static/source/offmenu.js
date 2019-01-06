@@ -1,16 +1,20 @@
 var offmenu= new Phaser.Scene('offmenu');
        var selected;
+       var offmenuesc;
         offmenu.create=function(){
             var sound = this.sound.add('click')
             var music = this.sound.add('menumusic');
             music.play();
-     
+            var lights=true;
+            var back=offmenu.add.sprite(90,100,'barr').setInteractive({useHandCursor:true});
+            var light=offmenu.add.sprite(90,200,'light').setInteractive({useHandCursor:true});
+            light.setFrame(1);
+            offmenuesc = offmenu.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
             var f=offmenu.add.image(350,325,'arr');
             var f2=offmenu.add.image(400,185,'arr4');
             var f3=offmenu.add.image(670,125,'arr3');
             var f4=offmenu.add.image(880,275,'arr5');
             var f5=offmenu.add.image(1140,180,'arr2');
-            
             var fs=offmenu.add.container();
             fs.add(f);
             fs.add(f2);
@@ -28,16 +32,25 @@ var offmenu= new Phaser.Scene('offmenu');
             var botonS=this.add.sprite(770,125,'survive').setInteractive({useHandCursor:true});      
             var botonA=this.add.sprite(770,275,'alone').setInteractive({useHandCursor:true});
             var botonC=this.add.sprite(1100,225,'cooperate').setInteractive({useHandCursor:true});
-            var
-            botonO=this.add.sprite(1080,50,'onlone').setInteractive({useHandCursor:true});
             botones.add(botonE);
             botones.add(botonM);
             botones.add(botonS);
             botones.add(botonA);
             botones.add(botonC);
-            botones.add(botonO);
+            botones.add(light);
+            botones.add(back);
             botones.alpha = 1;
             offmenu.sys.backgroundColor = '#000000';
+            light.on('pointerdown',function(){
+                if(!lights){
+                this.setFrame(1);
+                lights=true;
+                }
+                else{
+                this.setFrame(0);
+                lights=false;
+                }
+            });
             botonE.on('pointerover',function(){this.setFrame(2);}); //cuando estemos encima cambia el frame
             botonE.on('pointerout',function(){this.setFrame(0);});  //cuando salgamos volvemos al inicial
             botonE.on('pointerdown',function(){this.setFrame(1); transition("Escape");sound.play();}); //al hacer click lo resaltamos
@@ -57,18 +70,28 @@ var offmenu= new Phaser.Scene('offmenu');
             botonC.on('pointerover',function(){this.setFrame(2);}); //cuando estemos encima cambia el frame
             botonC.on('pointerout',function(){this.setFrame(0);});  //cuando salgamos volvemos al inicial
             botonC.on('pointerdown',function(){this.setFrame(1); transition("Cooperate");sound.play();}); //al hacer click lo resaltamos      
-            botonO.on('pointerover',function(){this.setFrame(2);});
-            botonO.on('pointerout',function(){this.setFrame(0);});
-            botonO.on('pointerdown',function(){this.setFrame(1); transition("m_online");sound.play();});
+            back.on('pointerover',function(){this.setFrame(2)});
+            back.on('pointerout',function(){this.setFrame(0)});
+            back.on('pointerdown',function(){this.setFrame(1);transition("back");sound.play();});
             var foco=this.add.sprite(200,200,'luz');
             var escenaM=offmenu.add.container();
             escenaM.add(fondo);
             escenaM.add(botones);
-        escenaM.mask=new Phaser.Display.Masks.BitmapMask(this,foco);
-        escenaM.mask.invertAlpha = true;
+            escenaM.mask=new Phaser.Display.Masks.BitmapMask(this,foco);
+            escenaM.mask.invertAlpha=true;
+            foco.x=3000;
+            foco.y=3000;
         offmenu.input.on('pointermove',function(pointer){
-        	foco.x=pointer.x;
+            if(!lights){
+            foco.x=pointer.x;
             foco.y=pointer.y;
+            escenaM.mask.invertAlpha = false;    
+            }
+            else{
+            foco.x = 3000;
+            foco.y = 3000;
+            escenaM.mask.invertAlpha = true;
+            }
         });
         offmenu.add.tween({
            targets:foco,
@@ -106,11 +129,21 @@ var offmenu= new Phaser.Scene('offmenu');
                     var t=offmenu.scene.transition({target:'offcooperate',duration:10}); 
                     }
                     else if(str==="m_online"){
-                    var t=menu.scene.transition({target:'m_online',duration:'10'}); 
+                    var t=offmenu.scene.transition({target:'m_online',duration:10}); 
+                    }
+                    else if(str=="back"){
+                    music.stop();
+                    var t=offmenu.scene.transition({target:'selection',duration:10});        
                     }
                 }
             })
         }
    
-    };
+    }
+    offmenu.update=function(){
+        if(offmenuesc.isDown){
+        music.stop();
+        var t=offmenu.scene.transition({target:'selection',duration:10});
+    }
+    }
    

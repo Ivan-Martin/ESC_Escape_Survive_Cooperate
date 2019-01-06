@@ -16,7 +16,7 @@ var camara1;
 var camara2;
 var velocidadp2;
 var movimiento;
-var music;
+var escapemusic;
 var log;
 var log2;
 var imhost;
@@ -42,8 +42,8 @@ escape.create = function () {
 	}
 
 	updateMode(globalid, 'Escape');
-	music = this.sound.add('escmusic');
-	music.play();
+	escapemusic = this.sound.add('escmusic');
+	escapemusic.play();
 	movimiento=true;
 
 	esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
@@ -459,7 +459,7 @@ escape.create = function () {
 
 escape.update=function () {
 	if(esc.isDown){
-		music.stop();
+		escapemusic.stop();
 		var t=escape.scene.transition({target:'menu',duration:'10'});
 	}
 

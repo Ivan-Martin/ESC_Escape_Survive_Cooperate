@@ -1,15 +1,19 @@
         var menu= new Phaser.Scene('menu');
        var selected;
+        var menuesc;
         menu.create=function(){
             var sound = this.sound.add('click');
             var music = this.sound.add('menumusic');
             music.play();
-     
+            var lights=true;
+            var back=menu.add.sprite(90,100,'barr').setInteractive({useHandCursor:true});
+            var light=menu.add.sprite(90,200,'light').setInteractive({useHandCursor:true});
+            light.setFrame(1);
+            menuesc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
             var f=menu.add.image(350,325,'arr');
             var f2=menu.add.image(400,185,'arr4');
             var f3=menu.add.image(670,125,'arr3');
             var f5=menu.add.image(830,225,'arr2');
-            
             var fs=menu.add.container();
             fs.add(f);
             fs.add(f2);
@@ -32,8 +36,20 @@
             botones.add(botonS);
             botones.add(botonC);
             botones.add(botonO);
+            botones.add(back);
+            botones.add(light);
             botones.alpha = 1;
             menu.sys.backgroundColor = '#000000';
+              light.on('pointerdown',function(){
+                if(!lights){
+                this.setFrame(1);
+                lights=true;
+                }
+                else{
+                this.setFrame(0);
+                lights=false;
+                }
+            });
             botonE.on('pointerover',function(){this.setFrame(2);}); //cuando estemos encima cambia el frame
             botonE.on('pointerout',function(){this.setFrame(0);});  //cuando salgamos volvemos al inicial
             botonE.on('pointerdown',function(){this.setFrame(1); transition("Escape");sound.play();}); //al hacer click lo resaltamos
@@ -52,27 +68,40 @@
             botonO.on('pointerover',function(){this.setFrame(2);});
             botonO.on('pointerout',function(){this.setFrame(0);});
             botonO.on('pointerdown',function(){this.setFrame(1); transition("m_online");sound.play();});
-            var foco=this.add.sprite(200,200,'luz');
+            back.on('pointerover',function(){this.setFrame(2)});
+            back.on('pointerout',function(){this.setFrame(0)});
+            back.on('pointerdown',function(){this.setFrame(1);transition("back");sound.play();});
+            var foco=this.add.sprite(200,200,'luz');   
             var escenaM=menu.add.container();
             escenaM.add(fondo);
             escenaM.add(botones);
-        escenaM.mask=new Phaser.Display.Masks.BitmapMask(this,foco);
-        menu.input.on('pointermove',function(pointer){
-            foco.x=pointer.x;
-            foco.y=pointer.y;
-        });
-        menu.add.tween({
-           targets:foco,
-            alpha:0.25,
-            duration:2500,
-            ease:'Sine.easeInOut',
-            loop:-1,
-            yoyo: true
-        });
- 
+            escenaM.mask=new Phaser.Display.Masks.BitmapMask(this,foco);
+            escenaM.mask.invertAlpha=true;
+            foco.x=3000;
+            foco.y=3000;
+            menu.input.on('pointermove',function(pointer){
+                if(!lights){
+                foco.x=pointer.x;
+                foco.y=pointer.y;
+                escenaM.mask.invertAlpha = false;    
+            }
+            else{
+                foco.x = 3000;
+                foco.y = 3000;
+                escenaM.mask.invertAlpha = true;
+            }
+        });        
+            menu.add.tween({
+                targets:foco,
+                alpha:0.25,
+                duration:2500,
+                ease:'Sine.easeInOut',
+                loop:-1,
+                yoyo: true
+            });
 
        //hacemos un fade out con un tween en el que el objetivo es el contenedor de los botones, cuando se completa iniciamos una escena diferente.
-        function transition(str) {;
+        function transition(str) {
             menu.add.tween({
                 targets:botones,
                 alpha:0,
@@ -84,6 +113,9 @@
                     if(str=="m_online"){
                     var t=menu.scene.transition({target:'m_online',duration:10});
                        }
+                    else if(str=="back"){
+                            var t=menu.scene.transition({target:'selection',duration:10});
+                        }
                     else{ 
                     var t=menu.scene.transition({target:'elobby',duration:10});
                     }
@@ -91,4 +123,11 @@
             })
         }
    
-    };
+    }
+   menu.update=function(){
+        if(menuesc.isDown){
+        music.stop();
+        var t=menu.scene.transition({target:'selection',duration:10});
+    }
+    }
+   
