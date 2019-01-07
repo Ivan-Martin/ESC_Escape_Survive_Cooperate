@@ -36,18 +36,23 @@ achievs.create=function(){
                 switch(i){
                     case 0:
                         escape1=achievs.add.image(600,140,'escape1');
+                        botones.add(escape1);
                         break;
                     case 1:
                         mirror1=achievs.add.image(840,140,'mirror1');
+                        botones.add(mirror1);
                         break;
                     case 2:
                         survive1=achievs.add.image(1080,140,'survive1');
+                        botones.add(survive1);
                         break;
                     case 3:
                         alone1=achievs.add.image(120,140,'alone1');
+                        botones.add(alone1);
                         break;
                     case 4:
                         cooperate1=achievs.add.image(360,140,'cooperate1');
+                        botones.add(cooperate1);
                         break;
                 }
             }
@@ -55,18 +60,23 @@ achievs.create=function(){
                 switch(i){
                     case 0:
                         escape2=achievs.add.image(600,260,'escape2');
+                        botones.add(escape2);
                         break;
                     case 1:
                         mirror2=achievs.add.image(840,260,'mirror2');
+                        botones.add(mirror2);
                         break;
                     case 2:
                         survive2=achievs.add.image(1080,260,'survive2');
+                        botones.add(survive2);
                         break;
                     case 3:
                         alone2=achievs.add.image(120,260,'alone2');
+                        botones.add(alone2);
                         break;
                     case 4:
                         cooperate2=achievs.add.image(360,260,'cooperate2');
+                        botones.add(cooperate2);
                         break;
                 }
         }
