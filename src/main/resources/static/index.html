@@ -48,7 +48,7 @@
         //var canvas= document.getElementById('c');
         //var context=canvas.getContext('2d');
         function enter(inp){
-            if(event.key==='Enter'){
+            if(event.key==='Enter'&&inp.value.length>3&&inp.value.length<=20){
                comenzar(inp.value);
                //context.clearRect(0, 0, canvas.width, canvas.height);
                 var ini=document.getElementById("user");
@@ -57,16 +57,9 @@
                 ini.parentNode.removeChild(ini);
                 imgg.parentNode.removeChild(imgg);
                 tags.parentNode.removeChild(tags);
-                start();
+                start();               
                }
         }
-    /*
-    window.onload = function() {
-    	comenzar();
-        start();
-        
-    }
-    */
     </script>
         </center>
 	
