@@ -57,6 +57,8 @@ public class HandlerEscape extends TextWebSocketHandler {
 			respuesta.put("id", "desconexion");
 			WebSocketSession s = sesiones.get(emparejamientos.get(userid));
 			s.sendMessage(new TextMessage(respuesta.toString()));
+			limpiar(emparejamientos.get(userid));
+			limpiar(userid);
 			
 		} else if(id.equals("velocidad")){
 			tiempos.put(userid, 10);
@@ -73,6 +75,13 @@ public class HandlerEscape extends TextWebSocketHandler {
 		}
 	}
 	
+	private void limpiar(int userid) {
+		tiempos.remove(userid);
+		emparejamientos.remove(userid);
+		sesiones.remove(userid);
+		
+	}
+
 	public static void inicializarTemporizador () {
 		timer.scheduleWithFixedDelay(() -> {
 			for (Integer i : tiempos.keySet()) {
@@ -96,5 +105,11 @@ public class HandlerEscape extends TextWebSocketHandler {
 		respuesta.put("id", "desconexion");
 		WebSocketSession s = sesiones.get(emparejamientos.get(i));
 		s.sendMessage(new TextMessage(respuesta.toString()));
+		tiempos.remove(i);
+		emparejamientos.remove(emparejamientos.get(i));
+		sesiones.remove(emparejamientos.get(i));
+		tiempos.remove(emparejamientos.get(i));
+		emparejamientos.remove(i);
+		sesiones.remove(i);
 	}
 }
