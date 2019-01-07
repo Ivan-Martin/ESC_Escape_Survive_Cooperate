@@ -24,7 +24,10 @@
     var flash;
     var music;
     var sound;
-
+    var pausa=false;
+    var pausaimg;
+    var abriendose=false;
+    var enter;
     var log;
     var log2;
     
@@ -45,7 +48,7 @@
             flag=false;
             //console.log ("Modo survive");
             esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-            
+            enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Enter);
             velocidadp2 = 150;
             
             worldtiles = worldsize*3;
@@ -275,10 +278,30 @@
                 repeat:1
             })
             
+            pausaimg=offsurvive.add.image(300,200,'paused').setScrollFactor(0);
+            pausaimg.alpha=0;
+            pausaimg.depth=1; 
+            
         }
         
         offsurvive.update=function () {
-            if(esc.isDown){
+            if(esc.isDown&&!abriendose&&!pausa){
+                abriendose=true;
+                flag=true;
+                setTimeout(function(){
+                    pausaimg.alpha=1;
+                    pausa=true;
+                    abriendose=false;
+                },500);
+	       }
+            if(esc.isDown&&pausa){
+                setTimeout(function(){
+                    pausa=false;
+                    flag=false;
+                    pausaimg.alpha=0;
+                },500);
+            }
+            if(enter.isDown&&pausa){
                 music.stop();
                 var t=offsurvive.scene.transition({target:'offmenu',duration:'10'});
             }

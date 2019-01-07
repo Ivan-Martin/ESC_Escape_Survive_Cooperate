@@ -62,8 +62,16 @@ public class HandlerEscape extends TextWebSocketHandler {
 			
 		} else if(id.equals("velocidad")){
 			tiempos.put(userid, 10);
+
+			JsonNode responder = mapper.readTree(message.getPayload());
+
+			System.out.println("Message sent: " + message.toString());
+
+			WebSocketSession s = sesiones.get(emparejamientos.get(userid));
+
+			s.sendMessage(new TextMessage(responder.toString()));
 		} else {
-			
+
 			JsonNode responder = mapper.readTree(message.getPayload());
 			
 			System.out.println("Message sent: " + message.toString());

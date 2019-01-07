@@ -26,6 +26,10 @@ var sound;
 var moverse = "N";
 var log;
 var log2;
+var pausa=false;
+var pausaimg;
+var abriendose=false;
+var enter;
 
 
 alone.create=function() {
@@ -48,7 +52,7 @@ alone.create=function() {
 	velocidadp2 = 150; //Inicializamos la velocidad de sombra
 
 	worldtiles = worldsize*3; //Calculamos las tiles del mapa
-
+    enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Enter);
 	esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 	wkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 	akey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -236,15 +240,37 @@ alone.create=function() {
 	player1.setSize(10, 16).setOffset(0, 8);
 	player2.setSize(10, 16).setOffset(0, 8);
 	//Cambiamos la caja de colisiones de los jugadores
+    
+          
+    pausaimg=alone.add.image(300,200,'paused').setScrollFactor(0);
+    pausaimg.alpha=0;
+    pausaimg.depth=1;
 }
 
 alone.update=function(){        
-	if(esc.isDown){
-		music.stop();
-		var t=alone.scene.transition({target:'offmenu',duration:'10'});
-	} //Salimos del modo
+	if(esc.isDown&&!abriendose&&!pausa){
+                abriendose=true;
+                flag=true;
+                setTimeout(function(){
+                    pausaimg.alpha=1;
+                    pausa=true;
+                    abriendose=false;
+                },500);
+	       }
+            if(esc.isDown&&pausa){
+                setTimeout(function(){
+                    pausa=false;
+                    flag=false;
+                    pausaimg.alpha=0;
+                },500);
+            }
+            if(enter.isDown&&pausa){
+                music.stop();
+                var t=alone.scene.transition({target:'offmenu',duration:'10'});
+            } //Salimos del modo
 
-	if(!sombramoviendose){
+	if(!flag){
+    if(!sombramoviendose){
 		player2.body.velocity.x = 0;
 		player2.body.velocity.y = 0;
 
@@ -278,6 +304,7 @@ alone.update=function(){
 			},
 			callbackScope: this
 		});
+    }
 		//Manejador de la inteligencia artificial del enemigo
 	}
 	if(!usingpower) this.physics.world.collide(player1, capa);

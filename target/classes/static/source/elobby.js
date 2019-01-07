@@ -19,8 +19,8 @@ elobby.create=function(){
 				if(selected=="Escape"){
 	                var t=elobby.scene.transition({target:'escape',duration:'500'});
 	            }
-	            else if(selected=="Survival"){
-	                var t=elobby.scene.transition({target:'survival',duration:'500'});
+	            else if(selected=="Survive"){
+	                var t=elobby.scene.transition({target:'survive',duration:'500'});
 	            }
 	            else if(selected=="Mirror"){
 	                var t=elobby.scene.transition({target:'mirror',duration:'500'});

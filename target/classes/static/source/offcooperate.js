@@ -21,9 +21,12 @@ var player2;
 var flag;
 var music;
 var sound;
-
+var pausa=false;
+var pausaimg;
+var enter;
 var log;
 var log2;
+var abriendose=false;
 
 
         offcooperate.create=function () {
@@ -54,7 +57,7 @@ var log2;
             akey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
             skey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
             dkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-            
+            enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Enter);
             worldtiles = worldsize*3*2+3;
             
             mapatiles = this.make.tilemap({ tileWidth: 32, tileHeight: 32, width: worldtiles*32*2+96, heigth: worldtiles*32*2}); //Esto añade un mapa vacío al mundo
@@ -489,17 +492,40 @@ var log2;
             
             text = this.add.text(32, 32).setScrollFactor(0);
             
+            pausaimg=offcooperate.add.image(300,200,'paused').setScrollFactor(0);
+            pausaimg.alpha=0;
+            pausaimg.depth=1;
+
+            
         }
         
         offcooperate.update=function () {
             var number = cuentatiempo.getProgress().toString().substr(2, 2);
-    number = 100-number;
-    
-    text.setText('Tiempo: ' + number + "%");
-            if(esc.isDown){
-                music.stop();
-                var t=offcooperate.scene.transition({target:'menu',duration:'10'});
+            number = 100-number;
+            
+            if(esc.isDown&&!abriendose&&!pausa){
+                abriendose=true;
+                flag=true;
+                setTimeout(function(){
+                    pausaimg.alpha=1;
+                    pausa=true;
+                    abriendose=false;
+                },500);
+	       }
+            if(esc.isDown&&pausa){
+                setTimeout(function(){
+                    pausa=false;
+                    flag=false;
+                    pausaimg.alpha=0;
+                },500);
             }
+            if(enter.isDown&&pausa){
+                music.stop();
+                var t=offcooperate.scene.transition({target:'offmenu',duration:'10'});
+            }
+            
+            
+            text.setText('Tiempo: ' + number + "%");
             this.physics.world.collide(player1, capa);
             if(!puerta1abierta) this.physics.world.collide(player1, puerta1);
             if(!puerta2abierta) this.physics.world.collide(player2, puerta2);
