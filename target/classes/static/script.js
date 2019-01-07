@@ -112,6 +112,29 @@ function cargarUsuario (callback) {
 	
 };
 
+/*
+function comprobarServidor (game) {
+	console.log("comprobando server");
+	$.ajax({
+		method: 'GET',
+		url: ip + "/users/status"
+	}).fail(function () {
+		alert("Servidor fuera de servicio");
+		var manejadorescenas = game.scene;
+		var totalescenas = manejadorescenas.keys;
+		var refescenas = manejadorescenas.scenes;
+		console.log(refescenas);
+		console.log(totalescenas);
+		
+		for(var i = 0; i < totalescenas.length; i++){
+			var escena = totalescenas[i];
+			refescenas[i].add.image(200, 300, 'errorserver');
+			escena.add.image(200, 300, 'errorserver');
+		}
+	});
+}*/
+
+
 window.onbeforeunload = function () {
 	deleteUser(globalid);
 	console.log("saliendito" + globalid);

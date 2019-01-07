@@ -304,4 +304,9 @@ public class UsersController {
 		pw.close();
 		return c;
 	}
+	
+	@GetMapping("/status")
+	public ResponseEntity<Boolean> status () {
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
 }
