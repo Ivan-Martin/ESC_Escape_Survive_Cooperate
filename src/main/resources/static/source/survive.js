@@ -271,15 +271,14 @@ survive.create =function () {
 		var frasesprite;
 
 		var mijugador;
-
+		
+		frasesprite = 'player';
+		frasesprite2 = 'enemy';
+		
 		if(imhost){
-			frasesprite = 'player';
-			frasesprite2 = 'enemy';
 			mijugador = player1;
 			rival = player2;
 		} else {
-			frasesprite = 'enemy';
-			frasesprite2 = 'player';
 			mijugador = player2;
 			rival = player1;
 		}

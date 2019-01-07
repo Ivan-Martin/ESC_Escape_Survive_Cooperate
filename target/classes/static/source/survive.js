@@ -271,15 +271,14 @@ survive.create =function () {
 		var frasesprite;
 
 		var mijugador;
-
+		
+		frasesprite = 'player';
+		frasesprite2 = 'enemy';
+		
 		if(imhost){
-			frasesprite = 'player';
-			frasesprite2 = 'enemy';
 			mijugador = player1;
 			rival = player2;
 		} else {
-			frasesprite = 'enemy';
-			frasesprite2 = 'player';
 			mijugador = player2;
 			rival = player1;
 		}
@@ -552,20 +551,61 @@ survive.update=function () {
 
 		rival.body.velocity.x = velrivalx;
 		rival.body.velocity.y = velrivaly;
-
+        if(imhost){
 		if(velrivalx > 0){
 			rival.play('right2', true);
-		} else if (velrivalx < 0){
+        } else if (velrivalx < 0){
 			rival.play('left2', true);
-		} else if (velrivaly < 0){
+          } else if (velrivaly < 0){
 			rival.play('upwards2', true);
-		} else if (velrivaly > 0){
+          } else if (velrivaly > 0){
 			rival.play('downwards2', true);
-		}
+          }
+        }
+        else{
+           if(usingpower){
+               if(velrivalx > 0){
+                   rival.play('rightpower', true);
+               } else if (velrivalx < 0){
+                   rival.play('leftpower', true);
+               } else if (velrivaly < 0){
+                   rival.play('uppower', true);
+               } else if (velrivaly > 0){
+                   rival.play('downpower', true);
+               }
+              }
+           else{
+              if(velrivalx > 0){
+                  rival.play('right', true);
+               } else if (velrivalx < 0){
+                   rival.play('left', true);
+               } else if (velrivaly < 0){
+                   rival.play('up', true);
+               } else if (velrivaly > 0){
+                   rival.play('down', true);
+               }
+          }
+        }
 		if(!nomovimiento){
 			var mijugador;
-
-			if (cursors.up.isDown ||wkey.isDown) {
+            if(imhost){
+            if(usingpower){
+                if (cursors.up.isDown ||wkey.isDown) {
+                     mijugador.body.velocity.y = -200;
+                     mijugador.play('uppower',true);
+                 } else if (cursors.down.isDown || skey.isDown) {
+                     mijugador.body.velocity.y = 200;
+                     mijugador.play('downpower',true);
+                 } else if (cursors.left.isDown || akey.isDown) {
+                     mijugador.body.velocity.x = -200;
+                     mijugador.play('leftpower',true);
+                 } else if (cursors.right.isDown || dkey.isDown) {
+                     mijugador.body.velocity.x = 200;
+                     mijugador.play('rightpower',true);
+                }
+            }
+            else{
+                if (cursors.up.isDown ||wkey.isDown) {
 				mijugador.body.velocity.y = -200;
 				mijugador.play('up',true);
 			} else if (cursors.down.isDown || skey.isDown) {
@@ -577,7 +617,24 @@ survive.update=function () {
 			} else if (cursors.right.isDown || dkey.isDown) {
 				mijugador.body.velocity.x = 200;
 				mijugador.play('right',true);
-			}
+            } 
+                }
+            }
+            else{
+            if (cursors.up.isDown ||wkey.isDown) {
+				mijugador.body.velocity.y = -200;
+				mijugador.play('upwards2',true);
+			} else if (cursors.down.isDown || skey.isDown) {
+				mijugador.body.velocity.y = 200;
+				mijugador.play('downwards2',true);
+			} else if (cursors.left.isDown || akey.isDown) {
+				mijugador.body.velocity.x = -200;
+				mijugador.play('left2',true);
+			} else if (cursors.right.isDown || dkey.isDown) {
+				mijugador.body.velocity.x = 200;
+				mijugador.play('right2',true);
+			 }
+            }
 			//Manejamos las teclas izq/der
 			//Manejamos las teclas izq/der
 			mivelx = mijugador.body.velocity.x;

@@ -48,7 +48,7 @@
             flag=false;
             //console.log ("Modo survive");
             esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-            enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Enter);
+            enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
             velocidadp2 = 150;
             
             worldtiles = worldsize*3;

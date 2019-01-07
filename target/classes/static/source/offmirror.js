@@ -53,7 +53,7 @@ var log2;
             skey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
             dkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
             esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-            enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Enter);
+            enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
             mapatiles = this.make.tilemap({ tileWidth: 32, tileHeight: 32, width: 2*worldtiles*32+centralsize*32+24*32, heigth: 2*worldtiles*32+centralsize*32+24*32}); //Esto añade un mapa vacío al mundo
             
             var tileset = mapatiles.addTilesetImage('tileo', 'tileo', 32, 32); //Cargamos el mapa de sprites de tiles

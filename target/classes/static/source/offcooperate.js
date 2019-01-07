@@ -57,7 +57,7 @@ var abriendose=false;
             akey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
             skey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
             dkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-            enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Enter);
+            enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
             worldtiles = worldsize*3*2+3;
             
             mapatiles = this.make.tilemap({ tileWidth: 32, tileHeight: 32, width: worldtiles*32*2+96, heigth: worldtiles*32*2}); //Esto añade un mapa vacío al mundo

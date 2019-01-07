@@ -24,7 +24,7 @@ var abriendose=false;
 
 offescape.create =function () {
 	esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-    enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Enter);
+    enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 	cursors = this.input.keyboard.createCursorKeys(); //Creamos el manejo del teclado
 	wkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 	akey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
