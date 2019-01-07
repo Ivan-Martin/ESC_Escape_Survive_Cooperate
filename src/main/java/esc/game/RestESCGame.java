@@ -14,6 +14,8 @@ public class RestESCGame implements WebSocketConfigurer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(RestESCGame.class, args);
+		
+		HandlerEscape.inicializarTemporizador();
 	}
 
 	@Override
@@ -22,7 +24,7 @@ public class RestESCGame implements WebSocketConfigurer {
 	}
 	
 	@Bean
-	public Handler2 echoHandler() {
-		return new Handler2();
+	public HandlerEscape echoHandler() {
+		return new HandlerEscape();
 	}
 }

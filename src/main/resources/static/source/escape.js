@@ -34,6 +34,8 @@ var esperandopaquete = false;
 var abriendose=false;
 var pausa=false;
 var pausaimg;
+var intervalo;
+
 function comprobarMundoListo () {
 	//Función para comprobar que no se haya perdido ningún paquete al enviar el mundo al otro jugador
 	var booleanodim = true;
@@ -138,13 +140,16 @@ escape.create = function () {
 				
 			} else if (datos.id == "desconexion"){
 				var ganadesconexion = escape.add.image(300, 200, 'victoriadesconexion');
-				ganadesconexion.depth = 3;
+				ganadesconexion.depth = 2;
 				ganadesconexion.setScrollFactor(0);
 				nomovimiento=true;
 				if(imhost) addGame(globalid, 'Escape', "Player1", logros);
 				else addGame(globalid, 'Escape', "Player2", logros);
 				
-				setTimeout(function () {var t=escape.scene.transition({target:'menu',duration:3000});}, 3000);
+				setTimeout(function () {
+					var t=escape.scene.transition({target:'menu',duration:3000});
+					clearInterval(intervalo);
+					}, 3000);
 			}
 		}
 
@@ -510,6 +515,7 @@ escape.create = function () {
 			addGame(globalid, 'Escape', "Player1", logros);
 
 			var t=escape.scene.transition({target:'menu',duration:3000});
+			clearInterval(intervalo);
 		}
 
 		escape.physics.add.collider(player1, goldenstairs, gana1, null, escape);
@@ -520,6 +526,7 @@ escape.create = function () {
 			nomovimiento=true;
 			addGame(globalid, 'Escape', "Player2", logros);
 			var t=escape.scene.transition({target:'menu',duration:3000});
+			clearInterval(intervalo);
 		}
 
 		escape.physics.add.collider(player2, goldenstairs, gana2, null, escape);
@@ -528,7 +535,7 @@ escape.create = function () {
 		nomovimiento=false;
 		
 		//Definimos el intervalo para mandar los websockets de posicion entre jugadores.
-		var intervalo = setInterval(function () {
+		intervalo = setInterval(function () {
 			if(imhost) {
 				mijugador = player1;
 			} else {
@@ -550,7 +557,7 @@ escape.create = function () {
     pausaimg.depth = 1;
     
     var imagenayuda = escape.add.image(-2700, -2800, 'ayudaescape');
-    imagenayuda.depth = 2;
+    imagenayuda.depth = 3;
 }
 
 escape.update=function () {
@@ -578,6 +585,7 @@ escape.update=function () {
 		medesconecto.id = "desconexion";
 		connection.send(JSON.stringify(medesconecto));
 		var t=escape.scene.transition({target:'menu',duration:10});
+		clearInterval(intervalo);
 	}
 
 	if(player2ready){

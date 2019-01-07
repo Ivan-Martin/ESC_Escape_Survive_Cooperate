@@ -1,8 +1,12 @@
 package esc.game;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -11,12 +15,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-public class Handler2 extends TextWebSocketHandler {
+public class HandlerEscape extends TextWebSocketHandler {
 
-	private ObjectMapper mapper = new ObjectMapper();
-	private Map <Integer, WebSocketSession> sesiones = new ConcurrentHashMap <> ();
+	private static ObjectMapper mapper = new ObjectMapper();
+	private static Map <Integer, WebSocketSession> sesiones = new ConcurrentHashMap <> ();
 	//En el mapa "sesiones" almacenamos como clave el identificador del usuario y como valor su sesión de websockets
-	private Map <Integer, Integer> emparejamientos = new ConcurrentHashMap <> ();
+	private static Map <Integer, Integer> emparejamientos = new ConcurrentHashMap <> ();
+	private static Map <Integer, Integer> tiempos = new ConcurrentHashMap <> ();
+	
+	private static ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor();
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
@@ -25,6 +32,7 @@ public class Handler2 extends TextWebSocketHandler {
 		JsonNode node = mapper.readTree(message.getPayload());
 		String id = node.get("id").asText();
 		int userid = node.get("userid").asInt();
+		
 		if(id.equals("conectarServidor")) {
 			int rivalid = node.get("rivalid").asInt();
 			if(!sesiones.containsKey(userid)) {
@@ -46,12 +54,14 @@ public class Handler2 extends TextWebSocketHandler {
 		} else if (id.equals("desconexion")) {
 			ObjectNode respuesta = mapper.createObjectNode();
 			respuesta.put("userid", 0);
-			respuesta.put("tipo", 0);
 			respuesta.put("id", "desconexion");
 			WebSocketSession s = sesiones.get(emparejamientos.get(userid));
 			s.sendMessage(new TextMessage(respuesta.toString()));
 			
+		} else if(id.equals("velocidad")){
+			tiempos.put(userid, 10);
 		} else {
+			
 			JsonNode responder = mapper.readTree(message.getPayload());
 			
 			System.out.println("Message sent: " + message.toString());
@@ -61,5 +71,30 @@ public class Handler2 extends TextWebSocketHandler {
 			s.sendMessage(new TextMessage(responder.toString()));
 			
 		}
+	}
+	
+	public static void inicializarTemporizador () {
+		timer.scheduleWithFixedDelay(() -> {
+			for (Integer i : tiempos.keySet()) {
+				tiempos.put(i, tiempos.get(i)-1);
+			}
+			for (Integer i : tiempos.keySet()) {
+				if(tiempos.get(i) <= 0) {
+					try {
+						desconectar(i);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}, 1000, 1000, TimeUnit.MILLISECONDS);
+	}
+	
+	private static void desconectar (int i) throws IOException {
+		ObjectNode respuesta = mapper.createObjectNode();
+		respuesta.put("userid", 0);
+		respuesta.put("id", "desconexion");
+		WebSocketSession s = sesiones.get(emparejamientos.get(i));
+		s.sendMessage(new TextMessage(respuesta.toString()));
 	}
 }
