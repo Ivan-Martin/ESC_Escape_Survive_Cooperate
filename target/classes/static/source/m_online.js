@@ -14,17 +14,17 @@ m_online.create = function () {
     back=m_online.add.sprite(90,100,'barr').setInteractive({useHandCursor:true});
     back.on('pointerover',function(){this.setFrame(2);});
     back.on('pointerout',function(){this.setFrame(0);});
-    back.on('pointerdown',function(){this.setFrame(1);transition();});
-    function transition(){
+    back.on('pointerdown',function(){this.setFrame(1);transicion();});
+    function transicion(){
     	m_online.add.tween({
-    		targets:back,
+    		targets:"back",
     		alpha:0,
     		duration:2000,
     		ease:'Sine.easeInOut',
     		onComplete:function(){
     			var t= m_online.scene.transition({targets:'menu',duration:10});
     		}
-    	})
+    	});
 
     }
 }
