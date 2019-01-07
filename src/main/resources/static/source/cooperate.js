@@ -154,7 +154,7 @@ cooperate.create = function () {
 				else addGame(globalid, 'Survive', "Player2", logros);
 
 				setTimeout(function () {
-					var t=escape.scene.transition({target:'menu',duration:3000});
+					var t=cooperate.scene.transition({target:'menu',duration:3000});
 					clearInterval(intervalosurvive);
 				}, 3000);
 			}
@@ -820,7 +820,7 @@ cooperate.update=function () {
 		},500);
 	}
 	if(enter.isDown && pausa){
-		survivemusic.stop();
+		coopmusic.stop();
 		var medesconecto = {};
 		medesconecto.userid = globalid;
 		medesconecto.id = "desconexion";

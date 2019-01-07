@@ -8,6 +8,9 @@ var comenzado = false;
 var efade;
 var esc;
 elobby.create=function(){
+	rivalencontrado = false;
+	getrespuesta = false;
+	comenzado = false;
 	updateMode(globalid, selected);
     esc=this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 	var fondo=this.add.image(600,200,'lobby');
@@ -70,27 +73,27 @@ elobby.create=function(){
 elobby.update=function(){
 	if(esc.isDown){
 		if(selected=="Escape"){
-            updateMode(globalid, "exitEscape");
-        }
-        else if(selected=="Survive"){
-        	updateMode(globalid, "exitSurvive");
-        }
-        else if(selected=="Mirror"){
-        	updateMode(globalid, "exitMirror");
-        }
-        else if(selected=="Cooperate"){
-        	updateMode(globalid, "exitCooperate");
-        }
-       elobby.add.tween({
-            targets:efade,
-            alpha:0,
-            duration:2000,
-            ease:'Sine.easeInOut',
-            onComplete:function(){
-            var t=elobby.scene.transition({target:'menu',duration:10});
-        }
-        });
-       }
+			updateMode(globalid, "exitEscape");
+		}
+		else if(selected=="Survive"){
+			updateMode(globalid, "exitSurvive");
+		}
+		else if(selected=="Mirror"){
+			updateMode(globalid, "exitMirror");
+		}
+		else if(selected=="Cooperate"){
+			updateMode(globalid, "exitCooperate");
+		}
+		elobby.add.tween({
+			targets:efade,
+			alpha:0,
+			duration:2000,
+			ease:'Sine.easeInOut',
+			onComplete:function(){
+				var t=elobby.scene.transition({target:'menu',duration:10});
+			}
+		});
+	}
 	if(!rivalencontrado && !getrespuesta){
 		var checker = function (user) {
 			getrespuesta = false;
