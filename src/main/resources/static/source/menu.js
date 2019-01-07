@@ -6,7 +6,7 @@
             var music = this.sound.add('menumusic');
             music.play();
             var lights=true;
-            var back=menu.add.sprite(90,100,'barr').setInteractive({useHandCursor:true});
+            var back=menu.add.sprite(90,100,'barr2').setInteractive({useHandCursor:true});
             var light=menu.add.sprite(90,200,'light').setInteractive({useHandCursor:true});
             light.setFrame(1);
             menuesc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
