@@ -1,9 +1,11 @@
 var offmenu= new Phaser.Scene('offmenu');
        var selected;
        var offmenuesc;
+       var botones;
+       var music;
         offmenu.create=function(){
+            music = offmenu.sound.add('menumusic');
             var sound = this.sound.add('click')
-            var music = this.sound.add('menumusic');
             music.play();
             var lights=true;
             var back=offmenu.add.sprite(90,100,'barr2').setInteractive({useHandCursor:true});
@@ -24,7 +26,6 @@ var offmenu= new Phaser.Scene('offmenu');
             fs.alpha=0.25;
             var fondo=this.add.image(600,200,'ESC');
             var test=offmenu.add.image(1140,500,'escape1');
-            var botones;
             //creamos un contenedor para los botones, los creamos y los introducimos en el. 
             botones = this.add.container();
             var botonE=this.add.sprite(400,125,'escape').setInteractive({useHandCursor:true});
@@ -142,8 +143,15 @@ var offmenu= new Phaser.Scene('offmenu');
     }
     offmenu.update=function(){
         if(offmenuesc.isDown){
-        music.stop();
-        var t=offmenu.scene.transition({target:'selection',duration:10});
+            offmenu.add.tween({
+                targets:botones,
+                alpha:0,
+                duration:2000,
+                ease:'Sine.easeInOut',
+                onComplete:function(){
+                    music.stop();
+                    var t=offmenu.scene.transition({target:'selection',duration:10});
+                }
+    })
     }
     }
-   

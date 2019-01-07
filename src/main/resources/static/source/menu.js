@@ -1,10 +1,14 @@
         var menu= new Phaser.Scene('menu');
        var selected;
-        var menuesc;
+       var menuesc;
+       var botones;
+       var music;
         menu.create=function(){
             var sound = this.sound.add('click');
-            var music = this.sound.add('menumusic');
+            music = offmenu.sound.add('menumusic');
+            if(selected!="m_online"){
             music.play();
+            }
             var lights=true;
             var back=menu.add.sprite(90,100,'barr2').setInteractive({useHandCursor:true});
             var light=menu.add.sprite(90,200,'light').setInteractive({useHandCursor:true});
@@ -22,7 +26,6 @@
             fs.alpha=0.25;
             var fondo=this.add.image(600,200,'ESC');
             var test=menu.add.image(1140,500,'escape1');
-            var botones;
             //creamos un contenedor para los botones, los creamos y los introducimos en el. 
             botones = this.add.container();
             var botonE=this.add.sprite(400,125,'escape').setInteractive({useHandCursor:true});
@@ -109,14 +112,16 @@
                 ease:'Sine.easeInOut',
                 onComplete:function(){
                     selected=str;
-                    music.stop();
+                  
                     if(str=="m_online"){
                     var t=menu.scene.transition({target:'m_online',duration:10});
                        }
                     else if(str=="back"){
-                            var t=menu.scene.transition({target:'selection',duration:10});
+                    music.stop();
+                    var t=menu.scene.transition({target:'selection',duration:10});
                         }
-                    else{ 
+                    else{
+                    music.stop();    
                     var t=menu.scene.transition({target:'elobby',duration:10});
                     }
                 }
@@ -126,8 +131,16 @@
     }
    menu.update=function(){
         if(menuesc.isDown){
-        music.stop();
-        var t=menu.scene.transition({target:'selection',duration:10});
+            menu.add.tween({
+                targets:botones,
+                alpha:0,
+                duration:2000,
+                ease:'Sine.easeInOut',
+                onComplete:function(){
+                    music.stop();
+                    var t=menu.scene.transition({target:'selection',duration:10});
+                }
+            })
     }
     }
    
