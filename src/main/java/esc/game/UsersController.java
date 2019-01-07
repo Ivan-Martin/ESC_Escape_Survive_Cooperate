@@ -214,6 +214,45 @@ public class UsersController {
 				}
 			}
 			
+			if(modo.equals("exitEscape")) {
+				if(escape.containsKey(usuario)) {
+					escape.remove(usuario);
+					usuario.setIshost(false);
+					usuario.setModo(null);
+					System.out.println(escape.keySet().toString());
+					return new ResponseEntity <> (usuario, HttpStatus.OK);
+				} else {
+					return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+				}
+			} else if (modo.equals("exitMirror")) {
+				if(mirrored.containsKey(usuario)) {
+					mirrored.remove(usuario);
+					usuario.setIshost(false);
+					usuario.setModo(null);
+					return new ResponseEntity <> (usuario, HttpStatus.OK);
+				} else {
+					return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+				}
+			} else if (modo.equals("exitSurvive")) {
+				if(survive.containsKey(usuario)) {
+					survive.remove(usuario);
+					usuario.setIshost(false);
+					usuario.setModo(null);
+					return new ResponseEntity <> (usuario, HttpStatus.OK);
+				} else {
+					return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+				}
+			} else if (modo.equals("exitCooperate")) {
+				if(cooperate.containsKey(usuario)) {
+					cooperate.remove(usuario);
+					usuario.setIshost(false);
+					usuario.setModo(null);
+					return new ResponseEntity <> (usuario, HttpStatus.OK);
+				} else {
+					return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+				}
+			}
+			
 			return new ResponseEntity<>(usuario, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

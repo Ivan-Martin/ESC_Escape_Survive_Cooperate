@@ -478,6 +478,7 @@ mirror.create=function() {
 			goldenstairs.destroy();
 			nomovimiento=true;
 			addGame(globalid, 'Mirrored Escape', "Player1", logros);
+            music.stop();
 			var t=mirror.scene.transition({target:'menu',duration:3000});
 		}
 
@@ -488,6 +489,7 @@ mirror.create=function() {
 			goldenstairs.destroy();
 			nomovimiento=true;
 			addGame(globalid, 'Mirrored Escape', "Player2", logros);
+            music.stop();
 			var t=mirror.scene.transition({target:'menu',duration:3000});
 		}
 

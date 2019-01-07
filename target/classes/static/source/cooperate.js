@@ -694,6 +694,7 @@ cooperate.create = function () {
 			nomovimiento=true;
 			cooperate.add.image(600,400,'ganan');
 			addGame(globalid, 'Cooperate', "Player1", logros);
+            music.stop();
 			var t=cooperate.scene.transition({target:'menu',duration:3000});
 
 		}
@@ -704,6 +705,7 @@ cooperate.create = function () {
 			nomovimiento=true;
 			cooperate.add.image(600,400,'ganan');
 			addGame(globalid, 'Cooperate', "Player1", logros);
+            music.stop();
 			var t=cooperate.scene.transition({target:'menu',duration:3000});
 
 		}
@@ -755,6 +757,7 @@ cooperate.create = function () {
 		var pierden = function () {
 			cooperate.add.image(300, 200, 'pierden').setScrollFactor(0);
 			nomovimiento=true;
+            music.stop();
 			var t=cooperate.scene.transition({target:'menu',duration:3000});
 		}
 

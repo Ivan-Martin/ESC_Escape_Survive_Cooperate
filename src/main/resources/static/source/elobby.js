@@ -22,6 +22,18 @@ elobby.create=function(){
     efade.add(text1);
     efade.add(text2);
     function transition(){
+    	if(selected=="Escape"){
+            updateMode(globalid, "exitEscape");
+        }
+        else if(selected=="Survive"){
+        	updateMode(globalid, "exitSurvive");
+        }
+        else if(selected=="Mirror"){
+        	updateMode(globalid, "exitMirror");
+        }
+        else if(selected=="Cooperate"){
+        	updateMode(globalid, "exitCooperate");
+        }
         elobby.add.tween({
             targets:efade,
             alpha:0,
@@ -57,6 +69,18 @@ elobby.create=function(){
 }
 elobby.update=function(){
 	if(esc.isDown){
+		if(selected=="Escape"){
+            updateMode(globalid, "exitEscape");
+        }
+        else if(selected=="Survive"){
+        	updateMode(globalid, "exitSurvive");
+        }
+        else if(selected=="Mirror"){
+        	updateMode(globalid, "exitMirror");
+        }
+        else if(selected=="Cooperate"){
+        	updateMode(globalid, "exitCooperate");
+        }
        elobby.add.tween({
             targets:efade,
             alpha:0,
