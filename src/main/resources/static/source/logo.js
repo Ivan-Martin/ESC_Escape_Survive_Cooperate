@@ -69,6 +69,7 @@ logo.preload=function () {
 	this.load.image('survive1c','assets/menu/Achivments/achivsur1c.png');
 	this.load.image('survive2c','assets/menu/Achivments/achivsur2c.png');
 	this.load.image('ayudaescape','assets/Fase4/esch.png');
+	this.load.image('victoriadesconexion', 'assets/Fase4/disconect.png');
 	this.load.spritesheet('OfflineMode','assets/Fase4/OfflineMode.png',{frameWidth:200,frameHeight:70});
 	this.load.spritesheet('OnlineMode','assets/Fase4/OnlineMode.png',{frameWidth:200,frameHeight:70});
 	this.load.spritesheet('light','assets/Fase4/switch.png',{frameWidth:60,frameHeight:105});

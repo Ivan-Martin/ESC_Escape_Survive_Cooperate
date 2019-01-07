@@ -136,6 +136,15 @@ escape.create = function () {
 					mensajemundo.dim[j] = capa.getTileAt(datos.dim, j, true).index;
 				}
 				
+			} else if (datos.id == "desconexion"){
+				var ganadesconexion = escape.add.image(300, 200, 'victoriadesconexion');
+				ganadesconexion.depth = 3;
+				ganadesconexion.setScrollFactor(0);
+				nomovimiento=true;
+				if(imhost) addGame(globalid, 'Escape', "Player1", logros);
+				else addGame(globalid, 'Escape', "Player2", logros);
+				
+				setTimeout(function () {var t=escape.scene.transition({target:'menu',duration:3000});}, 3000);
 			}
 		}
 
@@ -564,6 +573,10 @@ escape.update=function () {
 	}
 	if(enter.isDown && pausa){
 		escapemusic.stop();
+		var medesconecto = {};
+		medesconecto.userid = globalid;
+		medesconecto.id = "desconexion";
+		connection.send(JSON.stringify(medesconecto));
 		var t=escape.scene.transition({target:'menu',duration:10});
 	}
 

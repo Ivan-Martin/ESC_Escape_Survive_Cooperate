@@ -53,7 +53,7 @@ elobby.update=function(){
 				globalidrival = user.id;
 				imhost = !(user.ishost);
 
-				text2.setText("JUGADOR ENCONTRADO");
+				text2.setText("Tu rival es: " + user.name);
 			}
 		}
 		//Definimos funcion a llamar despues del GET de jugadores

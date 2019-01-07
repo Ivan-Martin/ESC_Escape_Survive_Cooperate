@@ -69,10 +69,12 @@ logo.preload=function () {
 	this.load.image('survive1c','assets/menu/Achivments/achivsur1c.png');
 	this.load.image('survive2c','assets/menu/Achivments/achivsur2c.png');
 	this.load.image('ayudaescape','assets/Fase4/esch.png');
+	this.load.image('victoriadesconexion', 'assets/Fase4/disconect.png');
 	this.load.spritesheet('OfflineMode','assets/Fase4/OfflineMode.png',{frameWidth:200,frameHeight:70});
 	this.load.spritesheet('OnlineMode','assets/Fase4/OnlineMode.png',{frameWidth:200,frameHeight:70});
 	this.load.spritesheet('light','assets/Fase4/switch.png',{frameWidth:60,frameHeight:105});
-	this.load.spritesheet('barr','assets/Fase4/back.png',{frameWidth:80,frameHeight:70});
+	this.load.spritesheet('barr','assets/Fase4/back.png',{frameWidth:40,frameHeight:35});
+    this.load.spritesheet('barr2','assets/Fase4/back2.png',{frameWidth:80,fameHeight:70});
 	this.load.spritesheet('coins','assets/Fase4/trophy.png',{frameWidth:70,frameHeight:70});
     this.load.image('warning','assets/Fase4/warning.png');
 	var randomtile = Math.random();

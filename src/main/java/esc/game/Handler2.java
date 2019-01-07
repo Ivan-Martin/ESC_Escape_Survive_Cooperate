@@ -43,6 +43,14 @@ public class Handler2 extends TextWebSocketHandler {
 				s.sendMessage(new TextMessage(respuesta.toString()));
 			}
 			
+		} else if (id.equals("desconexion")) {
+			ObjectNode respuesta = mapper.createObjectNode();
+			respuesta.put("userid", 0);
+			respuesta.put("tipo", 0);
+			respuesta.put("id", "desconexion");
+			WebSocketSession s = sesiones.get(emparejamientos.get(userid));
+			s.sendMessage(new TextMessage(respuesta.toString()));
+			
 		} else {
 			JsonNode responder = mapper.readTree(message.getPayload());
 			

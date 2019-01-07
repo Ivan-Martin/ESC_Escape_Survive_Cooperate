@@ -6,7 +6,7 @@ var offmenu= new Phaser.Scene('offmenu');
             var music = this.sound.add('menumusic');
             music.play();
             var lights=true;
-            var back=offmenu.add.sprite(90,100,'barr').setInteractive({useHandCursor:true});
+            var back=offmenu.add.sprite(90,100,'barr2').setInteractive({useHandCursor:true});
             var light=offmenu.add.sprite(90,200,'light').setInteractive({useHandCursor:true});
             light.setFrame(1);
             offmenuesc = offmenu.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
