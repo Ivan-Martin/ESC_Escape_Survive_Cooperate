@@ -482,6 +482,7 @@ var abriendose=false;
             var pierden = function () {
                 this.add.image(300, 200, 'pierden').setScrollFactor(0);
                 flag=true;
+                music.stop();
                 var t=offcooperate.scene.transition({target:'menu',duration:3000});
             }
             
