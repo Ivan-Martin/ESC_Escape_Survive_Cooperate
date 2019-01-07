@@ -1,4 +1,5 @@
 var achesc;
+var botones;
 var achievs=new Phaser.Scene('achievs');
 achievs.create=function(){
     var fondo=this.add.image(600,200,'lobby');
@@ -14,7 +15,7 @@ achievs.create=function(){
     var survive2=this.add.image(1080,260,'survive2c');
     var select=this.add.sprite(50,60,'barr').setInteractive({useHandCursor:true});
     achesc=this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-    var botones = this.add.container();
+    botones = this.add.container();
     botones.add(alone1);
     botones.add(alone2);
     botones.add(cooperate1);
@@ -72,19 +73,27 @@ achievs.create=function(){
     }
     });
     function transition(){
-        logros.add.tween({
+        achievs.add.tween({
             targets:botones,
             alpha:0,
             duration:2000,
             ease:'Sine.easeInOut',
             onComplete:function(){
-                var t=transition.scene.transition({targets:'selection',duration:10});
+                var t=achievs.scene.transition({target:'selection',duration:10});
             }
-        })
+        });
     } 
 }
 achievs.update=function(){
     if(achesc.isDown){
-        transition();
+            achievs.add.tween({
+            targets:botones,
+            alpha:0,
+            duration:2000,
+            ease:'Sine.easeInOut',
+            onComplete:function(){
+                var t=achievs.scene.transition({target:'selection',duration:10});
+            }
+        });
     }
 }

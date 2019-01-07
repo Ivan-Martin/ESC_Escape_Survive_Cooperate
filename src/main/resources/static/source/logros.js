@@ -30,7 +30,7 @@ achievs.create=function(){
     select.on('pointerover',function(){this.setFrame(2)});
     select.on('pointerout',function(){this.setFrame(0)});
     select.on('pointerdown',function(){this.setFrame(1);transition();}); 
-    /*cargarUsuario(function(user){       
+    cargarUsuario(function(user){       
         for(var i=0;i<5;i++){
             if(user.partidasjugadas[i]>=1){
                 switch(i){
@@ -71,7 +71,7 @@ achievs.create=function(){
                 }
         }
     }
-    });*/
+    });
     function transition(){
         achievs.add.tween({
             targets:botones,
