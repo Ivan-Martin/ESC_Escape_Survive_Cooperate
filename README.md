@@ -11,7 +11,8 @@ ESC es un juego de puzzles con una estética retro, ambientado en una temática 
 Cada vez que juegues a ESC tendrás una experiencia única, ya que cada vez que entras a jugar, nuevos laberintos son generados.
 ¡Nunca verás dos iguales!
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/J0jtra2VqR0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[Aqui un video mostrando la funcionalidad online](https://youtu.be/J0jtra2VqR0)
+
 
 ## Escape
 
