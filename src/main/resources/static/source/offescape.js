@@ -17,11 +17,14 @@ var flag;
 var music;
 var log;
 var log2;
-
+var pausa=false;
+var pausaimg;
+var enter;
+var abriendose=false;
 
 offescape.create =function () {
-	
 	esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Enter);
 	cursors = this.input.keyboard.createCursorKeys(); //Creamos el manejo del teclado
 	wkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 	akey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -332,14 +335,34 @@ offescape.create =function () {
 	this.physics.add.collider(player2, goldenstairs, gana2, null, this);
 	player1.setSize(10, 16).setOffset(0, 8);
 	player2.setSize(10, 16).setOffset(0, 8);
+    
+    pausaimg=offescape.add.image(300,200,'paused').setScrollFactor(0);
+    pausaimg.alpha=0;
+    pausaimg.depth=1;
 
 }
 
 offescape.update=function () {
-	if(esc.isDown){
-		music.stop();
-		var t=offescape.scene.transition({target:'offmenu',duration:'10'});
+	if(esc.isDown&&!abriendose&&!pausa){
+        abriendose=true;
+        flag=true;
+        setTimeout(function(){
+        pausaimg.alpha=1;
+        pausa=true;
+        abriendose=false;
+        },500);
 	}
+    if(esc.isDown&&pausa){
+        setTimeout(function(){
+            pausa=false;
+            flag=false;
+            pausaimg.alpha=0;
+        },500);
+    }
+    if(enter.isDown&&pausa){
+       music.stop();
+       var t=offescape.scene.transition({target:'offmenu',duration:'10'});
+    }
 	this.physics.world.collide(player1, capa);
 
 	//Hacemos que el personaje colisione con la capa del tile

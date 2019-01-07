@@ -17,7 +17,10 @@ var camara2;
 var velocidadp2;
 var flag;
 var music;
-
+var pausa=false;
+var pausaimg;
+var abriendose=false;
+var enter;
 var log;
 var log2;
 
@@ -50,7 +53,7 @@ var log2;
             skey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
             dkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
             esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-            
+            enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Enter);
             mapatiles = this.make.tilemap({ tileWidth: 32, tileHeight: 32, width: 2*worldtiles*32+centralsize*32+24*32, heigth: 2*worldtiles*32+centralsize*32+24*32}); //Esto añade un mapa vacío al mundo
             
             var tileset = mapatiles.addTilesetImage('tileo', 'tileo', 32, 32); //Cargamos el mapa de sprites de tiles
@@ -298,10 +301,31 @@ var log2;
             this.physics.add.collider(player2, goldenstairs, gana2, null, this);
             player1.setSize(10, 16).setOffset(0, 8);
             player2.setSize(10, 16).setOffset(0, 8);
+            
+            pausaimg=offmirror.add.image(300,200,'paused').setScrollFactor(0);
+            pausaimg.alpha=0;
+            pausaimg.depth=1;
+
         }
         
         offmirror.update=function () {
-            if(esc.isDown){
+         	if(esc.isDown&&!abriendose&&!pausa){
+                abriendose=true;
+                flag=true;
+                setTimeout(function(){
+                    pausaimg.alpha=1;
+                    pausa=true;
+                    abriendose=false;
+                },500);
+	       }
+            if(esc.isDown&&pausa){
+                setTimeout(function(){
+                    pausa=false;
+                    flag=false;
+                    pausaimg.alpha=0;
+                },500);
+            }
+            if(enter.isDown&&pausa){
                 music.stop();
                 var t=offmirror.scene.transition({target:'offmenu',duration:'10'});
             }

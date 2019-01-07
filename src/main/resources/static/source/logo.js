@@ -78,6 +78,7 @@ logo.preload=function () {
 	this.load.spritesheet('coins','assets/Fase4/trophy.png',{frameWidth:70,frameHeight:70});
     this.load.image('warning','assets/Fase4/warning.png');
     this.load.image('errorserver', 'assets/Fase4/error.png');
+    this.load.image('paused','assets/Fase4/pause.png');
 	var randomtile = Math.random();
 	if(randomtile < 0.25){
 		this.load.image('tileo', 'assets/tilemap.png');
