@@ -267,9 +267,6 @@ survive.create =function () {
 		camara1 = survive.cameras.main.setSize(600,400);
 		camara2 = survive.cameras.add(600, 0, 600, 400);
 
-		camara1.setBounds(0, 0, worldtiles*32, worldtiles*32);
-		camara2.setBounds(0, 0, worldtiles*32, worldtiles*32);
-
 
 		var frasesprite;
 
@@ -305,7 +302,7 @@ survive.create =function () {
 
 		camara1.startFollow(mijugador);
 		//camara2.startFollow(rival);
-		camara2.setScroll(29800, 29800);
+		camara2.setScroll(-3000, -3000);
 
 		var textureFrames = survive.textures.get('powerup').getFrameNames();
 		var animFrames = [];
@@ -472,10 +469,10 @@ survive.create =function () {
 	pausaimg.depth = 1;
 
 	if(imhost){
-		var imagenayuda = survive.add.image(27000, 28000, 'ayudasurvivehumano');
+		var imagenayuda = survive.add.image(-2700, -2800, 'ayudasurvivehumano');
 		imagenayuda.depth = 3;
 	} else {
-		var imagenayuda = survive.add.image(27000, 28000, 'ayudasurvivesombra');
+		var imagenayuda = survive.add.image(-2700, -2800, 'ayudasurvivesombra');
 		imagenayuda.depth = 3;
 	}
 
