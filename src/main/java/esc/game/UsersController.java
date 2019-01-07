@@ -253,6 +253,10 @@ public class UsersController {
 				}
 			}
 			
+			if(modo.equals("desconexion")) {
+				usuario.setIshost(false);
+			}
+			
 			return new ResponseEntity<>(usuario, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -313,6 +317,7 @@ public class UsersController {
 	public ResponseEntity<User> sumarPartida(@PathVariable long id, @PathVariable String mode, @RequestBody String winner) { 
 		winner = winner.replaceAll("\"", "");
 		User usuario = connectedusers.get(id);
+		usuario.setIshost(false);
 		if(usuario != null) {
 			usuario.addPartida(mode);
 			connectedusers.put(usuario.getId(), usuario);

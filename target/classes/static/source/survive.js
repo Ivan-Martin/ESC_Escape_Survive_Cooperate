@@ -504,6 +504,7 @@ survive.update=function () {
 		medesconecto.userid = globalid;
 		medesconecto.id = "desconexion";
 		connection.send(JSON.stringify(medesconecto));
+		updateMode(globalid, "desconexion");
 		var t=survive.scene.transition({target:'menu',duration:10});
 		clearInterval(intervalosurvive);
 	}
