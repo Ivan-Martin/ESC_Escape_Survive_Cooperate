@@ -52,7 +52,7 @@ alone.create=function() {
 	velocidadp2 = 150; //Inicializamos la velocidad de sombra
 
 	worldtiles = worldsize*3; //Calculamos las tiles del mapa
-    enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Enter);
+    enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 	esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 	wkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 	akey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -111,12 +111,9 @@ alone.create=function() {
 	camara1 = this.cameras.main.setSize(600,400);
 	camara2 = this.cameras.add(600, 0, 600, 400);
 
-	camara1.setBounds(0, 0, worldtiles*32, worldtiles*32);
-	camara2.setBounds(0, 0, worldtiles*32, worldtiles*32);
-
 	camara1.startFollow(player1);
-	camara2.startFollow(player2);
-
+	//camara2.startFollow(player2);
+    camara2.setScroll(-3000 , -3000);
 	var ganasomb = function () {
 		this.add.image(300, 200, 'ganasombra').setScrollFactor(0);
 		if(!flag) addGame(globalid, 'Survive Alone', "Player2", logros);
@@ -245,6 +242,9 @@ alone.create=function() {
     pausaimg=alone.add.image(300,200,'paused').setScrollFactor(0);
     pausaimg.alpha=0;
     pausaimg.depth=1;
+    
+    var imagenayuda = alone.add.image(-2700,-2800,'ayudasurvivehumano');
+    imagenayuda.depth = 3;
 }
 
 alone.update=function(){        
@@ -257,14 +257,15 @@ alone.update=function(){
                     abriendose=false;
                 },500);
 	       }
-            if(esc.isDown&&pausa){
+            if(esc.isDown && pausa){
                 setTimeout(function(){
                     pausa=false;
                     flag=false;
                     pausaimg.alpha=0;
                 },500);
             }
-            if(enter.isDown&&pausa){
+            if(enter.isDown && pausa){
+                console.log("pinche");
                 music.stop();
                 var t=alone.scene.transition({target:'offmenu',duration:'10'});
             } //Salimos del modo
