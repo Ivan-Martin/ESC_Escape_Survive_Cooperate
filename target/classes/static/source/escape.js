@@ -19,6 +19,7 @@ var nomovimiento;
 var escapemusic;
 var log;
 var log2;
+var enter;
 var imhost;
 var player2ready = false;
 var enviarmensaje = {};
@@ -30,7 +31,9 @@ var mivelx = 0, mively = 0;
 var gameready = false;
 var posrivalx, posrivaly;
 var esperandopaquete = false;
-
+var abriendose=false;
+var pausa=false;
+var pausaimg;
 function comprobarMundoListo () {
 	//Función para comprobar que no se haya perdido ningún paquete al enviar el mundo al otro jugador
 	var booleanodim = true;
@@ -78,6 +81,7 @@ escape.create = function () {
 
 	//Creación de controles y teclado.
 	esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    enter=this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 	cursors = this.input.keyboard.createCursorKeys();
 	wkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 	akey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -531,15 +535,31 @@ escape.create = function () {
 			connection.send(JSON.stringify(enviarvelocidad));
 		}, 50);
 	};
-
+	pausaimg=escape.add.image(300,200,'warning').setScrollFactor(0);
+    pausaimg.alpha=0;
 }
 
 escape.update=function () {
-	
-	if(esc.isDown){
-		//Nos salimos del modo de juego al menú
+
+	if(esc.isDown && !abriendose && !pausa){
+		abriendose=true;
+		nomovimiento=true;
+		setTimeout(function(){
+			pausaimg.alpha=1;
+			pausa=true;
+			abriendose=false;
+		},500);
+	}
+	if(esc.isDown && pausa){
+		setTimeout(function(){
+			pausa=false;
+			nomovimiento = false;
+			pausaimg.alpha=0;
+		},500);
+	}
+	if(enter.isDown && pausa){
 		escapemusic.stop();
-		var t=escape.scene.transition({target:'menu',duration:'10'});
+		var t=escape.scene.transition({target:'menu',duration:10});
 	}
 
 	if(player2ready){

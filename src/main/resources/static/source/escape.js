@@ -58,8 +58,7 @@ function comprobarMundoListo () {
 }
 
 escape.create = function () {
-	pausaimg=this.add.image(300,200,'warning');
-    pausaimg.alpha=0;
+	
 	//Definición de los logros para mostrar al completar suficientes partidas
 	var logros = function (user) {
 		if(user.partidasjugadas[0] == 1){
@@ -536,32 +535,31 @@ escape.create = function () {
 			connection.send(JSON.stringify(enviarvelocidad));
 		}, 50);
 	};
-
+	pausaimg=escape.add.image(300,200,'warning').setScrollFactor(0);
+    pausaimg.alpha=0;
 }
 
 escape.update=function () {
-	
+
 	if(esc.isDown && !abriendose && !pausa){
-        abriendose=true;
-        nomovimiento=true;
-        setTimeout(function(){
-            pausaimg.alpha=1;
-            pausa=true;
-            abriendose=false;
-        },100);
-    } 
-    if(esc.isDown&&pausa){
-        setTimeout(function(){
-            pausa=false;
-            pausaimg.alpha=0;
-        },100);
-    if(enter.isDown&&pausa){
-            escapemusic.stop();
-            var t=escape.scene.transition({target:'menu',duration:10});
-       }
-		//Nos salimos del modo de juego al menú
+		abriendose=true;
+		nomovimiento=true;
+		setTimeout(function(){
+			pausaimg.alpha=1;
+			pausa=true;
+			abriendose=false;
+		},500);
+	}
+	if(esc.isDown && pausa){
+		setTimeout(function(){
+			pausa=false;
+			nomovimiento = false;
+			pausaimg.alpha=0;
+		},500);
+	}
+	if(enter.isDown && pausa){
 		escapemusic.stop();
-		var t=escape.scene.transition({target:'menu',duration:'10'});
+		var t=escape.scene.transition({target:'menu',duration:10});
 	}
 
 	if(player2ready){
