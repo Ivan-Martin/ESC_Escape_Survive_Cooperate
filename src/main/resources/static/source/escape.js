@@ -369,7 +369,8 @@ escape.create = function () {
 		escape.physics.world.enable([player1, player2]);
 
 		camara1.startFollow(mijugador);
-		camara2.startFollow(rival);
+		//camara2.startFollow(rival);
+		camara2.setScroll(-3000, -3000);
 
 		escape.add.image(0, 0, 'borde').setScrollFactor(0);
 		
@@ -537,6 +538,10 @@ escape.create = function () {
 	};
 	pausaimg=escape.add.image(300,200,'warning').setScrollFactor(0);
     pausaimg.alpha=0;
+    pausaimg.depth = 1;
+    
+    var imagenayuda = escape.add.image(-2700, -2800, 'ayudaescape');
+    imagenayuda.depth = 2;
 }
 
 escape.update=function () {

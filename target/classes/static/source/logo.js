@@ -60,14 +60,15 @@ logo.preload=function () {
 	this.load.image('survive2','assets/menu/Achivments/achivsur2.png');
 	this.load.image('alone1c','assets/menu/Achivments/achivalo1c.png');
 	this.load.image('alone2c','assets/menu/Achivments/achivalo2c.png');
-	this.load.image('cooperate1','assets/menu/Achivments/achivcoop1c.png');
-	this.load.image('cooperate2','assets/menu/Achivments/achivcoop2c.png');
+	this.load.image('cooperate1c','assets/menu/Achivments/achivcoop1c.png');
+	this.load.image('cooperate2c','assets/menu/Achivments/achivcoop2c.png');
 	this.load.image('escape1c','assets/menu/Achivments/achivesc1c.png');
 	this.load.image('escape2c','assets/menu/Achivments/achivesc2c.png');
 	this.load.image('mirror1c','assets/menu/Achivments/achivmir1c.png');
 	this.load.image('mirror2c','assets/menu/Achivments/achivmir2c.png');
 	this.load.image('survive1c','assets/menu/Achivments/achivsur1c.png');
 	this.load.image('survive2c','assets/menu/Achivments/achivsur2c.png');
+	this.load.image('ayudaescape','assets/Fase4/esch.png');
 	this.load.spritesheet('OfflineMode','assets/Fase4/OfflineMode.png',{frameWidth:200,frameHeight:70});
 	this.load.spritesheet('OnlineMode','assets/Fase4/OnlineMode.png',{frameWidth:200,frameHeight:70});
 	this.load.spritesheet('light','assets/Fase4/switch.png',{frameWidth:60,frameHeight:105});
