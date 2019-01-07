@@ -76,14 +76,22 @@ Todo el juego está desarrollado en javascript con el motor de juego [Phaser 3][
 La distribuición de los menús es de la siguente manera:
 ![No se pudo cargar la imagen](https://i.imgur.com/ga4IrE9.png "Diagrama de Navegación")
 
-# Diagrama del backend APIRest
+# Diagrama del backend APIRest y Websockets
 ![No se pudo cargar la imagen](https://fotos.subefotos.com/fe4f9a56ae5f83bc153dd1b689cdfacdo.jpg "Diagrama de clases del backend")
 
 # Ejecutando el servidor
 
-Para ejecutar el servidor, se deben descargar las carpetas de github, y ejecutar el jar "ESCGame-0.6.jar" mediante el comando java -jar. Para acceder al servidor desde otro ordenador, se debe utilizar la IP Local de la red, que es donde Spring aloja el juego.
+Para ejecutar el servidor, se deben descargar las carpetas de github, y ejecutar el jar "ESCGame-1.4.jar" mediante el comando java -jar. Para acceder al servidor desde otro ordenador, se debe utilizar la IP Local de la red, que es donde Spring aloja el juego.
 
 Alternativamente, se puede depurar el servidor descargandose las carpetas de Github, donde se puede ver el código fuente. En caso de existir problemas con las conexiones de servidor, pueden provenir de la IP escrita en el fichero "script.js", puesto que puede mandar las peticiones a una dirección equivocada.
+
+# Websockets
+
+En nuestro juego, se utilizan websockets solo una vez están emparejados dos jugadores, durante la partida. Todos los websockets llevan unidos un identificador para saber el tipo de paquete que se está enviando, y un userid para saber quién lo ha enviado. Durante la partida, a través del id del websocket se identificará qué incluye, pudiendose obtener los datos del mismo. Además, se descartarán los paquetes cuyo userid coincida con el propio, ya que serán nuestros propios paquetes.
+Aun así, el servidor incluye un hashmap con todos los emparejamientos actuales, con lo que se asegura de que cada websocket enviado por un jugador solo lo recibirá su rival.
+El juego incluye un sistema de detección de pérdida de websockets en la generación del mundo, pudiendo así volver a pedir un websocket si se ha perdido, ya que el mundo es muy grande y su descripción se ha de enviar en distintos paquetes, posibilitando la pérdida de alguno. Siendo estos paquetes tan importantes, se ha implementado este sistema.
+
+Además, una vez iniciada una partida, los jugadores principalmente enviarán un tipo de websocket, aquel que incluye los datos de velocidad y posición, siendo identificado este con id "velocidad". Cuando el servidor detecta este websocket, actualiza el tiempo de desconexión de ese jugador, pudiendo detectar de esta forma si se ha perdido la conexión con algún cliente, y desconectandole en ese caso e informando a su rival de lo sucedido.
 
 - - -
 
