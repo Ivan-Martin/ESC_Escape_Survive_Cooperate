@@ -134,7 +134,7 @@ public class UsersController {
 					usuario.setIshost(true);
 					escape.put(usuario, nulo);
 				}
-			} else if (modo.equals("Mirrored")) {
+			} else if (modo.equals("Mirror")) {
 				Set <User> jugadores = mirrored.keySet();
 				boolean emparejado = false;
 				for (User u : jugadores) {
@@ -227,7 +227,7 @@ public class UsersController {
 			if(mode.equals("Escape")) {
 				User rival = escape.get(usuario);
 				return new ResponseEntity<>(rival, HttpStatus.OK);
-			} else if (mode.equals("Mirrored")) {
+			} else if (mode.equals("Mirror")) {
 				User rival = mirrored.get(usuario);
 				return new ResponseEntity<>(rival, HttpStatus.OK);
 			} else if (mode.equals("Survive")) {
