@@ -11,6 +11,8 @@ ESC es un juego de puzzles con una estética retro, ambientado en una temática 
 Cada vez que juegues a ESC tendrás una experiencia única, ya que cada vez que entras a jugar, nuevos laberintos son generados.
 ¡Nunca verás dos iguales!
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/J0jtra2VqR0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Escape
 
 El modo de juego Escape consiste en una carrera entre dos jugadores para llegar antes que el rival al centro. Se generarán aleatoriamente dos laberintos, uno para cada jugador, dotando de un toque de azar al juego. Se generarán de forma que se asegure una misma dificultad entre los dos laberintos. La salida estará un laberinto como sala central, es decir, al que se podrá acceder a través de las escaleras que tiene cada jugador en su laberinto. El primero en salir encontrando las escaleras doradas en la sala central será el ganador. El otro jugador se enfrentará a un fin oscuro...
