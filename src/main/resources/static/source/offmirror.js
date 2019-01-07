@@ -285,6 +285,7 @@ var log2;
                 goldenstairs.destroy();
                 flag=true;
                 addGame(globalid, 'Mirrored Escape', "Player1", logros);
+                music.stop();
                 var t=offmirror.scene.transition({target:'offmenu',duration:3000});
             }
             
@@ -295,6 +296,7 @@ var log2;
                 goldenstairs.destroy();
                 flag=true;
                 addGame(globalid, 'Mirrored Escape', "Player2", logros);
+                music.stop();
                 var t=offmirror.scene.transition({target:'offmenu',duration:3000});
             }
             

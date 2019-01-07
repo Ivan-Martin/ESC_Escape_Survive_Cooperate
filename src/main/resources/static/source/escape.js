@@ -513,7 +513,7 @@ escape.create = function () {
 			goldenstairs.destroy();
 			nomovimiento=true;
 			addGame(globalid, 'Escape', "Player1", logros);
-
+            music.stop();
 			var t=escape.scene.transition({target:'menu',duration:3000});
 			clearInterval(intervalo);
 		}
@@ -525,6 +525,7 @@ escape.create = function () {
 			goldenstairs.destroy();
 			nomovimiento=true;
 			addGame(globalid, 'Escape', "Player2", logros);
+            music.stop();
 			var t=escape.scene.transition({target:'menu',duration:3000});
 			clearInterval(intervalo);
 		}

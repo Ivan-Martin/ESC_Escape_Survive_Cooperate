@@ -383,6 +383,7 @@ var abriendose=false;
                 flag=true;
                 offcooperate.add.image(600,400,'ganan');
                 addGame(globalid, 'Cooperate', "Player1", logros);
+                music.stop();
                 var t=offcooperate.scene.transition({target:'offmenu',duration:3000});
 
             }
@@ -393,6 +394,7 @@ var abriendose=false;
                 flag=true;
                   offcooperate.add.image(600,400,'ganan');
                   addGame(globalid, 'Cooperate', "Player1", logros);
+                music.stop();
                 var t=offcooperate.scene.transition({target:'offmenu',duration:3000});
 
             }

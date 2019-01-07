@@ -370,6 +370,7 @@ survive.create =function () {
 			survive.add.image(300, 200, 'ganasombra').setScrollFactor(0);
 			nomovimiento=true;
 			addGame(globalid, 'Survive', "Player2", logros);
+            music.stop();
 			var t=survive.scene.transition({target:'menu',duration:3000});
 		};
 
@@ -382,6 +383,7 @@ survive.create =function () {
 			survive.add.image(300, 200, 'ganahumano').setScrollFactor(0);
 			nomovimiento=true;
 			addGame(globalid, 'Survive', "Player1", logros);
+            music.stop();
 			var t=survive.scene.transition({target:'menu',duration:3000});
 		}
 
