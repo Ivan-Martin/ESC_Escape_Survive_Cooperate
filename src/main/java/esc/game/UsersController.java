@@ -95,6 +95,7 @@ public class UsersController {
 	public ResponseEntity<User> actualizaUser(@PathVariable long id, @RequestBody String modo) { 
 		modo = modo.replaceAll("\"", "");
 		User usuario = connectedusers.get(id);
+		System.out.println("ID: " + id + " modo: " + modo);
 		if(usuario != null) {
 			if(modo.equals("Escape") || modo.equals("Survive") || modo.equals("Mirrored") || modo.equals("Cooperate")) {
 				usuario.setModo(modo);

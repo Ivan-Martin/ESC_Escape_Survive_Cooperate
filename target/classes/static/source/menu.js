@@ -55,19 +55,19 @@ menu.create=function(){
 	});
 	botonE.on('pointerover',function(){this.setFrame(2);}); //cuando estemos encima cambia el frame
 	botonE.on('pointerout',function(){this.setFrame(0);});  //cuando salgamos volvemos al inicial
-	botonE.on('pointerdown',function(){this.setFrame(1); transition("Escape");sound.play();}); //al hacer click lo resaltamos
+	botonE.on('pointerdown',function(){this.setFrame(1); selected = "Escape"; transition("Escape");sound.play();}); //al hacer click lo resaltamos
 	//boton mirror
 	botonM.on('pointerover',function(){this.setFrame(2);}); //cuando estemos encima cambia el frame
 	botonM.on('pointerout',function(){this.setFrame(0);});  //cuando salgamos volvemos al inicial
-	botonM.on('pointerdown',function(){this.setFrame(1); transition("Mirror");sound.play();}); //al hacer click lo resaltamos
+	botonM.on('pointerdown',function(){this.setFrame(1); selected = "Mirror"; transition("Mirror");sound.play();}); //al hacer click lo resaltamos
 	//boton survive
 	botonS.on('pointerover',function(){this.setFrame(2);}); //cuando estemos encima cambia el frame
 	botonS.on('pointerout',function(){this.setFrame(0);});  //cuando salgamos volvemos al inicial
-	botonS.on('pointerdown',function(){this.setFrame(1); transition("Survive");sound.play();}); //al hacer click lo resaltamos
+	botonS.on('pointerdown',function(){this.setFrame(1); selected = "Survive"; transition("Survive");sound.play();}); //al hacer click lo resaltamos
 	//boton cooperate
 	botonC.on('pointerover',function(){this.setFrame(2);}); //cuando estemos encima cambia el frame
 	botonC.on('pointerout',function(){this.setFrame(0);});  //cuando salgamos volvemos al inicial
-	botonC.on('pointerdown',function(){this.setFrame(1); transition("Cooperate");sound.play();}); //al hacer click lo resaltamos      
+	botonC.on('pointerdown',function(){this.setFrame(1); selected = "Cooperate"; transition("Cooperate");sound.play();}); //al hacer click lo resaltamos      
 	botonO.on('pointerover',function(){this.setFrame(2);});
 	botonO.on('pointerout',function(){this.setFrame(0);});
 	botonO.on('pointerdown',function(){this.setFrame(1); transition("m_online");sound.play();});

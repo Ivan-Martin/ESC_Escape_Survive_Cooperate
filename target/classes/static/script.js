@@ -83,7 +83,7 @@ function showUser(user) {
 
     var name = user.name;
     $('#info').append('<div id="Player Connected:' + user.nick + '</div>');
-    alert("Bienvenido " + name);
+    //alert("Bienvenido " + name);
     
 }
 

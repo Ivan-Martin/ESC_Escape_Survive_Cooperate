@@ -371,6 +371,7 @@ survive.create =function () {
 			nomovimiento=true;
 			addGame(globalid, 'Survive', "Player2", logros);
             music.stop();
+            clearInterval(intervalosurvive);
 			var t=survive.scene.transition({target:'menu',duration:3000});
 		};
 
@@ -384,6 +385,7 @@ survive.create =function () {
 			nomovimiento=true;
 			addGame(globalid, 'Survive', "Player1", logros);
             music.stop();
+            clearInterval(intervalosurvive);
 			var t=survive.scene.transition({target:'menu',duration:3000});
 		}
 
