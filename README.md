@@ -74,7 +74,7 @@ Todo el juego está desarrollado en javascript con el motor de juego [Phaser 3][
 # Navegación
 
 La distribuición de los menús es de la siguente manera:
-![No se pudo cargar la imagen](https://i.imgur.com/ga4IrE9.png "Diagrama de Navegación")
+![No se pudo cargar la imagen](https://raw.githubusercontent.com/Ivan-Martin/ESC_Escape_Survive_Cooperate/master/src/main/resources/static/assets/dia2.png "Diagrama de Navegación")
 
 # Diagrama del backend APIRest y Websockets
 ![No se pudo cargar la imagen](https://fotos.subefotos.com/fe4f9a56ae5f83bc153dd1b689cdfacdo.jpg "Diagrama de clases del backend")
