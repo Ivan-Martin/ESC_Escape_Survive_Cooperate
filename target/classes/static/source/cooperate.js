@@ -155,7 +155,7 @@ cooperate.create = function () {
 
 				setTimeout(function () {
 					var t=cooperate.scene.transition({target:'menu',duration:3000});
-					clearInterval(intervalosurvive);
+					clearInterval(intervalo);
 				}, 3000);
 			}
 		}
@@ -793,7 +793,7 @@ cooperate.create = function () {
 		finrender = true;
 	}
 	
-	pausaimg=escape.add.image(300,200,'warning').setScrollFactor(0);
+	pausaimg=cooperate.add.image(300,200,'warning').setScrollFactor(0);
     pausaimg.alpha=0;
     pausaimg.depth = 1;
 
