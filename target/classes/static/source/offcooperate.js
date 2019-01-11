@@ -39,7 +39,7 @@ offcooperate.create=function () {
 			log2=offcooperate.add.image(500,340,'cooperate2').setScrollFactor(0);
 		}
 	}
-	updateMode(globalid, 'Cooperate');
+	updateMode(globalid, 'Cooperate Offline');
 	/*
             console.log ("Modo cooperate");
             var test = this.add.text(500,150,'COOPERATE',{fontSize: '50px', fill:'#0f0'});

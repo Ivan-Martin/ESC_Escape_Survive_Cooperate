@@ -30,7 +30,8 @@ var pausa=false;
 var pausaimg;
 var abriendose=false;
 var enter;
-
+var tiempoalone;
+var intervaloalone;
 
 alone.create=function() {
 	var logros = function (user) {
@@ -121,26 +122,14 @@ alone.create=function() {
 		if(!flag) addGame(globalid, 'Survive Alone', "Player2", logros);
 		flag=true;
         music.stop();
+        clearInterval(intervaloalone);
 		var t=alone.scene.transition({target:'offmenu',duration:3000});
+		
 	};
 	//Evento que se lanza cuando sombra gana el juego
 
 	this.physics.add.collider(player1, player2, ganasomb, null, this);
-
-	var ganahuma = function () {
-		this.add.image(300, 200, 'ganahumano').setScrollFactor(0);
-		flag=true;
-		addGame(globalid, 'Survive Alone', "Player1", logros);
-        music.stop();
-		var t=alone.scene.transition({target:'offmenu',duration:3000});
-	};
 	//Evento que se lanza cuando el humano gana el juego
-
-	cuentatiempo = this.time.addEvent({
-		delay: 180000,
-		callback: ganahuma,
-		callbackScope: this
-	});
 
 	//cuentatiempo tarda 3 minutos, tiempo general de Survive, para dar victoria a p1
 
@@ -249,6 +238,22 @@ alone.create=function() {
     
     var imagenayuda = alone.add.image(-2700,-2800,'ayudasurvivehumano');
     imagenayuda.depth = 3;
+    
+    tiempoalone = 180;
+    
+    intervaloalone = setInterval(function () {
+    	if (tiempoalone > 0 && !pausa){
+    		tiempoalone--;
+    	}
+    	if(tiempoalone <= 0 && !flag){
+    		alone.add.image(300, 200, 'ganahumano').setScrollFactor(0);
+    		flag=true;
+    		addGame(globalid, 'Survive Alone', "Player1", logros);
+            music.stop();
+    		var t=alone.scene.transition({target:'offmenu',duration:3000});
+    		clearInterval(intervaloalone);
+    	}
+    }, 1000);
 }
 
 alone.update=function(){        
@@ -269,16 +274,18 @@ alone.update=function(){
                 },500);
             }
             if(enter.isDown && pausa){
-                console.log("pinche");
                 music.stop();
+                clearInterval(intervaloalone);
                 var t=alone.scene.transition({target:'offmenu',duration:'10'});
             } //Salimos del modo
 
 	if(!flag){
-    if(!sombramoviendose){
-		player2.body.velocity.x = 0;
+		
+    if(!sombramoviendose && ! pausa){
+    	
+    	player2.body.velocity.x = 0;
 		player2.body.velocity.y = 0;
-
+		
 		var player1tile = mapatiles.getTileAtWorldXY(player1.x, player1.y);
 		var player2tile = mapatiles.getTileAtWorldXY(player2.x, player2.y);
 		moverse = randomfinding(Math.round(player2tile.x/3), Math.round(player2tile.y/3), moverse);
@@ -351,12 +358,27 @@ alone.update=function(){
 			}
 		//Manejamos las teclas izq/der
 
-		var number = cuentatiempo.getProgress().toString().substr(2, 2);
-		number = 100-number;
-
+		var number = "";
+		if (tiempoalone == 180){
+			number = "3:00";
+		} else {
+			var copia;
+			if(tiempoalone >= 120){
+				number+="2:";
+				copia = tiempoalone-120;
+			} else if (tiempoalone >= 60){
+				number+="1:";
+				copia = tiempoalone-60;
+			} else {
+				number+= "0:"
+				copia = tiempoalone;
+			}
+			if(copia < 10) number += "0";
+			number+=copia;
+		}
 		//Actualizamos el tiempo que queda en pantalla
 
-		text.setText('Tiempo: ' + number + "%");
+		text.setText(number);
 	}
 	if(spacekey.isDown && powerup){
 		powerup = false;

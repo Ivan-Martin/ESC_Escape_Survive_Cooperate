@@ -34,7 +34,7 @@ offmirror.create=function() {
 			log2=offmirror.add.image(500,340,'mirror2').setScrollFactor(0);
 		}
 	}
-	updateMode(globalid, 'Mirrored Escape');
+	updateMode(globalid, 'Mirrored Escape Offline');
 	music = this.sound.add('escmusic');
 	music.play();
 	flag=false;

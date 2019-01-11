@@ -41,7 +41,7 @@ offsurvive.create =function () {
 			log2=offsurvive.add.image(500,340,'survive2').setScrollFactor(0);
 		}
 	}
-	updateMode(globalid, 'Survive');
+	updateMode(globalid, 'Survive Offline');
 	sound = this.sound.add('spup');
 	music = this.sound.add('surmusic');
 	music.play();

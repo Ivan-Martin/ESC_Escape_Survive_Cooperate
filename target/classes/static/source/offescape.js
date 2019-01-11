@@ -41,7 +41,7 @@ offescape.create =function () {
 		}
 	}
 
-	updateMode(globalid, 'Escape');
+	updateMode(globalid, 'Escape Offline');
 	music = this.sound.add('escmusic');
 	music.play();
 	flag=false;
