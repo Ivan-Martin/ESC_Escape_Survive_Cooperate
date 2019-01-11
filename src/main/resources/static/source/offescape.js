@@ -61,7 +61,9 @@ offescape.create =function () {
 
 	mapatiles = this.make.tilemap({ tileWidth: 32, tileHeight: 32, width: 2*worldtiles*32+centralsize*32+24*32, heigth: 2*worldtiles*32+centralsize*32+24*32}); //Esto añade un mapa vacío al mundo
 
-	var tileset = mapatiles.addTilesetImage('tileo', 'tileo', 32, 32); //Cargamos el mapa de sprites de tiles
+	var nombretileset = 'tileo' + Math.ceil(Math.random()*6);
+	
+	var tileset = mapatiles.addTilesetImage(nombretileset, nombretileset, 32, 32); //Cargamos el mapa de sprites de tiles
 
 	capa = mapatiles.createBlankDynamicLayer('nivel', tileset, 0, 0, worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
 
