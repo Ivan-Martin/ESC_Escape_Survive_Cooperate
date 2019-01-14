@@ -304,6 +304,7 @@ offsurvive.update=function () {
 		},500);
 	}
 	if(enter.isDown&&pausa){
+        pausa=false;
 		music.stop();
 		var t=offsurvive.scene.transition({target:'offmenu',duration:'10'});
 	}

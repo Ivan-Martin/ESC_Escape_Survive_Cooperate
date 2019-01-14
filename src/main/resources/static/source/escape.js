@@ -579,6 +579,7 @@ escape.update=function () {
 		},500);
 	}
 	if(enter.isDown && pausa){
+        pausa=false;
 		escapemusic.stop();
 		var medesconecto = {};
 		medesconecto.userid = globalid;

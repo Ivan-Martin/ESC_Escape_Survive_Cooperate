@@ -541,6 +541,7 @@ mirror.update=function () {
 		},500);
 	}
 	if(enter.isDown && pausa){
+        pausa=false;
 		mirrormusic.stop();
 		var medesconecto = {};
 		medesconecto.userid = globalid;
