@@ -45,6 +45,8 @@ var intervalosurvive;
 var poder;
 var finrender = false;
 var poweruppos = {};
+var tiempoSurvive;
+var intervaloSurviveT;
 
 function comprobarMundoListo () {
 	//Función para comprobar que no se haya perdido ningún paquete al enviar el mundo al otro jugador
@@ -70,7 +72,7 @@ function comprobarMundoListo () {
 }
 
 survive.create =function () {
-
+    nomovimiento=false;
 	//Definición de los logros para mostrar al completar suficientes partidas
 	var logros = function (user) {
 		if(user.partidasjugadas[2] == 1){
@@ -370,7 +372,6 @@ survive.create =function () {
 			survive.add.image(300, 200, 'ganasombra').setScrollFactor(0);
 			nomovimiento=true;
 			addGame(globalid, 'Survive', "Player2", logros);
-            music.stop();
             clearInterval(intervalosurvive);
 			var t=survive.scene.transition({target:'menu',duration:3000});
 		};
@@ -379,21 +380,7 @@ survive.create =function () {
 
 		/**/
 
-		var ganahuma = function () {
-			survivalmusic.stop();
-			survive.add.image(300, 200, 'ganahumano').setScrollFactor(0);
-			nomovimiento=true;
-			addGame(globalid, 'Survive', "Player1", logros);
-            music.stop();
-            clearInterval(intervalosurvive);
-			var t=survive.scene.transition({target:'menu',duration:3000});
-		}
 
-		cuentatiempo = survive.time.addEvent({
-			delay: 180000,
-			callback: ganahuma,
-			callbackScope: survive
-		});
 
 		//cuentatiempo tarda 3 minutos, tiempo general de Survive, para dar victoria a p1
 
@@ -478,6 +465,20 @@ survive.create =function () {
 		var imagenayuda = survive.add.image(-2700, -2800, 'ayudasurvivesombra');
 		imagenayuda.depth = 3;
 	}
+    tiempoSurvive=180;
+    intervaloSurviveT=setInterval(function(){
+        if(tiempoSurvive>0&&!pausa){
+            tiempoSurvive--;
+           }
+        if(tiempoSurvive<=0 && !flag){
+            survivalmusic.stop();
+			survive.add.image(300, 200, 'ganahumano').setScrollFactor(0);
+			nomovimiento=true;
+			addGame(globalid, 'Survive', "Player1", logros);
+            clearInterval(intervalosurvive);
+			var t=survive.scene.transition({target:'menu',duration:3000});
+           }
+    });
 
 
 }
@@ -529,10 +530,27 @@ survive.update=function () {
 
 	if(gameready && finrender){
 
-		var number = cuentatiempo.getProgress().toString().substr(2, 2);
-		number = 100-number;
+		var number = "";
+		if (tiempoSurvive == 180){
+			number = "3:00";
+		} else {
+			var copia;
+			if(tiempoSurvive >= 120){
+				number+="2:";
+				copia = tiempoSurvive-120;
+			} else if (tiempoSurvive >= 60){
+				number+="1:";
+				copia = tiempoSurvive-60;
+			} else {
+				number+= "0:"
+				copia = tiempoSurvive;
+			}
+			if(copia < 10) number += "0";
+			number+=copia;
+		}
+		//Actualizamos el tiempo que queda en pantalla
 
-		text.setText('Tiempo: ' + number + "%");
+		text.setText(number);
 		//Si podemos comenzar a jugar
 
 		var mijugador;
