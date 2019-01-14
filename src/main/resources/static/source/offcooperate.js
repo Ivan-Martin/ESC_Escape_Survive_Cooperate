@@ -887,7 +887,7 @@ offcooperate.update=function () {
     }
     
 	//text.setText('Tiempo: ' + number + "%");
-	//this.physics.world.collide(player1, capa);
+	this.physics.world.collide(player1, capa);
 	if(!puerta1abierta) this.physics.world.collide(player1, puerta1);
 	if(!puerta2abierta) this.physics.world.collide(player2, puerta2);
 	if(!puerta3abierta) this.physics.world.collide(player1, puerta3);
