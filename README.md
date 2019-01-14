@@ -104,10 +104,17 @@ En las ultimas etapas de desarrollo de este proyecto hemos realizo beta-testing 
 * Dos nuevos tilesets estás disponibles en todos los modos, elevando el total de mapas de texturas a 6.
 
 * Nuevos powerups para multiples modos:
-* * El ojo ominsicente permite a los jugadores
-
+  -El Ojo Ominsicente permite al jugador ver donde está su rival.
+  -El Turbo Booster acelera la velocidad de movimeinto de su usuario.
+  -El Freezer conjela a tu rival durante un momento.
+  -El Atajo de Bolsillo te teletransporta más cerca al objetivo.
+  
 El beta testing se llevó acabo de manera externa "hands-off", enviando a ciertos focus groups un enlance con acesso al juego y un formulario para rellenar tras terminar las partidas.
 Además, se ha publicado la versión final del proyecto en tres webs des juegos de navegador, aqui facilitamos los enlaces:
+
+Itch.io -
+Newgrounds -
+Kongregate -
 
 - - -
 
