@@ -478,7 +478,7 @@ survive.create =function () {
             clearInterval(intervalosurvive);
 			var t=survive.scene.transition({target:'menu',duration:3000});
            }
-    });
+    }, 1000);
 
 
 }
