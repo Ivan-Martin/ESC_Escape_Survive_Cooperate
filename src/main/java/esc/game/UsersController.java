@@ -40,7 +40,7 @@ public class UsersController {
 	Map <User, User> cooperate = new ConcurrentHashMap <> ();
 	
 	public UsersController () throws IOException {
-		BufferedReader input = new BufferedReader (new FileReader (new File ("classes/data.txt")));
+		BufferedReader input = new BufferedReader (new FileReader (new File ("src/main/java/data.txt")));
 		String linea;
 		long id = 0;
 		while((linea = input.readLine()) != null) {

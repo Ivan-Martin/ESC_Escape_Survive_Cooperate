@@ -362,6 +362,7 @@ offescape.update=function () {
         },500);
     }
     if(enter.isDown&&pausa){
+        pausa=false;
        music.stop();
        var t=offescape.scene.transition({target:'offmenu',duration:'10'});
     }

@@ -820,6 +820,7 @@ cooperate.update=function () {
 		},500);
 	}
 	if(enter.isDown && pausa){
+        pausa=false;
 		coopmusic.stop();
 		var medesconecto = {};
 		medesconecto.userid = globalid;

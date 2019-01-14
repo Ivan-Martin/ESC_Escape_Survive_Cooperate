@@ -32,6 +32,7 @@ var abriendose=false;
 var enter;
 var tiempoalone;
 var intervaloalone;
+var recorrido;
 
 alone.create=function() {
 	var logros = function (user) {
@@ -76,11 +77,15 @@ alone.create=function() {
 
 	muros = tileindex(); //Recuperamos del generador de laberintos el tileo del mapa
 
+	recorrido = [];
 
 	for (var i = 0; i < worldtiles; i++){
+		recorrido[i] = [];
 		for (var j = 0; j < worldtiles; j++){
 			var pos = (i*worldtiles)+j;
 			mapatiles.putTileAt(muros[pos], i, j, true, capa); //Asignamos a la capa de tiles de Phaser nuestras tiles generadas
+			if(muros[pos] < 3) recorrido[i][j] = 0;
+			else recorrido[i][j] = 1;
 		}
 	}
 	mapatiles.setCollisionBetween(3, 14, true, true, capa); //Le dice que las tiles de 3 a 14 colisionan
@@ -256,6 +261,19 @@ alone.create=function() {
     }, 1000);
 }
 
+var cleverfinding = function (x, y, metax, metay) {
+	console.log("X = " + x + " Y = " + y + " meta x = " + metax + " meta y = " + metay);
+	if (Math.abs(x-metax) < 6 && Math.abs(y-metay) < 6){
+		if (x < metax) return "E";
+		else if (x > metax) return "W";
+		if (y > metay) return "N";
+		else return "S";
+	}
+	console.log("Random");
+	return randomfinding(Math.round(x/3), Math.round(y/3), moverse);
+	
+}
+
 alone.update=function(){        
 	if(esc.isDown&&!abriendose&&!pausa){
                 abriendose=true;
@@ -274,6 +292,7 @@ alone.update=function(){
                 },500);
             }
             if(enter.isDown && pausa){
+            	pausa = false;
                 music.stop();
                 clearInterval(intervaloalone);
                 var t=alone.scene.transition({target:'offmenu',duration:'10'});
@@ -288,7 +307,7 @@ alone.update=function(){
 		
 		var player1tile = mapatiles.getTileAtWorldXY(player1.x, player1.y);
 		var player2tile = mapatiles.getTileAtWorldXY(player2.x, player2.y);
-		moverse = randomfinding(Math.round(player2tile.x/3), Math.round(player2tile.y/3), moverse);
+		moverse = cleverfinding(player2tile.x, player2tile.y, player1tile.x, player1tile.y);
 
 		if (moverse == "N") {
 			player2.body.velocity.y = -velocidadp2;
@@ -319,7 +338,10 @@ alone.update=function(){
     }
 		//Manejador de la inteligencia artificial del enemigo
 	}
-	if(!usingpower) this.physics.world.collide(player1, capa);
+	
+	//if(!usingpower) this.physics.world.collide(player1, capa);
+	
+	
 	//Hacemos que el personaje colisione con la capa del tile
 	player1.body.velocity.x = 0;
 	player1.body.velocity.y = 0;

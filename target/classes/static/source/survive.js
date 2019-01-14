@@ -501,6 +501,7 @@ survive.update=function () {
 		},500);
 	}
 	if(enter.isDown && pausa){
+        pausa=false;
 		survivalmusic.stop();
 		var medesconecto = {};
 		medesconecto.userid = globalid;

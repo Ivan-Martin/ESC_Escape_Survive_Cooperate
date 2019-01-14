@@ -80,17 +80,15 @@ logo.preload=function () {
     this.load.image('errorserver', 'assets/Fase4/error.png');
     this.load.image('paused','assets/Fase4/pause.png');
     this.load.image('ayudasurvivehumano', 'assets/Fase4/surh1.png');
-	this.load.image('ayudasurvivesombra', 'assets/Fase4/surh2.png');
-	var randomtile = Math.random();
-	if(randomtile < 0.25){
-		this.load.image('tileo', 'assets/tilemap.png');
-	} else if (randomtile < 0.5) {
-		this.load.image('tileo', 'assets/tilemap2.png');
-	} else if (randomtile < 0.75){
-		this.load.image('tileo', 'assets/tilemap3.png');
-	} else {
-		this.load.image('tileo', 'assets/tilemap4.png');
-	}
+    this.load.image('ayudasurvivesombra', 'assets/Fase4/surh2.png');
+    this.load.image('tileo', 'assets/tilemap.png');
+    this.load.image('tileo1', 'assets/tilemap.png');
+    this.load.image('tileo2', 'assets/tilemap2.png');
+    this.load.image('tileo3', 'assets/tilemap3.png');
+    this.load.image('tileo4', 'assets/tilemap4.png');
+    this.load.image('tileo5', 'assets/tilemap5.png');
+    this.load.image('tileo6', 'assets/tilemap6.png');
+
 	barracarga.setFrame(1);
 };
 logo.create=function(){

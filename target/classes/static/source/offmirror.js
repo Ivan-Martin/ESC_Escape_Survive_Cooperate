@@ -330,6 +330,7 @@ offmirror.update=function () {
 		},500);
 	}
 	if(enter.isDown&&pausa){
+        pausa=false;
 		music.stop();
 		var t=offmirror.scene.transition({target:'offmenu',duration:'10'});
 	}
