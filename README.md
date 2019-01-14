@@ -115,6 +115,7 @@ En las ultimas etapas de desarrollo de este proyecto hemos realizo beta-testing 
   
   
 El beta testing se llevó acabo con gente externa al grupo de desarrollo, enviando se un enlance con acesso al juego y un formulario para rellenar tras terminar las partidas. Este formulario buscaba recopilar opiniones sobre distintos aspectos del juego, sugeriencias de mejora y bugs por arreglar, todos los cuales se han tenido en cuenta a lo largo del desarrollo de esta fase.
+
 Además, se ha publicado la versión final del proyecto en tres webs des juegos de navegador, aqui facilitamos los enlaces:
 
 Itch.io -
