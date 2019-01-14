@@ -93,6 +93,22 @@ El juego incluye un sistema de detección de pérdida de websockets en la genera
 
 Además, una vez iniciada una partida, los jugadores principalmente enviarán un tipo de websocket, aquel que incluye los datos de velocidad y posición, siendo identificado este con id "velocidad". Cuando el servidor detecta este websocket, actualiza el tiempo de desconexión de ese jugador, pudiendo detectar de esta forma si se ha perdido la conexión con algún cliente, y desconectandole en ese caso e informando a su rival de lo sucedido.
 
+# Fase 5
+
+En las ultimas etapas de desarrollo de este proyecto hemos realizo beta-testing e intentando implementar el feedback de este al proyecto mediante multiples mejoras entre las cuales se incluye:
+
+* La IA del modo alone cuenta ahora con dos estedos: Inicialmente, la IA explorará de forma aleatoria los pasillos hasta llegar a un limite de proximidad con el jugador y entonces la IA calcula de forma dinamica el camino más rapido a este.
+
+* Se han añadido al modo cooperate dos nuevas mecánicas: Se generan ahora en los laberintos sensores de presión en el suelo sobre los cuales un jugador debe mantenerse quieto para abrirle el camino a su compañero. También se ha añadido una flecha que indica la dirección general hacia el proximo objetivo para asistir a los jugadores en este modo más complejo.
+
+* Dos nuevos tilesets estás disponibles en todos los modos, elevando el total de mapas de texturas a 6.
+
+* Nuevos powerups para multiples modos:
+** El ojo ominsicente permite a los jugadores
+
+El beta testing se llevó acabo de manera externa "hands-off", enviando a ciertos focus groups un enlance con acesso al juego y un formulario para rellenar tras terminar las partidas.
+Además, se ha publicado la versión final del proyecto en tres webs des juegos de navegador, aqui facilitamos los enlaces:
+
 - - -
 
 Equipo de desarrollo de ESC:
