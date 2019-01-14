@@ -97,7 +97,7 @@ Además, una vez iniciada una partida, los jugadores principalmente enviarán un
 
 En las ultimas etapas de desarrollo de este proyecto hemos realizo beta-testing e intentando implementar el feedback de este al proyecto mediante multiples mejoras entre las cuales se incluye:
 
-* La IA del modo alone cuenta ahora con dos estedos: Inicialmente, la IA explorará de forma aleatoria los pasillos hasta llegar a un limite de proximidad con el jugador y entonces la IA calcula de forma dinamica el camino más rapido a este.
+* La IA del modo alone cuenta ahora con dos estedos: Inicialmente, la IA explorará de forma aleatoria los pasillos hasta llegar a un limite de proximidad con el jugador y entonces la IA comenzará a perseguir a este.
 
 * Se han añadido al modo cooperate dos nuevas mecánicas: Se generan ahora en los laberintos sensores de presión en el suelo sobre los cuales un jugador debe mantenerse quieto para abrirle el camino a su compañero. También se ha añadido una flecha que indica la dirección general hacia el proximo objetivo para asistir a los jugadores en este modo más complejo.
 
@@ -114,7 +114,7 @@ En las ultimas etapas de desarrollo de este proyecto hemos realizo beta-testing 
   -El Atajo de Bolsillo te teletransporta más cerca al objetivo.
   
   
-El beta testing se llevó acabo de manera externa "hands-off", enviando a ciertos focus groups un enlance con acesso al juego y un formulario para rellenar tras terminar las partidas.
+El beta testing se llevó acabo con gente externa al grupo de desarrollo, enviando se un enlance con acesso al juego y un formulario para rellenar tras terminar las partidas. Este formulario buscaba recopilar opiniones sobre distintos aspectos del juego, sugeriencias de mejora y bugs por arreglar, todos los cuales se han tenido en cuenta a lo largo del desarrollo de esta fase.
 Además, se ha publicado la versión final del proyecto en tres webs des juegos de navegador, aqui facilitamos los enlaces:
 
 Itch.io -
