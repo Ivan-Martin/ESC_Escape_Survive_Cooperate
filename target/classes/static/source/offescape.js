@@ -21,6 +21,7 @@ var pausa=false;
 var pausaimg;
 var enter;
 var abriendose=false;
+var powerupescape;
 
 offescape.create =function () {
 	esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);

@@ -8,6 +8,8 @@ logo.preload=function () {
 	this.load.spritesheet('player', 'assets/char/pcs.png', { frameWidth: 10, frameHeight: 24 });
 	this.load.spritesheet('playerpower', 'assets/char/ens.png', { frameWidth: 10, frameHeight: 24 });
 	this.load.spritesheet('powerup', 'assets/actors/ups.png', {frameWidth: 10, frameHeight: 10});
+	this.load.spritesheet('powerup2', 'assets/Fase5/ups2.png', {frameWidth: 10, frameHeight: 10});
+	this.load.spritesheet('powerup3', 'assets/Fase5/ups3.png', {frameWidth: 10, frameHeight: 10});
 	this.load.spritesheet('escape','assets/menu/escs.png',{frameWidth:200,frameHeight:32});
 	this.load.spritesheet('mirror','assets/menu/mirs.png',{frameWidth:200,frameHeight:32});
 	this.load.spritesheet('survive','assets/menu/surs.png',{frameWidth:200,frameHeight:32});

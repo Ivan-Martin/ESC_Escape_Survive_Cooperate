@@ -339,7 +339,7 @@ alone.update=function(){
 		//Manejador de la inteligencia artificial del enemigo
 	}
 	
-	//if(!usingpower) this.physics.world.collide(player1, capa);
+	if(!usingpower) this.physics.world.collide(player1, capa);
 	
 	
 	//Hacemos que el personaje colisione con la capa del tile

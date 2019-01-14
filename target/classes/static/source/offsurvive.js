@@ -10,13 +10,14 @@ var capa;
 var worldsize = 20;
 var worldtiles;
 var wkey, akey, skey, dkey;
+var shift;
 var muros;
 var camara1;
 var camara2;
 var text;
 var cuentatiempo;
 var velocidadp2;
-var powerup = false;
+var powerup, powerup2, powerup3;
 var usingpower = false;
 var mask, mask2;
 var p2;
@@ -30,8 +31,14 @@ var abriendose=false;
 var enter;
 var log;
 var log2;
+var tiemposurviveoff;
+var usingpowerup3;
+var usingpowerup2p1, usingpowerup2p2;
 
 offsurvive.create =function () {
+	usingpowerup3 = false;
+	usingpowerup2p1 = false;
+	usingpowerup2p2 = false;
 	var logros = function (user) {
 		if(user.partidasjugadas[0] == 1){
 			log=offsurvive.add.image(500,340,'survive1').setScrollFactor(0);
@@ -46,6 +53,7 @@ offsurvive.create =function () {
 	music = this.sound.add('surmusic');
 	music.play();
 	flag=false;
+	powerup = false; powerup2 = false; powerup3 = false;
 	//console.log ("Modo survive");
 	esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 	enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
@@ -59,6 +67,7 @@ offsurvive.create =function () {
 	skey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 	dkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 	spacekey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+	shift = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
 
 	mapatiles = this.make.tilemap({ tileWidth: 32, tileHeight: 32, width: worldtiles*32, heigth: worldtiles*32}); //Esto añade un mapa vacío al mundo
 
@@ -133,20 +142,6 @@ offsurvive.create =function () {
 
 	/**/
 
-	var ganahuma = function () {
-		music.stop();
-		this.add.image(300, 200, 'ganahumano').setScrollFactor(0);
-		flag=true;
-		addGame(globalid, 'Survive', "Player1", logros);
-		var t=offsurvive.scene.transition({target:'offmenu',duration:3000});
-	}
-
-	cuentatiempo = this.time.addEvent({
-		delay: 180000,
-		callback: ganahuma,
-		callbackScope: this
-	});
-
 	//cuentatiempo tarda 3 minutos, tiempo general de Survive, para dar victoria a p1
 
 	var actualizar1 = this.time.addEvent({
@@ -168,8 +163,21 @@ offsurvive.create =function () {
 	});
 
 
+	tiemposurviveoff = 180;
 
-
+	intervalooffsurvive = setInterval(function () {
+    	if (tiemposurviveoff > 0 && !pausa && !usingpowerup3){
+    		tiemposurviveoff--;
+    	}
+    	if(tiempoalone <= 0 && !flag){
+    		offsurvive.add.image(300, 200, 'ganahumano').setScrollFactor(0);
+    		flag=true;
+    		addGame(globalid, 'Survive Offline', "Player1", logros);
+            music.stop();
+    		var t=offsurvive.scene.transition({target:'offmenu',duration:3000});
+    		clearInterval(intervalooffsurvive);
+    	}
+    }, 1000);
 
 
 	var textureFrames = this.textures.get('powerup').getFrameNames();
@@ -178,6 +186,24 @@ offsurvive.create =function () {
 	textureFrames.forEach(function (frameName) {
 
 		animFrames.push({ key: 'powerup', frame: frameName });
+
+	});
+	
+	var textureFrames2 = this.textures.get('powerup2').getFrameNames();
+	var animFrames2 = [];
+	
+	textureFrames2.forEach(function (frameName) {
+
+		animFrames2.push({ key: 'powerup2', frame: frameName });
+
+	});
+	
+	var textureFrames3 = this.textures.get('powerup3').getFrameNames();
+	var animFrames3 = [];
+	
+	textureFrames3.forEach(function (frameName) {
+
+		animFrames3.push({ key: 'powerup3', frame: frameName });
 
 	});
 
@@ -229,33 +255,164 @@ offsurvive.create =function () {
 	});
 
 	this.anims.create({ key: 'powerupanimate', frames: animFrames, frameRate: 6, repeat: -1 });
+	this.anims.create({ key: 'powerup2animate', frames: animFrames2, frameRate: 6, repeat: -1 });
+	this.anims.create({ key: 'powerup3animate', frames: animFrames3, frameRate: 6, repeat: -1 });
+	
+	var posicionespoderes = [];
+	
+	for (var i = 0; i < 6; i+=2){
+		
+		do{
+			randomx = Math.floor(Math.random() * worldsize);
 
-	do{
-		randomx = Math.floor(Math.random() * worldsize);
+			randomy = Math.floor(Math.random() * worldsize);
 
-		randomy = Math.floor(Math.random() * worldsize);
+			randomx--;
+			randomy--;
 
-		randomx--;
-		randomy--;
+			randomx*=32*3;
+			randomy*=32*3;
+			randomx+= 48;
+			randomy+= 48;
 
-		randomx*=32*3;
-		randomy*=32*3;
-		randomx+= 48;
-		randomy+= 48;
-
-	} while (randomx <= 200 || randomy <= 200);
+		} while (randomx <= 200 || randomy <= 200);
+		
+		posicionespoderes[i] = randomx;
+		posicionespoderes[i+1] = randomy;
+	}
+	
+	var aleatorio = Math.floor(Math.random()*6);
+	var ordenpoderes = [1, 2, 3];
+	
+	if(aleatorio == 0) ordenpoderes = [1, 2, 3];
+	else if (aleatorio == 1) ordenpoderes = [1, 3, 2];
+	else if (aleatorio == 2) ordenpoderes = [2, 1, 3];
+	else if (aleatorio == 3) ordenpoderes = [2, 3, 1];
+	else if (aleatorio == 4) ordenpoderes = [3, 1, 2];
+	else if (aleatorio == 5) ordenpoderes = [3, 2, 1];
 
 	//console.log(randomx); console.log(randomy);
+	if (ordenpoderes[0] == 1){
+		var poder = offsurvive.physics.add.sprite(posicionespoderes[0], posicionespoderes[1], 'powerup').play('powerupanimate');
 
+		var getpowerup = function () {
+			poder.destroy();
+			powerup = true;
+			if(powerup2 == 1) powerup2 = 0;
+		}
 
-	var poder = this.physics.add.sprite(randomx, randomy, 'powerup').play('powerupanimate');
+		offsurvive.physics.add.collider(player1, poder, getpowerup, null, offsurvive);
+	} else if (ordenpoderes[0] == 2){
+		var poder2 = offsurvive.physics.add.sprite(posicionespoderes[0], posicionespoderes[1], 'powerup2').play('powerup2animate');
+		
+		var getpowerup2a = function () {
+			poder2.destroy();
+			powerup2 = 1;
+			if(powerup) powerup = false;
+		}
+		
+		var getpowerup2b = function () {
+			poder2.destroy();
+			powerup2 = 2;
+			if(powerup3) powerup3 = false;
+		}
+		
+		offsurvive.physics.add.collider(player1, poder2, getpowerup2a, null, offsurvive);
+		offsurvive.physics.add.collider(player2, poder2, getpowerup2b, null, offsurvive);
+	} else {
+		var poder3 = offsurvive.physics.add.sprite(posicionespoderes[0], posicionespoderes[1], 'powerup3').play('powerup3animate');
 
-	var getpowerup = function () {
-		poder.destroy();
-		powerup = true;
+		var getpowerup3 = function () {
+			poder3.destroy();
+			powerup3 = true;
+			if(powerup2 == 2) powerup2 = 0;
+		}
+
+		offsurvive.physics.add.collider(player2, poder3, getpowerup3, null, offsurvive);
 	}
 
-	this.physics.add.collider(player1, poder, getpowerup, null, this);
+	setTimeout(function () {
+		if (ordenpoderes[1] == 1){
+			var poder = offsurvive.physics.add.sprite(posicionespoderes[2], posicionespoderes[3], 'powerup').play('powerupanimate');
+
+			var getpowerup = function () {
+				poder.destroy();
+				powerup = true;
+				if(powerup2 == 1) powerup2 = 0;
+			}
+
+			offsurvive.physics.add.collider(player1, poder, getpowerup, null, offsurvive);
+		} else if (ordenpoderes[1] == 2){
+			var poder2 = offsurvive.physics.add.sprite(posicionespoderes[2], posicionespoderes[3], 'powerup2').play('powerup2animate');
+			
+			var getpowerup2a = function () {
+				poder2.destroy();
+				powerup2 = 1;
+				if(powerup) powerup = false;
+			}
+			
+			var getpowerup2b = function () {
+				poder2.destroy();
+				powerup2 = 2;
+				if(powerup3) powerup3 = false;
+			}
+			
+			offsurvive.physics.add.collider(player1, poder2, getpowerup2a, null, offsurvive);
+			offsurvive.physics.add.collider(player2, poder2, getpowerup2b, null, offsurvive);
+		} else {
+			var poder3 = offsurvive.physics.add.sprite(posicionespoderes[2], posicionespoderes[3], 'powerup3').play('powerup3animate');
+
+			var getpowerup3 = function () {
+				poder3.destroy();
+				powerup3 = true;
+				if(powerup2 == 2) powerup2 = 0;
+			}
+
+			offsurvive.physics.add.collider(player2, poder3, getpowerup3, null, offsurvive);
+		}
+	}, 60000);
+
+	setTimeout(function () {
+		if (ordenpoderes[2] == 1){
+			var poder = offsurvive.physics.add.sprite(posicionespoderes[4], posicionespoderes[5], 'powerup').play('powerupanimate');
+
+			var getpowerup = function () {
+				poder.destroy();
+				powerup = true;
+				if(powerup2 == 1) powerup2 = 0;
+			}
+
+			offsurvive.physics.add.collider(player1, poder, getpowerup, null, offsurvive);
+		} else if (ordenpoderes[2] == 2){
+			var poder2 = offsurvive.physics.add.sprite(posicionespoderes[4], posicionespoderes[5], 'powerup2').play('powerup2animate');
+			
+			var getpowerup2a = function () {
+				poder2.destroy();
+				powerup2 = 1;
+				if(powerup) powerup = false;
+			}
+			
+			var getpowerup2b = function () {
+				poder2.destroy();
+				powerup2 = 2;
+				if(powerup3) powerup3 = false;
+			}
+			
+			offsurvive.physics.add.collider(player1, poder2, getpowerup2a, null, offsurvive);
+			offsurvive.physics.add.collider(player2, poder2, getpowerup2b, null, offsurvive);
+		} else {
+			var poder3 = offsurvive.physics.add.sprite(posicionespoderes[4], posicionespoderes[5], 'powerup3').play('powerup3animate');
+
+			var getpowerup3 = function () {
+				poder3.destroy();
+				powerup3 = true;
+				if(powerup2 == 2) powerup2 = 0;
+			}
+
+			offsurvive.physics.add.collider(player2, poder3, getpowerup3, null, offsurvive);
+		}
+	}, 120000);
+
 
 	this.add.image(0, 0, 'borde').setScrollFactor(0);
 
@@ -323,34 +480,40 @@ offsurvive.update=function () {
 
 	if(!flag){
 		if (cursors.up.isDown) {
-			player2.body.velocity.y = -velocidadp2;
+			if(!usingpowerup2p2) player2.body.velocity.y = -velocidadp2;
+			else player2.body.velocity.y = -velocidadp2*1.5;
 			player2.play('upwards2',true);
 		}
 		else if (cursors.down.isDown) {
-			player2.body.velocity.y = velocidadp2;
+			if(!usingpowerup2p2) player2.body.velocity.y = velocidadp2;
+			else player2.body.velocity.y = velocidadp2*1.5;
 			player2.play('downwards2',true);
 		} else
 			//Manejamos las teclas arriba/abajo
 
 			if (cursors.left.isDown)
 			{
-				player2.body.velocity.x = -velocidadp2;
+				if(!usingpowerup2p2) player2.body.velocity.x = -velocidadp2;
+				else player2.body.velocity.x = -velocidadp2*1.5;
 				player2.play('left2',true);
 			}
 			else if (cursors.right.isDown)
 			{
-				player2.body.velocity.x = velocidadp2;
+				if(!usingpowerup2p2) player2.body.velocity.x = velocidadp2;
+				else player2.body.velocity.x = velocidadp2*1.5;
 				player2.play('right2',true);
 			}
 		//Manejamos las teclas izq/der
 
 		if (wkey.isDown) {
-			player1.body.velocity.y = -200;
+			if(!usingpowerup2p1) player1.body.velocity.y = -200;
+			else player1.body.velocity.y = -300;
 			if(!usingpower)player1.play('up',true);
 			else player1.play('uppower', true);
 		}
 		else if (skey.isDown) {
-			player1.body.velocity.y = 200;
+			if(!usingpowerup2p1) player1.body.velocity.y = 200;
+			else player1.body.velocity.y = 300;
 			if(!usingpower)player1.play('down', true);
 			else player1.play('downpower', true);
 		} else
@@ -358,22 +521,41 @@ offsurvive.update=function () {
 
 			if (akey.isDown)
 			{
-				player1.body.velocity.x = -200;
+				if(!usingpowerup2p1) player1.body.velocity.x = -200;
+				else player1.body.velocity.x = -300;
 				if(!usingpower)player1.play('left',true);
 				else player1.play('leftpower', true);
 			}
 			else if (dkey.isDown)
 			{
-				player1.body.velocity.x = 200;
+				if(!usingpowerup2p1) player1.body.velocity.x = 200;
+				else player1.body.velocity.x = 300;
 				if(!usingpower)player1.play('right',true);
 				else player1.play('rightpower', true);
 			}
 		//Manejamos las teclas izq/der
 
-		var number = cuentatiempo.getProgress().toString().substr(2, 2);
-		number = 100-number;
-
-		text.setText('Tiempo: ' + number + "%");
+		var number = "";
+		if (tiemposurviveoff == 180){
+			number = "3:00";
+		} else {
+			var copia;
+			if(tiemposurviveoff >= 120){
+				number+="2:";
+				copia = tiemposurviveoff-120;
+			} else if (tiemposurviveoff >= 60){
+				number+="1:";
+				copia = tiemposurviveoff-60;
+			} else {
+				number+= "0:"
+				copia = tiemposurviveoff;
+			}
+			if(copia < 10) number += "0";
+			number+=copia;
+		}
+		//Actualizamos el tiempo que queda en pantalla
+		if(usingpowerup3) number += " STOPPED";
+		text.setText(number);
 	}
 	if(spacekey.isDown && powerup){
 		powerup = false;
@@ -386,5 +568,28 @@ offsurvive.update=function () {
 			},
 			callbackScope: this
 		});
+	}
+	if(spacekey.isDown && powerup2 == 1) {
+		usingpowerup2p1 = true;
+		powerup2 = 0;
+		setTimeout(function () {
+			usingpowerup2p1 = false;
+		}, 5000);
+	}
+	
+	if(shift.isDown && powerup2 == 2) {
+		usingpowerup2p2 = true;
+		powerup2 = 0;
+		setTimeout(function () {
+			usingpowerup2p2 = false;
+		}, 5000);
+	}
+	
+	if(shift.isDown && powerup3){
+		usingpowerup3 = true;
+		powerup3 = false;
+		setTimeout(function () {
+			usingpowerup3 = false;
+		}, 10000);
 	}
 }
