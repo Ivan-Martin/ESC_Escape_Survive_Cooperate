@@ -27,9 +27,19 @@ var enter;
 var log;
 var log2;
 var abriendose=false;
+var llave1;
 var llave2;
-
+var llave3;
+var llave4;
+var peekArrow;
+var peekArrow2;
+var found; //p1
+var found2; //p2
 offcooperate.create=function () {
+      peekArrow=offcooperate.add.image(48,48,'peek');
+      peekArrow2=offcooperate.add.image(0,0,'peek');
+      found=false;
+      found2=false;
 	var logros = function (user) {
 		if(user.partidasjugadas[0] == 1){
 			log=offcooperate.add.image(500,340,'cooperate1').setScrollFactor(0);
@@ -238,6 +248,8 @@ offcooperate.create=function () {
 	player1 = this.physics.add.sprite(48, 48, 'player'); //Cargamos al jugador
 	player2 = this.physics.add.sprite(worldsize*3*32+5*32-16, 48, 'player2');
 
+
+    
 	this.physics.world.enable([player1, player2]);
 	//Camaras
 
@@ -316,9 +328,10 @@ offcooperate.create=function () {
 
 	randomx+= worldsize*3*32 + 3*32;
 
-	var llave1 = this.physics.add.sprite(randomx, randomy, 'key1').play('key1animate');
+	llave1 = this.physics.add.sprite(randomx, randomy, 'key1').play('key1animate');
 
 	var getllave1 = function () {
+        found2=true;
 		llave1.destroy();
 		sound.play();
 		puerta1abierta = true;
@@ -418,7 +431,7 @@ offcooperate.create=function () {
 
 	randomy+= worldsize*3*32 + 3*32;
 
-	var llave3 = this.physics.add.sprite(randomx, randomy, 'key3').play('key3animate');
+    llave3 = this.physics.add.sprite(randomx, randomy, 'key3').play('key3animate');
 
 	var getllave3 = function () {
 		llave3.destroy();
@@ -451,7 +464,7 @@ offcooperate.create=function () {
 	randomx+= worldsize*3*32 + 3*32;
 	randomy+= worldsize*3*32 + 3*32;
 
-	var llave4 = this.physics.add.sprite(randomx, randomy, 'key3').play('key3animate');
+	llave4 = this.physics.add.sprite(randomx, randomy, 'key3').play('key3animate');
 
 	var getllave4 = function () {
 		llave4.destroy();
@@ -485,12 +498,206 @@ offcooperate.create=function () {
 	pausaimg=offcooperate.add.image(300,200,'paused').setScrollFactor(0);
 	pausaimg.alpha=0;
 	pausaimg.depth=1;
-
-
+    peekArrow.alpha=0;
+    peekArrow.depth=1;
+    peekArrow2.alpha=0;
+    peekArrow2.depth=1;
+    
+    setTimeout(function(){
+        if(!found&&!found2||!found&&!llave4cogida&&!llave3cogida&&!found2||llave3cogida&&!llave4cogida){
+        offcooperate.add.tween({
+                    targets:[peekArrow,peekArrow2],
+                    alpha:1,
+                    duration:500,
+                    ease:'Sine.easeInOut',
+                    onComplete:function(){
+                    setTimeout(function(){
+                    //timeout
+                    offcooperate.add.tween({
+                    targets:[peekArrow,peekArrow2],
+                    alpha:0,
+                    duration:500,
+                    ease:'Sine.easeInOut',
+                    onComplete:function(){
+                        setTimeout(function(){
+                        if(!found&&!found2||!found&&!llave4cogida&&!llave3cogida&&!found2||llave3cogida&&!llave4cogida){
+                            setTimeout(function(){
+                                offcooperate.add.tween({
+                                targets:[peekArrow,peekArrow2],
+                                alpha:0,
+                                duration:500,
+                                ease:'Sine.easeInOut',
+                                onComplete:function(){
+                                        if(!found&&!found2||!found&&!llave4cogida&&!llave3cogida&&!found2||llave3cogida&&!llave4cogida){
+                                            offcooperate.add.tween({
+                                                targets:[peekArrow,peekArrow2],
+                                                alpha:1,
+                                                duration:500,
+                                                ease:'Sine.easeInOut',
+                                                onComplete:function(){
+                                                    setTimeout(function(){
+                                                        offcooperate.add.tween({
+                                                            targets:[peekArrow,peekArrow2],
+                                                            alpha:0,
+                                                            duration:500,
+                                                            ease:'Sine.easeInOut'
+                                                        })
+                                                    },9500);
+                                                }
+                                            });
+                                        }else if(!found||!llave3cogida){
+                                            offcooperate.add.tween({
+                                                targets:peekArrow,
+                                                alpha:1,
+                                                duration:500,
+                                                ease:'Sine.easeInOut',
+                                                onComplete:function(){
+                                                    setTimeout(function(){
+                                                        offcooperate.add.tween({
+                                                            targets:peekArrow,
+                                                            alpha:0,
+                                                            duration:500,
+                                                            ease:'Sine.easeInOut'
+                                                        })
+                                                    },9500);
+                                                }
+                                            });
+                                        }else if(!found2||!llave4cogida){
+                                            offcooperate.add.tween({
+                                                targets:peekArrow2,
+                                                alpha:1,
+                                                duration:500,
+                                                ease:'Sine.easeInOut',
+                                                onComplete:function(){
+                                                    setTimeout(function(){
+                                                        offcooperate.add.tween({
+                                                            targets:peekArrow2,
+                                                            alpha:0,
+                                                            duration:500,
+                                                            ease:'Sine.easeInOut'
+                                                        })
+                                                    },9500);
+                                                }
+                                            })
+                                        }
+                                    }
+                                })
+                        },9500);
+                        }else if(!found||!llave3cogida){
+                            peekArrow.alpha=1;
+                            setTimeout(function(){
+                                offcooperate.add.tween({
+                                targets:peekArrow,
+                                alpha:0,
+                                duration:500,
+                                ease:'Sine.easeInOut'
+                            })
+                        },9500);
+                        }else if(!found2||!llave4cogida){   
+                            peekArrow2.alpha=1;
+                            setTimeout(function(){
+                                offcooperate.add.tween({
+                                targets:peekArrow,
+                                alpha:0,
+                                duration:500,
+                                ease:'Sine.easeInOut'
+                            })
+                        },9500)
+                        }
+                    },60000);
+                    }
+                })
+            },9500)
+        }
+        })
+        }else if(!found||!llave3cogida){
+            offcooperate.add.tween({
+                targets:peekArrow,
+                alpha:1,
+                duration:500,
+                ease:'Sine.easeInOut',
+                onComplete:function(){
+                    setTimeout(function(){
+                        offcooperate.add.tween({
+                            targets:peekArrow,
+                            alpha:0,
+                            duration:500,
+                            ease:'Sine.easeInOut',
+                            onComplete:function(){
+                                setTimeout(function(){
+                                    if(!found||!llave3cogida){
+                                       offcooperate.add.tween({
+                                            targets:peekArrow,
+                                            alpha:1,
+                                            duration:500,
+                                            ease:'Sine.easeInOut',
+                                            onComplete:function(){
+                                                setTimeout(function(){
+                                                    offcooperate.add.tween({
+                                                        targets:peekArrow,
+                                                        alpha:0,
+                                                        duration:500,
+                                                        ease:'Sine.easeInOut'
+                                                    })
+                                                },9500)
+                                            }
+                                       })
+                                       }
+                                },60000)
+                            }
+                        })
+                    },9500);
+                }
+            })
+        }else if(!found2||!llave4cogida){   
+            offcooperate.add.tween({
+                targets:peekArrow2,
+                alpha:1,
+                duration:500,
+                ease:'Sine.easeInOut',
+                onComplete:function(){
+                    setTimeout(function(){
+                        offcooperate.add.tween({
+                        targets:peekArrow2,
+                        alpha:0,
+                        duration:500,
+                        ease:'Sine.easeInOut',
+                        onComplete:function(){
+                            setTimeout(function(){
+                                if(!found2||!llave4cogida){
+                                    offcooperate.add.tween({
+                                        targets:peekArrow2,
+                                        alpha:1,
+                                        duration:500,
+                                        ease:'Sine.easeInOut',
+                                        onComplete:function(){
+                                            setTimeout(function(){
+                                                offcooperate.add.tween({
+                                                    targets:peekArrow2,
+                                                    alpha:0,
+                                                    duration:500,
+                                                    ease:'Sine.easeInOut'
+                                                })
+                                            },9500)
+                                        }
+                                    })
+                                   }
+                            },60000)
+                        }
+                    })
+                    },9500)
+                }
+            })
+        }
+       
+        
+    },60000);
+    
 }
 
 offcooperate.update=function () {
     	if (offcooperate.physics.overlap(player1, llave2)){
+            found=true;
        		puerta2abierta = true;
 		    llave2.setFrame(1);
             puerta2.setFrame(1);
@@ -527,9 +734,160 @@ offcooperate.update=function () {
 		var t=offcooperate.scene.transition({target:'offmenu',duration:'10'});
 	}
 
+    
 
+
+        if(llave3cogida){
+            peekArrow.alpha=0;
+     }
+        if(llave4cogida){
+            peekArrow2.alpha=0;
+    }
+    
+    if(!found){
+    if(player1.x<llave2.x&&player1.y+50>llave2.y&&player1.y-50<llave2.y){
+       peekArrow.angle=0;
+       peekArrow.x=player1.x+50;
+       peekArrow.y=player1.y;
+    }else if(player1.x+50<llave2.x&&player1.y+50>llave2.y){
+       peekArrow.angle=-50;
+       peekArrow.x=player1.x+50;
+       peekArrow.y=player1.y-50;
+    }else if(player1.x+50<llave2.x&&player1.y-50<llave2.y){
+       peekArrow.angle=50;
+       peekArrow.x=player1.x+50;
+       peekArrow.y=player1.y+50;   
+    }else if(player1.x>llave2.x&&player1.y+50>llave2.y&&player1.y-50<llave2.y){
+       peekArrow.angle=180;
+       peekArrow.x=player1.x-50;
+       peekArrow.y=player1.y;   
+    }else if(player1.x-50>llave2.x&&player1.y+50>llave2.y){
+       peekArrow.angle=230;
+       peekArrow.x=player1.x-50;
+       peekArrow.y=player1.y-50;       
+    }else if(player1.x-50>llave2.x&&player1.y-50<llave2.y){
+       peekArrow.angle=130;
+       peekArrow.x=player1.x-50;
+       peekArrow.y=player1.y+50;   
+    }else if(player1.y<llave2.y){
+       peekArrow.angle=90;
+       peekArrow.x=player1.x;
+       peekArrow.y=player1.y+50;    
+    }else if(player1.y>llave2.y){
+       peekArrow.angle=-90;
+       peekArrow.x=player1.x;
+       peekArrow.y=player1.y-50;   
+    }
+    }
+    if(found&&!llave3cogida){
+       if(player1.x<llave3.x&&player1.y+50>llave3.y&&player1.y-50<llave3.y){
+       peekArrow.angle=0;
+       peekArrow.x=player1.x+50;
+       peekArrow.y=player1.y;
+    }else if(player1.x+50<llave3.x&&player1.y+50>llave3.y){
+       peekArrow.angle=-50;
+       peekArrow.x=player1.x+50;
+       peekArrow.y=player1.y-50;
+    }else if(player1.x+50<llave3.x&&player1.y-50<llave3.y){
+       peekArrow.angle=50;
+       peekArrow.x=player1.x+50;
+       peekArrow.y=player1.y+50;   
+    }else if(player1.x>llave3.x&&player1.y+50>llave3.y&&player1.y-50<llave3.y){
+       peekArrow.angle=180;
+       peekArrow.x=player1.x-50;
+       peekArrow.y=player1.y;   
+    }else if(player1.x-50>llave3.x&&player1.y+50>llave3.y){
+       peekArrow.angle=230;
+       peekArrow.x=player1.x-50;
+       peekArrow.y=player1.y-50;       
+    }else if(player1.x-50>llave3.x&&player1.y-50<llave3.y){
+       peekArrow.angle=130;
+       peekArrow.x=player1.x-50;
+       peekArrow.y=player1.y+50;   
+    }else if(player1.y<llave3.y){
+       peekArrow.angle=90;
+       peekArrow.x=player1.x;
+       peekArrow.y=player1.y+50;    
+    }else if(player1.y>llave3.y){
+       peekArrow.angle=-90;
+       peekArrow.x=player1.x;
+       peekArrow.y=player1.y-50;   
+    }  
+    }
+    
+    if(!found2){
+    if(player2.x<llave1.x&&player2.y+50>llave1.y&&player2.y-50<llave1.y){
+       peekArrow2.angle=0;
+       peekArrow2.x=player2.x+50;
+       peekArrow2.y=player2.y;
+    }else if(player2.x+50<llave1.x&&player2.y+50>llave1.y){
+       peekArrow2.angle=-50;
+       peekArrow2.x=player2.x+50;
+       peekArrow2.y=player2.y-50;
+    }else if(player2.x+50<llave1.x&&player2.y-50<llave1.y){
+       peekArrow2.angle=50;
+       peekArrow2.x=player2.x+50;
+       peekArrow2.y=player2.y+50;   
+    }else if(player2.x>llave1.x&&player2.y+50>llave1.y&&player2.y-50<llave1.y){
+       peekArrow2.angle=180;
+       peekArrow2.x=player2.x-50;
+       peekArrow2.y=player2.y;   
+    }else if(player2.x-50>llave1.x&&player2.y+50>llave1.y){
+       peekArrow2.angle=230;
+       peekArrow2.x=player2.x-50;
+       peekArrow2.y=player2.y-50;       
+    }else if(player2.x-50>llave1.x&&player2.y-50<llave1.y){
+       peekArrow2.angle=130;
+       peekArrow2.x=player2.x-50;
+       peekArrow2.y=player2.y+50;   
+    }else if(player2.y<llave1.y){
+       peekArrow2.angle=90;
+       peekArrow2.x=player2.x;
+       peekArrow2.y=player2.y+50;    
+    }else if(player2.y>llave1.y){
+       peekArrow2.angle=-90;
+       peekArrow2.x=player2.x;
+       peekArrow2.y=player2.y-50;   
+    }
+    }
+    if(found2&&!llave4cogida){
+    if(player2.x<llave4.x&&player2.y+50>llave4.y&&player2.y-50<llave4.y){
+       peekArrow2.angle=0;
+       peekArrow2.x=player2.x+50;
+       peekArrow2.y=player2.y;
+    }else if(player2.x+50<llave4.x&&player2.y+50>llave4.y){
+       peekArrow2.angle=-50;
+       peekArrow2.x=player2.x+50;
+       peekArrow2.y=player2.y-50;
+    }else if(player2.x+50<llave4.x&&player2.y-50<llave4.y){
+       peekArrow2.angle=50;
+       peekArrow2.x=player2.x+50;
+       peekArrow2.y=player2.y+50;   
+    }else if(player2.x>llave4.x&&player2.y+50>llave4.y&&player2.y-50<llave4.y){
+       peekArrow2.angle=180;
+       peekArrow2.x=player2.x-50;
+       peekArrow2.y=player2.y;   
+    }else if(player2.x-50>llave4.x&&player2.y+50>llave4.y){
+       peekArrow2.angle=230;
+       peekArrow2.x=player2.x-50;
+       peekArrow2.y=player2.y-50;       
+    }else if(player2.x-50>llave4.x&&player2.y-50<llave4.y){
+       peekArrow2.angle=130;
+       peekArrow2.x=player2.x-50;
+       peekArrow2.y=player2.y+50;   
+    }else if(player2.y<llave4.y){
+       peekArrow2.angle=90;
+       peekArrow2.x=player2.x;
+       peekArrow2.y=player2.y+50;    
+    }else if(player2.y>llave4.y){
+       peekArrow2.angle=-90;
+       peekArrow2.x=player2.x;
+       peekArrow2.y=player2.y-50;   
+    }
+    }
+    
 	//text.setText('Tiempo: ' + number + "%");
-	this.physics.world.collide(player1, capa);
+	//this.physics.world.collide(player1, capa);
 	if(!puerta1abierta) this.physics.world.collide(player1, puerta1);
 	if(!puerta2abierta) this.physics.world.collide(player2, puerta2);
 	if(!puerta3abierta) this.physics.world.collide(player1, puerta3);
