@@ -27,7 +27,7 @@ var enter;
 var log;
 var log2;
 var abriendose=false;
-
+var llave2;
 
 offcooperate.create=function () {
 	var logros = function (user) {
@@ -229,7 +229,11 @@ offcooperate.create=function () {
 
 	randomx+= worldsize*32*3 + 32*3;
 
+    
+ 
+    
 	puerta2 = this.physics.add.staticSprite(randomx, worldsize*32*3, 'puerta2');
+
 
 	player1 = this.physics.add.sprite(48, 48, 'player'); //Cargamos al jugador
 	player2 = this.physics.add.sprite(worldsize*3*32+5*32-16, 48, 'player2');
@@ -338,31 +342,12 @@ offcooperate.create=function () {
 
 	} while (randomx <= 200 || randomy <= 200);
 
-	var textureFrames = this.textures.get('key2').getFrameNames();
-	var animFrames = [];
-
-	textureFrames.forEach(function (frameName) {
-
-		animFrames.push({ key: 'key2', frame: frameName });
-
-	});
-
-	this.anims.create({ key: 'key2animate', frames: animFrames, frameRate: 6, repeat: -1 });
-
-	var llave2 = this.physics.add.sprite(randomx, randomy, 'key2').play('key2animate');
-
-	var getllave2 = function () {
-		llave2.destroy();
-		sound.play();
-		puerta2abierta = true;
-		puerta2.setFrame(1);
-	}
-
-	this.physics.add.collider(player1, llave2, getllave2, null, this);
-
+        llave2 = this.physics.add.sprite(randomx, randomy, 'coopb');
 	do{
 		randomy = Math.floor(Math.random()*worldsize); 
 	} while (randomy == 0);
+    
+
 
 	mapatiles.putTileAt(1, worldsize*3-1, randomy*3+1+worldsize*3, true, capa);
 	mapatiles.putTileAt(1, worldsize*3, randomy*3+1+worldsize*3, true, capa);
@@ -488,11 +473,11 @@ offcooperate.create=function () {
 		var t=offcooperate.scene.transition({target:'menu',duration:3000});
 	}
 
-	cuentatiempo = this.time.addEvent({
+	/*cuentatiempo = this.time.addEvent({
 		delay: 180000,
 		callback: pierden,
 		callbackScope: this
-	});
+	});*/
 
 
 	text = this.add.text(32, 32).setScrollFactor(0);
@@ -505,9 +490,20 @@ offcooperate.create=function () {
 }
 
 offcooperate.update=function () {
-	var number = cuentatiempo.getProgress().toString().substr(2, 2);
-	number = 100-number;
+    	if (offcooperate.physics.overlap(player1, llave2)){
+       		puerta2abierta = true;
+		    llave2.setFrame(1);
+            puerta2.setFrame(1);
+        }
+        else{
+            puerta2abierta=false;
+            llave2.setFrame(0);
+            puerta2.setFrame(0);
+        }
 
+	//var number = cuentatiempo.getProgress().toString().substr(2, 2);
+	//number = 100-number;
+    
 	if(esc.isDown&&!abriendose&&!pausa){
 		abriendose=true;
 		flag=true;
@@ -525,13 +521,14 @@ offcooperate.update=function () {
 		},500);
 	}
 	if(enter.isDown&&pausa){
+        puerta2abierta=false;
         pausa=false;
 		music.stop();
 		var t=offcooperate.scene.transition({target:'offmenu',duration:'10'});
 	}
 
 
-	text.setText('Tiempo: ' + number + "%");
+	//text.setText('Tiempo: ' + number + "%");
 	this.physics.world.collide(player1, capa);
 	if(!puerta1abierta) this.physics.world.collide(player1, puerta1);
 	if(!puerta2abierta) this.physics.world.collide(player2, puerta2);
