@@ -39,18 +39,22 @@ var tiempoOffcooperate;
 var intervaloOffcooperate;
 
 offcooperate.create=function () {
+	
 	peekArrow=offcooperate.add.image(48,48,'peek');
 	peekArrow2=offcooperate.add.image(0,0,'peek');
 	found=false;
 	found2=false;
 	var logros = function (user) {
+		
 		if(user.partidasjugadas[0] == 1){
+			
 			log=offcooperate.add.image(500,340,'cooperate1').setScrollFactor(0);
 
 		} else if (user.partidasjugadas[0] == 5){
 
 			log2=offcooperate.add.image(500,340,'cooperate2').setScrollFactor(0);
 		}
+		
 	}
 	updateMode(globalid, 'Cooperate Offline');
 	/*
@@ -501,6 +505,7 @@ offcooperate.create=function () {
 	pausaimg=offcooperate.add.image(300,200,'paused').setScrollFactor(0);
 	pausaimg.alpha=0;
 	pausaimg.depth=3;
+	
 	peekArrow.alpha=0;
 	peekArrow.depth=1;
 	peekArrow2.alpha=0;
@@ -508,15 +513,18 @@ offcooperate.create=function () {
 
 	tiempoOffcooperate = 180;
 	intervaloOffcooperate = setInterval(function(){
+		
 		if(tiempoOffcooperate>0 && !pausa){
 			tiempoOffcooperate--;
 		}
+		
 		if(tiempoOffcooperate<=0&&!flag){
 			offcooperate.add.image(300, 200, 'pierden').setScrollFactor(0);
 			flag=true;
 			music.stop();
 			var t=offcooperate.scene.transition({target:'menu',duration:3000});
 		}
+		
 	},1000);
 
 	setTimeout(function(){
@@ -536,7 +544,7 @@ offcooperate.create=function () {
 							ease:'Sine.easeInOut',
 							onComplete:function(){
 								setTimeout(function(){
-									if(!found&&!found2||!found&&!llave4cogida&&!llave3cogida&&!found2||llave3cogida&&!llave4cogida){
+									if(!found&&!found2||!found&&!llave4cogida&&!llave3cogida&&!found2||!llave3cogida&&!llave4cogida){
 										setTimeout(function(){
 											offcooperate.add.tween({
 												targets:[peekArrow,peekArrow2],
@@ -903,20 +911,25 @@ offcooperate.update=function () {
 	}
 
 	//text.setText('Tiempo: ' + number + "%");
+	
 	this.physics.world.collide(player1, capa);
 	if(!puerta1abierta) this.physics.world.collide(player1, puerta1);
 	if(!puerta2abierta) this.physics.world.collide(player2, puerta2);
 	if(!puerta3abierta) this.physics.world.collide(player1, puerta3);
 	if(!puerta3abierta) this.physics.world.collide(player2, puerta4);
-	//Hacemos que el personaje colisione con la capa del tile
+	
 	player1.body.velocity.x = 0;
 	player1.body.velocity.y = 0;
+	
 	//El personaje por defecto aparece siempre parado excepto que se pulse una tecla
 
 	this.physics.world.collide(player2, capa);
+	
 	//Hacemos que el personaje colisione con la capa del tile
+	
 	player2.body.velocity.x = 0;
 	player2.body.velocity.y = 0;
+	
 	//El personaje por defecto aparece siempre parado excepto que se pulse una tecla
 
 	if(!flag){
