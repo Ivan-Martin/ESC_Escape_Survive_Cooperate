@@ -41,7 +41,6 @@ var intervalo;
 var finrender = false;
 var tiempoCooperate;
 var intervaloCooperate;
-var identificadortilecoop;
 
 function comprobarMundoListo () {
 	//Función para comprobar que no se haya perdido ningún paquete al enviar el mundo al otro jugador
@@ -122,11 +121,6 @@ cooperate.create = function () {
 				//ID: play
 				player2ready = true;
 				console.log("Recibido que el jugador 2 está listo");
-				var enviartile = {};
-				enviartile.id = "tileo";
-				enviartile.tile = identificadortilecoop;
-				enviartile.userid = globalid;
-				connection.send(JSON.stringify(enviartile));
 			} else if (datos.id == "rellenoMapa") {
 				var dimensionrelleno = datos.dim;
 				rellenocapa[dimensionrelleno] = true;
@@ -164,12 +158,8 @@ cooperate.create = function () {
 				setTimeout(function () {
 					var t=cooperate.scene.transition({target:'menu',duration:3000});
 					clearInterval(intervalo);
+                    clearInterval(intervaloCooperate);
 				}, 3000);
-			} else if (datos.id == "tileo"){
-				var nombretileo = "tileo" + datos.tile;
-				var tileset = mapatiles.addTilesetImage(nombretileo, nombretileo, 32, 32); //Cargamos el mapa de sprites de tiles
-				capa = mapatiles.createBlankDynamicLayer('nivel', tileset, 0, 0, worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
-
 			}
 		}
 
@@ -179,7 +169,10 @@ cooperate.create = function () {
 
 	mapatiles = this.make.tilemap({ tileWidth: 32, tileHeight: 32, width: worldtiles*32*2+96, heigth: worldtiles*32*2}); //Esto añade un mapa vacío al mundo
 
-	
+	var tileset = mapatiles.addTilesetImage('tileo', 'tileo', 32, 32); //Cargamos el mapa de sprites de tiles
+
+	capa = mapatiles.createBlankDynamicLayer('nivel', tileset, 0, 0, worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
+
 	var llave1pos = {}, llave2pos = {}, llave3pos = {}, llave4pos = {};
 	var puerta1pos = {}, puerta2pos = {}, puerta3pos = {}, puerta4pos = {};
 	var player2pos = {}, goldenstairspos= {};
@@ -191,14 +184,6 @@ cooperate.create = function () {
 		/*
 		 * CREACION DEL MUNDO
 		 */
-		identificadortilecoop = Math.ceil(Math.random()*6);
-		
-		var nombretileset = 'tileo' + identificadortilecoop;
-		
-		var tileset = mapatiles.addTilesetImage(nombretileset, nombretileset, 32, 32); //Cargamos el mapa de sprites de tiles
-
-		capa = mapatiles.createBlankDynamicLayer('nivel', tileset, 0, 0, worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
-
 		createworld(worldsize); //Lanzamos el generador de laberintos con un tamaño de worldsize x worldsize
 
 		muros = tileindex(); //Recuperamos del generador de laberintos el tileo del mapa
@@ -596,11 +581,9 @@ cooperate.create = function () {
 		connection.send(JSON.stringify(mensajelisto));
 	}
 	
-	
+	mapatiles.setCollisionBetween(3, 14, true, true, capa); //Le dice que las tiles de 3 a 14 colisionan
 
 	function render () {
-		
-		mapatiles.setCollisionBetween(3, 14, true, true, capa); //Le dice que las tiles de 3 a 14 colisionan
 		
 		puerta1 = cooperate.physics.add.staticSprite(puerta1pos.x, puerta1pos.y, 'puerta1');
 		puerta2 = cooperate.physics.add.staticSprite(puerta2pos.x, puerta2pos.y, 'puerta2');
@@ -715,6 +698,8 @@ cooperate.create = function () {
 			cooperate.add.image(600,400,'ganan');
 			addGame(globalid, 'Cooperate', "Player1", logros);
             coopmusic.stop();
+            clearInterval(intervalo);
+            clearInterval(intervaloCooperate);
 			var t=cooperate.scene.transition({target:'menu',duration:3000});
 
 		}
@@ -726,6 +711,8 @@ cooperate.create = function () {
 			cooperate.add.image(600,400,'ganan');
 			addGame(globalid, 'Cooperate', "Player1", logros);
             coopmusic.stop();
+            clearInterval(intervalo);
+            clearInterval(intervaloCooperate);
 			var t=cooperate.scene.transition({target:'menu',duration:3000});
 
 		}
@@ -816,6 +803,7 @@ cooperate.create = function () {
         nomovimiento=true;
         coopmusic.stop();
         clearInterval(intervalo);
+        clearInterval(intervaloCooperate);
         var t=cooperate.scene.transition({target:'menu',duration:3000});
         }
     },1000);
@@ -850,6 +838,7 @@ cooperate.update=function () {
 		updateMode(globalid, "desconexion");
 		var t=cooperate.scene.transition({target:'menu',duration:10});
 		clearInterval(intervalo);
+        clearInterval(intervaloCooperate);
 	}
 	
 	if(player2ready){

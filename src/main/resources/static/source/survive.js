@@ -47,7 +47,6 @@ var finrender = false;
 var poweruppos = {};
 var tiempoSurvive;
 var intervaloSurviveT;
-var identificadortilesurvive;
 
 function comprobarMundoListo () {
 	//Función para comprobar que no se haya perdido ningún paquete al enviar el mundo al otro jugador
@@ -121,11 +120,6 @@ survive.create =function () {
 				//ID: play
 				player2ready = true;
 				console.log("Recibido que el jugador 2 está listo");
-				var enviartile = {};
-				enviartile.id = "tileo";
-				enviartile.tile = identificadortilesurvive;
-				enviartile.userid = globalid;
-				connection.send(JSON.stringify(enviartile));
 			} else if (datos.id == "rellenoMapa") {
 				var dimensionrelleno = datos.dim;
 				rellenocapa[dimensionrelleno] = true;
@@ -163,12 +157,8 @@ survive.create =function () {
 				setTimeout(function () {
 					var t=survive.scene.transition({target:'menu',duration:3000});
 					clearInterval(intervalosurvive);
+                    clearInterval(intervaloSurviveT);
 				}, 3000);
-			} else if (datos.id == "tileo"){
-				var nombretileo = "tileo" + datos.tile;
-				var tileset = mapatiles.addTilesetImage(nombretileo, nombretileo, 32, 32); //Cargamos el mapa de sprites de tiles
-				capa = mapatiles.createBlankDynamicLayer('nivel', tileset, 0, 0, worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
-
 			}
 		}
 
@@ -182,18 +172,16 @@ survive.create =function () {
 
 	mapatiles = this.make.tilemap({ tileWidth: 32, tileHeight: 32, width: worldtiles*32, heigth: worldtiles*32}); //Esto añade un mapa vacío al mundo
 
-	
+	var tileset = mapatiles.addTilesetImage('tileo', 'tileo', 32, 32); //Cargamos el mapa de sprites de tiles
+
+	capa = mapatiles.createBlankDynamicLayer('nivel', tileset, 0, 0, worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
+
 	var player2pos = {};
 
 	if(imhost){
 		/*
 		 * CREACIÓN DEL MUNDO
 		 */
-		identificadortilesurvive = Math.ceil(Math.random()*6);
-		var nombretileset = 'tileo' + identificadortilesurvive;
-		var tileset = mapatiles.addTilesetImage(nombretileset, nombretileset, 32, 32); //Cargamos el mapa de sprites de tiles
-		capa = mapatiles.createBlankDynamicLayer('nivel', tileset, 0, 0, worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
-
 
 		createworld(worldsize); //Lanzamos el generador de laberintos con un tamaño de worldsize x worldsize
 
@@ -276,11 +264,9 @@ survive.create =function () {
 		connection.send(JSON.stringify(mensajelisto));
 	}
 
-	
+	mapatiles.setCollisionBetween(3, 14, true, true, capa); //Le dice que las tiles de 3 a 14 colisionan
 
 	function render () {
-		mapatiles.setCollisionBetween(3, 14, true, true, capa); //Le dice que las tiles de 3 a 14 colisionan
-		
 		camara1 = survive.cameras.main.setSize(600,400);
 		camara2 = survive.cameras.add(600, 0, 600, 400);
 
@@ -388,6 +374,7 @@ survive.create =function () {
 			nomovimiento=true;
 			addGame(globalid, 'Survive', "Player2", logros);
             clearInterval(intervalosurvive);
+            clearInterval(intervaloSurviveT);
 			var t=survive.scene.transition({target:'menu',duration:3000});
 		};
 
@@ -491,6 +478,7 @@ survive.create =function () {
 			nomovimiento=true;
 			addGame(globalid, 'Survive', "Player1", logros);
             clearInterval(intervalosurvive);
+            clearInterval(intervaloSurviveT);
 			var t=survive.scene.transition({target:'menu',duration:3000});
            }
     }, 1000);
@@ -526,6 +514,7 @@ survive.update=function () {
 		updateMode(globalid, "desconexion");
 		var t=survive.scene.transition({target:'menu',duration:10});
 		clearInterval(intervalosurvive);
+        clearInterval(intervaloSurviveT);
 	}
 
 	if(player2ready){

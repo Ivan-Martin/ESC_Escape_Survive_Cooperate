@@ -394,6 +394,7 @@ offcooperate.create=function () {
 		offcooperate.add.image(600,400,'ganan');
 		addGame(globalid, 'Cooperate', "Player1", logros);
 		music.stop();
+        clearInterval(intervaloOffcooperate);
 		var t=offcooperate.scene.transition({target:'offmenu',duration:3000});
 
 	}
@@ -405,6 +406,7 @@ offcooperate.create=function () {
 		offcooperate.add.image(600,400,'ganan');
 		addGame(globalid, 'Cooperate', "Player1", logros);
 		music.stop();
+        clearInterval(intervaloOffcooperate);
 		var t=offcooperate.scene.transition({target:'offmenu',duration:3000});
 
 	}
@@ -522,7 +524,8 @@ offcooperate.create=function () {
 			offcooperate.add.image(300, 200, 'pierden').setScrollFactor(0);
 			flag=true;
 			music.stop();
-			var t=offcooperate.scene.transition({target:'offmenu',duration:3000});
+            clearInterval(intervaloOffcooperate);
+			var t=offcooperate.scene.transition({target:'menu',duration:3000});
 		}
 		
 	},1000);
@@ -755,6 +758,7 @@ offcooperate.update=function () {
 		puerta2abierta=false;
 		pausa=false;
 		music.stop();
+        clearInterval(intervaloOffcooperate);
 		var t=offcooperate.scene.transition({target:'offmenu',duration:'10'});
 	}
 
