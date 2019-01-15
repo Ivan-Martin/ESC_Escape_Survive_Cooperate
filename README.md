@@ -11,6 +11,10 @@ ESC es un juego de puzzles con una estética retro, ambientado en una temática 
 Cada vez que juegues a ESC tendrás una experiencia única, ya que cada vez que entras a jugar, nuevos laberintos son generados.
 ¡Nunca verás dos iguales!
 
+¡¡Ya puedes probar online nuestro juego!!
+
+Puedes probarlo en [itchio][itchiolink], [Newgrounds][newgroundslink] y [Kongregate][kongregatelink]
+
 [Aqui un video mostrando la funcionalidad online](https://youtu.be/J0jtra2VqR0)
 
 
@@ -105,7 +109,7 @@ En las ultimas etapas de desarrollo de este proyecto hemos realizo beta-testing 
 
 * Nuevos powerups para el modo Survive:
   
-  -El Turbo Booster acelera la velocidad de movimeinto de su usuario.
+  -El Turbo Booster acelera la velocidad de movimiento de su usuario.
   
   -El Freezer congela el tiempo durante 5 segundos.
   
@@ -114,12 +118,44 @@ El beta testing se llevó acabo con gente externa al grupo de desarrollo, envian
 
 Además, se ha publicado la versión final del proyecto en tres webs de juegos de navegador, aqui facilitamos los enlaces:
 
-Itch.io -
+Itch.io - https://escgame.itch.io/esc
 
-Newgrounds -
+Newgrounds - https://www.newgrounds.com/portal/view/724623?updated=1547518458
 
-Kongregate -
+Kongregate - https://www.kongregate.com/games/ESCgame/esc-escape-survive-cooperate
 
+- - -
+
+# Beta testing
+
+Para llevar a cabo el beta testing, dispusimos nuestro juego en privado en itchio para irlo distribuyendo a aquellas personas que pudieran probarlo. Posteriormente, les pasamos un cuestionario para que rellenaran con sus opiniones.
+
+Los resultados del cuestionario han sido los siguientes:
+
+Acerca de la edad, el target del juego se cumple: Una media de edad de 20 años acerca de las personas que han probado el juego.
+
+Sobre la satisfacción de los usuarios con el juego, se observan buenos resultados:
+ * Escape tiene una media de 4 puntos sobre 5
+ * Survive tiene una media de 4,13 puntos sobre 5
+ * Cooperate tiene una media de 4,13 puntos sobre 5
+ * El juego en global tiene una media de 4 puntos sobre 5
+ * La música y estética se colocan con 3,9 puntos sobre 5
+ 
+Algunos de los errores encontrados destacan:
+
+- Problemas al entrar al modo Survive Alone, que no permitían mover al jugador -> SOLUCIONADO (Errata en el código)
+- Problemas con la carga de archivos -> SOLUCIONADO (Inclusión de una barra de carga)
+
+Con respecto al tamaño de los laberintos y al tiempo ofrecido para el gameplay, un 60% de los usuarios están satisfechos con el tamaño de los laberintos, y un 70% con el tiempo ofrecido. Se ha decidido dejar el gameplay sin modificaciones.
+
+También estamos satisfechos con la inclusión de las imágenes de ayuda en la página del juego: Un 90% de las personas indican que les resultan de ayuda.
+
+Por lo demás, también se han sugerido temas como la adición de nuevos powerups, en los que el equipo ya estaba trabajando.
+
+![No se pudo cargar la imagen](https://fotos.subefotos.com/72e6f932bb4f08a60e66073ef1a5baafo.png "Encuesta acerca de las ayudas")
+![No se pudo cargar la imagen](https://fotos.subefotos.com/91efd8bfc62711016d14d588bee9d8f3o.png "Encuesta acerca del tamaño de laberintos")
+![No se pudo cargar la imagen](https://fotos.subefotos.com/01ba270dccdc2e672185d6dac8c9407eo.png "Encuesta acerca del tiempo ofrecido")
+![No se pudo cargar la imagen](https://fotos.subefotos.com/afe1d4963538c1b9f5c977862db7a423o.png "Puntuación global del juego obtenida en el beta testing")
 - - -
 
 Equipo de desarrollo de ESC:
@@ -134,3 +170,6 @@ Equipo de desarrollo de ESC:
 [gitalvaro]: https://github.com/digifireEX
 [linksoundation]: https://soundation.com/
 [phaserlink]: https://phaser.io/
+[itchiolink]: https://escgame.itch.io/esc
+[newgroundslink]: https://www.newgrounds.com/portal/view/724623?updated=1547518458
+[kongregatelink]: https://www.kongregate.com/games/ESCgame/esc-escape-survive-cooperate
