@@ -164,12 +164,12 @@ cooperate.create = function () {
 				setTimeout(function () {
 					var t=cooperate.scene.transition({target:'menu',duration:3000});
 					clearInterval(intervalo);
+                    clearInterval(intervaloCooperate);
 				}, 3000);
 			} else if (datos.id == "tileo"){
 				var nombretileo = "tileo" + datos.tile;
 				var tileset = mapatiles.addTilesetImage(nombretileo, nombretileo, 32, 32); //Cargamos el mapa de sprites de tiles
 				capa = mapatiles.createBlankDynamicLayer('nivel', tileset, 0, 0, worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
-
 			}
 		}
 
@@ -179,7 +179,6 @@ cooperate.create = function () {
 
 	mapatiles = this.make.tilemap({ tileWidth: 32, tileHeight: 32, width: worldtiles*32*2+96, heigth: worldtiles*32*2}); //Esto añade un mapa vacío al mundo
 
-	
 	var llave1pos = {}, llave2pos = {}, llave3pos = {}, llave4pos = {};
 	var puerta1pos = {}, puerta2pos = {}, puerta3pos = {}, puerta4pos = {};
 	var player2pos = {}, goldenstairspos= {};
@@ -596,7 +595,6 @@ cooperate.create = function () {
 		connection.send(JSON.stringify(mensajelisto));
 	}
 	
-	
 
 	function render () {
 		
@@ -715,6 +713,8 @@ cooperate.create = function () {
 			cooperate.add.image(600,400,'ganan');
 			addGame(globalid, 'Cooperate', "Player1", logros);
             coopmusic.stop();
+            clearInterval(intervalo);
+            clearInterval(intervaloCooperate);
 			var t=cooperate.scene.transition({target:'menu',duration:3000});
 
 		}
@@ -726,6 +726,8 @@ cooperate.create = function () {
 			cooperate.add.image(600,400,'ganan');
 			addGame(globalid, 'Cooperate', "Player1", logros);
             coopmusic.stop();
+            clearInterval(intervalo);
+            clearInterval(intervaloCooperate);
 			var t=cooperate.scene.transition({target:'menu',duration:3000});
 
 		}
@@ -816,6 +818,7 @@ cooperate.create = function () {
         nomovimiento=true;
         coopmusic.stop();
         clearInterval(intervalo);
+        clearInterval(intervaloCooperate);
         var t=cooperate.scene.transition({target:'menu',duration:3000});
         }
     },1000);
@@ -850,6 +853,7 @@ cooperate.update=function () {
 		updateMode(globalid, "desconexion");
 		var t=cooperate.scene.transition({target:'menu',duration:10});
 		clearInterval(intervalo);
+        clearInterval(intervaloCooperate);
 	}
 	
 	if(player2ready){

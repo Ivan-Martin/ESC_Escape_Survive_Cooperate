@@ -135,6 +135,7 @@ offsurvive.create =function () {
 		this.add.image(300, 200, 'ganasombra').setScrollFactor(0);
 		flag=true;
 		addGame(globalid, 'Survive', "Player2", logros);
+        clearInterval(intervalooffsurvive);
 		var t=offsurvive.scene.transition({target:'offmenu',duration:3000});
 	};
 
@@ -463,6 +464,7 @@ offsurvive.update=function () {
 	if(enter.isDown&&pausa){
         pausa=false;
 		music.stop();
+        clearInterval(intervalooffsurvive);
 		var t=offsurvive.scene.transition({target:'offmenu',duration:'10'});
 	}
 

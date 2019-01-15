@@ -163,6 +163,7 @@ survive.create =function () {
 				setTimeout(function () {
 					var t=survive.scene.transition({target:'menu',duration:3000});
 					clearInterval(intervalosurvive);
+                    clearInterval(intervaloSurviveT);
 				}, 3000);
 			} else if (datos.id == "tileo"){
 				var nombretileo = "tileo" + datos.tile;
@@ -182,7 +183,6 @@ survive.create =function () {
 
 	mapatiles = this.make.tilemap({ tileWidth: 32, tileHeight: 32, width: worldtiles*32, heigth: worldtiles*32}); //Esto añade un mapa vacío al mundo
 
-	
 	var player2pos = {};
 
 	if(imhost){
@@ -193,7 +193,6 @@ survive.create =function () {
 		var nombretileset = 'tileo' + identificadortilesurvive;
 		var tileset = mapatiles.addTilesetImage(nombretileset, nombretileset, 32, 32); //Cargamos el mapa de sprites de tiles
 		capa = mapatiles.createBlankDynamicLayer('nivel', tileset, 0, 0, worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
-
 
 		createworld(worldsize); //Lanzamos el generador de laberintos con un tamaño de worldsize x worldsize
 
@@ -276,11 +275,9 @@ survive.create =function () {
 		connection.send(JSON.stringify(mensajelisto));
 	}
 
-	
 
 	function render () {
 		mapatiles.setCollisionBetween(3, 14, true, true, capa); //Le dice que las tiles de 3 a 14 colisionan
-		
 		camara1 = survive.cameras.main.setSize(600,400);
 		camara2 = survive.cameras.add(600, 0, 600, 400);
 
@@ -388,6 +385,7 @@ survive.create =function () {
 			nomovimiento=true;
 			addGame(globalid, 'Survive', "Player2", logros);
             clearInterval(intervalosurvive);
+            clearInterval(intervaloSurviveT);
 			var t=survive.scene.transition({target:'menu',duration:3000});
 		};
 
@@ -491,6 +489,7 @@ survive.create =function () {
 			nomovimiento=true;
 			addGame(globalid, 'Survive', "Player1", logros);
             clearInterval(intervalosurvive);
+            clearInterval(intervaloSurviveT);
 			var t=survive.scene.transition({target:'menu',duration:3000});
            }
     }, 1000);
@@ -526,6 +525,7 @@ survive.update=function () {
 		updateMode(globalid, "desconexion");
 		var t=survive.scene.transition({target:'menu',duration:10});
 		clearInterval(intervalosurvive);
+        clearInterval(intervaloSurviveT);
 	}
 
 	if(player2ready){
