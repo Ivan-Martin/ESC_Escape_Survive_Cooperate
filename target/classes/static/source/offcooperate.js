@@ -35,11 +35,14 @@ var peekArrow;
 var peekArrow2;
 var found; //p1
 var found2; //p2
+var tiempoOffcooperate;
+var intervaloOffcooperate;
+
 offcooperate.create=function () {
-      peekArrow=offcooperate.add.image(48,48,'peek');
-      peekArrow2=offcooperate.add.image(0,0,'peek');
-      found=false;
-      found2=false;
+	peekArrow=offcooperate.add.image(48,48,'peek');
+	peekArrow2=offcooperate.add.image(0,0,'peek');
+	found=false;
+	found2=false;
 	var logros = function (user) {
 		if(user.partidasjugadas[0] == 1){
 			log=offcooperate.add.image(500,340,'cooperate1').setScrollFactor(0);
@@ -239,17 +242,18 @@ offcooperate.create=function () {
 
 	randomx+= worldsize*32*3 + 32*3;
 
-    
- 
-    
+
+
+
 	puerta2 = this.physics.add.staticSprite(randomx, worldsize*32*3, 'puerta2');
 
 
 	player1 = this.physics.add.sprite(48, 48, 'player'); //Cargamos al jugador
+	player1.depth = 2;
 	player2 = this.physics.add.sprite(worldsize*3*32+5*32-16, 48, 'player2');
 
 
-    
+
 	this.physics.world.enable([player1, player2]);
 	//Camaras
 
@@ -262,6 +266,7 @@ offcooperate.create=function () {
 
 	this.add.image(0, 0, 'borde').setScrollFactor(0);
 
+	text=this.add.text(32,32).setScrollFactor(0);
 
 	this.anims.create({
 		key:'downwards2', frames:this.anims.generateFrameNumbers('player2',{start:1, end:3}), repeat:0, frameRate:6
@@ -331,7 +336,7 @@ offcooperate.create=function () {
 	llave1 = this.physics.add.sprite(randomx, randomy, 'key1').play('key1animate');
 
 	var getllave1 = function () {
-        found2=true;
+		found2=true;
 		llave1.destroy();
 		sound.play();
 		puerta1abierta = true;
@@ -355,11 +360,12 @@ offcooperate.create=function () {
 
 	} while (randomx <= 200 || randomy <= 200);
 
-        llave2 = this.physics.add.sprite(randomx, randomy, 'coopb');
+	llave2 = this.physics.add.sprite(randomx, randomy, 'coopb');
+	llave2.depth = 1;
 	do{
 		randomy = Math.floor(Math.random()*worldsize); 
 	} while (randomy == 0);
-    
+
 
 
 	mapatiles.putTileAt(1, worldsize*3-1, randomy*3+1+worldsize*3, true, capa);
@@ -431,7 +437,7 @@ offcooperate.create=function () {
 
 	randomy+= worldsize*3*32 + 3*32;
 
-    llave3 = this.physics.add.sprite(randomx, randomy, 'key3').play('key3animate');
+	llave3 = this.physics.add.sprite(randomx, randomy, 'key3').play('key3animate');
 
 	var getllave3 = function () {
 		llave3.destroy();
@@ -480,10 +486,7 @@ offcooperate.create=function () {
 	this.physics.add.collider(player2, llave4, getllave4, null, this);
 
 	var pierden = function () {
-		this.add.image(300, 200, 'pierden').setScrollFactor(0);
-		flag=true;
-		music.stop();
-		var t=offcooperate.scene.transition({target:'menu',duration:3000});
+
 	}
 
 	/*cuentatiempo = this.time.addEvent({
@@ -497,220 +500,233 @@ offcooperate.create=function () {
 
 	pausaimg=offcooperate.add.image(300,200,'paused').setScrollFactor(0);
 	pausaimg.alpha=0;
-	pausaimg.depth=1;
-    peekArrow.alpha=0;
-    peekArrow.depth=1;
-    peekArrow2.alpha=0;
-    peekArrow2.depth=1;
-    
-    setTimeout(function(){
-        if(!found&&!found2||!found&&!llave4cogida&&!llave3cogida&&!found2||llave3cogida&&!llave4cogida){
-        offcooperate.add.tween({
-                    targets:[peekArrow,peekArrow2],
-                    alpha:1,
-                    duration:500,
-                    ease:'Sine.easeInOut',
-                    onComplete:function(){
-                    setTimeout(function(){
-                    //timeout
-                    offcooperate.add.tween({
-                    targets:[peekArrow,peekArrow2],
-                    alpha:0,
-                    duration:500,
-                    ease:'Sine.easeInOut',
-                    onComplete:function(){
-                        setTimeout(function(){
-                        if(!found&&!found2||!found&&!llave4cogida&&!llave3cogida&&!found2||llave3cogida&&!llave4cogida){
-                            setTimeout(function(){
-                                offcooperate.add.tween({
-                                targets:[peekArrow,peekArrow2],
-                                alpha:0,
-                                duration:500,
-                                ease:'Sine.easeInOut',
-                                onComplete:function(){
-                                        if(!found&&!found2||!found&&!llave4cogida&&!llave3cogida&&!found2||llave3cogida&&!llave4cogida){
-                                            offcooperate.add.tween({
-                                                targets:[peekArrow,peekArrow2],
-                                                alpha:1,
-                                                duration:500,
-                                                ease:'Sine.easeInOut',
-                                                onComplete:function(){
-                                                    setTimeout(function(){
-                                                        offcooperate.add.tween({
-                                                            targets:[peekArrow,peekArrow2],
-                                                            alpha:0,
-                                                            duration:500,
-                                                            ease:'Sine.easeInOut'
-                                                        })
-                                                    },9500);
-                                                }
-                                            });
-                                        }else if(!found||!llave3cogida){
-                                            offcooperate.add.tween({
-                                                targets:peekArrow,
-                                                alpha:1,
-                                                duration:500,
-                                                ease:'Sine.easeInOut',
-                                                onComplete:function(){
-                                                    setTimeout(function(){
-                                                        offcooperate.add.tween({
-                                                            targets:peekArrow,
-                                                            alpha:0,
-                                                            duration:500,
-                                                            ease:'Sine.easeInOut'
-                                                        })
-                                                    },9500);
-                                                }
-                                            });
-                                        }else if(!found2||!llave4cogida){
-                                            offcooperate.add.tween({
-                                                targets:peekArrow2,
-                                                alpha:1,
-                                                duration:500,
-                                                ease:'Sine.easeInOut',
-                                                onComplete:function(){
-                                                    setTimeout(function(){
-                                                        offcooperate.add.tween({
-                                                            targets:peekArrow2,
-                                                            alpha:0,
-                                                            duration:500,
-                                                            ease:'Sine.easeInOut'
-                                                        })
-                                                    },9500);
-                                                }
-                                            })
-                                        }
-                                    }
-                                })
-                        },9500);
-                        }else if(!found||!llave3cogida){
-                            peekArrow.alpha=1;
-                            setTimeout(function(){
-                                offcooperate.add.tween({
-                                targets:peekArrow,
-                                alpha:0,
-                                duration:500,
-                                ease:'Sine.easeInOut'
-                            })
-                        },9500);
-                        }else if(!found2||!llave4cogida){   
-                            peekArrow2.alpha=1;
-                            setTimeout(function(){
-                                offcooperate.add.tween({
-                                targets:peekArrow,
-                                alpha:0,
-                                duration:500,
-                                ease:'Sine.easeInOut'
-                            })
-                        },9500)
-                        }
-                    },60000);
-                    }
-                })
-            },9500)
-        }
-        })
-        }else if(!found||!llave3cogida){
-            offcooperate.add.tween({
-                targets:peekArrow,
-                alpha:1,
-                duration:500,
-                ease:'Sine.easeInOut',
-                onComplete:function(){
-                    setTimeout(function(){
-                        offcooperate.add.tween({
-                            targets:peekArrow,
-                            alpha:0,
-                            duration:500,
-                            ease:'Sine.easeInOut',
-                            onComplete:function(){
-                                setTimeout(function(){
-                                    if(!found||!llave3cogida){
-                                       offcooperate.add.tween({
-                                            targets:peekArrow,
-                                            alpha:1,
-                                            duration:500,
-                                            ease:'Sine.easeInOut',
-                                            onComplete:function(){
-                                                setTimeout(function(){
-                                                    offcooperate.add.tween({
-                                                        targets:peekArrow,
-                                                        alpha:0,
-                                                        duration:500,
-                                                        ease:'Sine.easeInOut'
-                                                    })
-                                                },9500)
-                                            }
-                                       })
-                                       }
-                                },60000)
-                            }
-                        })
-                    },9500);
-                }
-            })
-        }else if(!found2||!llave4cogida){   
-            offcooperate.add.tween({
-                targets:peekArrow2,
-                alpha:1,
-                duration:500,
-                ease:'Sine.easeInOut',
-                onComplete:function(){
-                    setTimeout(function(){
-                        offcooperate.add.tween({
-                        targets:peekArrow2,
-                        alpha:0,
-                        duration:500,
-                        ease:'Sine.easeInOut',
-                        onComplete:function(){
-                            setTimeout(function(){
-                                if(!found2||!llave4cogida){
-                                    offcooperate.add.tween({
-                                        targets:peekArrow2,
-                                        alpha:1,
-                                        duration:500,
-                                        ease:'Sine.easeInOut',
-                                        onComplete:function(){
-                                            setTimeout(function(){
-                                                offcooperate.add.tween({
-                                                    targets:peekArrow2,
-                                                    alpha:0,
-                                                    duration:500,
-                                                    ease:'Sine.easeInOut'
-                                                })
-                                            },9500)
-                                        }
-                                    })
-                                   }
-                            },60000)
-                        }
-                    })
-                    },9500)
-                }
-            })
-        }
-       
-        
-    },60000);
-    
+	pausaimg.depth=3;
+	peekArrow.alpha=0;
+	peekArrow.depth=1;
+	peekArrow2.alpha=0;
+	peekArrow2.depth=1;
+
+	tiempoOffcooperate = 180;
+	intervaloOffcooperate = setInterval(function(){
+		if(tiempoOffcooperate>0 && !pausa){
+			tiempoOffcooperate--;
+		}
+		if(tiempoOffcooperate<=0&&!flag){
+			offcooperate.add.image(300, 200, 'pierden').setScrollFactor(0);
+			flag=true;
+			music.stop();
+			var t=offcooperate.scene.transition({target:'menu',duration:3000});
+		}
+	},1000);
+
+	setTimeout(function(){
+		if(!found&&!found2||!found&&!llave4cogida&&!llave3cogida&&!found2||llave3cogida&&!llave4cogida){
+			offcooperate.add.tween({
+				targets:[peekArrow,peekArrow2],
+				alpha:1,
+				duration:500,
+				ease:'Sine.easeInOut',
+				onComplete:function(){
+					setTimeout(function(){
+						//timeout
+						offcooperate.add.tween({
+							targets:[peekArrow,peekArrow2],
+							alpha:0,
+							duration:500,
+							ease:'Sine.easeInOut',
+							onComplete:function(){
+								setTimeout(function(){
+									if(!found&&!found2||!found&&!llave4cogida&&!llave3cogida&&!found2||llave3cogida&&!llave4cogida){
+										setTimeout(function(){
+											offcooperate.add.tween({
+												targets:[peekArrow,peekArrow2],
+												alpha:0,
+												duration:500,
+												ease:'Sine.easeInOut',
+												onComplete:function(){
+													if(!found&&!found2||!found&&!llave4cogida&&!llave3cogida&&!found2||llave3cogida&&!llave4cogida){
+														offcooperate.add.tween({
+															targets:[peekArrow,peekArrow2],
+															alpha:1,
+															duration:500,
+															ease:'Sine.easeInOut',
+															onComplete:function(){
+																setTimeout(function(){
+																	offcooperate.add.tween({
+																		targets:[peekArrow,peekArrow2],
+																		alpha:0,
+																		duration:500,
+																		ease:'Sine.easeInOut'
+																	})
+																},9500);
+															}
+														});
+													}else if(!found||!llave3cogida){
+														offcooperate.add.tween({
+															targets:peekArrow,
+															alpha:1,
+															duration:500,
+															ease:'Sine.easeInOut',
+															onComplete:function(){
+																setTimeout(function(){
+																	offcooperate.add.tween({
+																		targets:peekArrow,
+																		alpha:0,
+																		duration:500,
+																		ease:'Sine.easeInOut'
+																	})
+																},9500);
+															}
+														});
+													}else if(!found2||!llave4cogida){
+														offcooperate.add.tween({
+															targets:peekArrow2,
+															alpha:1,
+															duration:500,
+															ease:'Sine.easeInOut',
+															onComplete:function(){
+																setTimeout(function(){
+																	offcooperate.add.tween({
+																		targets:peekArrow2,
+																		alpha:0,
+																		duration:500,
+																		ease:'Sine.easeInOut'
+																	})
+																},9500);
+															}
+														})
+													}
+												}
+											})
+										},9500);
+									}else if(!found||!llave3cogida){
+										peekArrow.alpha=1;
+										setTimeout(function(){
+											offcooperate.add.tween({
+												targets:peekArrow,
+												alpha:0,
+												duration:500,
+												ease:'Sine.easeInOut'
+											})
+										},9500);
+									}else if(!found2||!llave4cogida){   
+										peekArrow2.alpha=1;
+										setTimeout(function(){
+											offcooperate.add.tween({
+												targets:peekArrow,
+												alpha:0,
+												duration:500,
+												ease:'Sine.easeInOut'
+											})
+										},9500)
+									}
+								},60000);
+							}
+						})
+					},9500)
+				}
+			})
+		}else if(!found||!llave3cogida){
+			offcooperate.add.tween({
+				targets:peekArrow,
+				alpha:1,
+				duration:500,
+				ease:'Sine.easeInOut',
+				onComplete:function(){
+					setTimeout(function(){
+						offcooperate.add.tween({
+							targets:peekArrow,
+							alpha:0,
+							duration:500,
+							ease:'Sine.easeInOut',
+							onComplete:function(){
+								setTimeout(function(){
+									if(!found||!llave3cogida){
+										offcooperate.add.tween({
+											targets:peekArrow,
+											alpha:1,
+											duration:500,
+											ease:'Sine.easeInOut',
+											onComplete:function(){
+												setTimeout(function(){
+													offcooperate.add.tween({
+														targets:peekArrow,
+														alpha:0,
+														duration:500,
+														ease:'Sine.easeInOut'
+													})
+												},9500)
+											}
+										})
+									}
+								},60000)
+							}
+						})
+					},9500);
+				}
+			})
+		}else if(!found2||!llave4cogida){   
+			offcooperate.add.tween({
+				targets:peekArrow2,
+				alpha:1,
+				duration:500,
+				ease:'Sine.easeInOut',
+				onComplete:function(){
+					setTimeout(function(){
+						offcooperate.add.tween({
+							targets:peekArrow2,
+							alpha:0,
+							duration:500,
+							ease:'Sine.easeInOut',
+							onComplete:function(){
+								setTimeout(function(){
+									if(!found2||!llave4cogida){
+										offcooperate.add.tween({
+											targets:peekArrow2,
+											alpha:1,
+											duration:500,
+											ease:'Sine.easeInOut',
+											onComplete:function(){
+												setTimeout(function(){
+													offcooperate.add.tween({
+														targets:peekArrow2,
+														alpha:0,
+														duration:500,
+														ease:'Sine.easeInOut'
+													})
+												},9500)
+											}
+										})
+									}
+								},60000)
+							}
+						})
+					},9500)
+				}
+			})
+		}
+
+
+	},60000);
+
 }
 
 offcooperate.update=function () {
-    	if (offcooperate.physics.overlap(player1, llave2)){
-            found=true;
-       		puerta2abierta = true;
-		    llave2.setFrame(1);
-            puerta2.setFrame(1);
-        }
-        else{
-            puerta2abierta=false;
-            llave2.setFrame(0);
-            puerta2.setFrame(0);
-        }
+	if (offcooperate.physics.overlap(player1, llave2)){
+		found=true;
+		puerta2abierta = true;
+		llave2.setFrame(1);
+		puerta2.setFrame(1);
+	}
+	else{
+		puerta2abierta=false;
+		llave2.setFrame(0);
+		puerta2.setFrame(0);
+	}
 
 	//var number = cuentatiempo.getProgress().toString().substr(2, 2);
 	//number = 100-number;
-    
+
 	if(esc.isDown&&!abriendose&&!pausa){
 		abriendose=true;
 		flag=true;
@@ -728,164 +744,164 @@ offcooperate.update=function () {
 		},500);
 	}
 	if(enter.isDown&&pausa){
-        puerta2abierta=false;
-        pausa=false;
+		puerta2abierta=false;
+		pausa=false;
 		music.stop();
 		var t=offcooperate.scene.transition({target:'offmenu',duration:'10'});
 	}
 
-    
 
 
-        if(llave3cogida){
-            peekArrow.alpha=0;
-     }
-        if(llave4cogida){
-            peekArrow2.alpha=0;
-    }
-    
-    if(!found){
-    if(player1.x<llave2.x&&player1.y+50>llave2.y&&player1.y-50<llave2.y){
-       peekArrow.angle=0;
-       peekArrow.x=player1.x+50;
-       peekArrow.y=player1.y;
-    }else if(player1.x+50<llave2.x&&player1.y+50>llave2.y){
-       peekArrow.angle=-50;
-       peekArrow.x=player1.x+50;
-       peekArrow.y=player1.y-50;
-    }else if(player1.x+50<llave2.x&&player1.y-50<llave2.y){
-       peekArrow.angle=50;
-       peekArrow.x=player1.x+50;
-       peekArrow.y=player1.y+50;   
-    }else if(player1.x>llave2.x&&player1.y+50>llave2.y&&player1.y-50<llave2.y){
-       peekArrow.angle=180;
-       peekArrow.x=player1.x-50;
-       peekArrow.y=player1.y;   
-    }else if(player1.x-50>llave2.x&&player1.y+50>llave2.y){
-       peekArrow.angle=230;
-       peekArrow.x=player1.x-50;
-       peekArrow.y=player1.y-50;       
-    }else if(player1.x-50>llave2.x&&player1.y-50<llave2.y){
-       peekArrow.angle=130;
-       peekArrow.x=player1.x-50;
-       peekArrow.y=player1.y+50;   
-    }else if(player1.y<llave2.y){
-       peekArrow.angle=90;
-       peekArrow.x=player1.x;
-       peekArrow.y=player1.y+50;    
-    }else if(player1.y>llave2.y){
-       peekArrow.angle=-90;
-       peekArrow.x=player1.x;
-       peekArrow.y=player1.y-50;   
-    }
-    }
-    if(found&&!llave3cogida){
-       if(player1.x<llave3.x&&player1.y+50>llave3.y&&player1.y-50<llave3.y){
-       peekArrow.angle=0;
-       peekArrow.x=player1.x+50;
-       peekArrow.y=player1.y;
-    }else if(player1.x+50<llave3.x&&player1.y+50>llave3.y){
-       peekArrow.angle=-50;
-       peekArrow.x=player1.x+50;
-       peekArrow.y=player1.y-50;
-    }else if(player1.x+50<llave3.x&&player1.y-50<llave3.y){
-       peekArrow.angle=50;
-       peekArrow.x=player1.x+50;
-       peekArrow.y=player1.y+50;   
-    }else if(player1.x>llave3.x&&player1.y+50>llave3.y&&player1.y-50<llave3.y){
-       peekArrow.angle=180;
-       peekArrow.x=player1.x-50;
-       peekArrow.y=player1.y;   
-    }else if(player1.x-50>llave3.x&&player1.y+50>llave3.y){
-       peekArrow.angle=230;
-       peekArrow.x=player1.x-50;
-       peekArrow.y=player1.y-50;       
-    }else if(player1.x-50>llave3.x&&player1.y-50<llave3.y){
-       peekArrow.angle=130;
-       peekArrow.x=player1.x-50;
-       peekArrow.y=player1.y+50;   
-    }else if(player1.y<llave3.y){
-       peekArrow.angle=90;
-       peekArrow.x=player1.x;
-       peekArrow.y=player1.y+50;    
-    }else if(player1.y>llave3.y){
-       peekArrow.angle=-90;
-       peekArrow.x=player1.x;
-       peekArrow.y=player1.y-50;   
-    }  
-    }
-    
-    if(!found2){
-    if(player2.x<llave1.x&&player2.y+50>llave1.y&&player2.y-50<llave1.y){
-       peekArrow2.angle=0;
-       peekArrow2.x=player2.x+50;
-       peekArrow2.y=player2.y;
-    }else if(player2.x+50<llave1.x&&player2.y+50>llave1.y){
-       peekArrow2.angle=-50;
-       peekArrow2.x=player2.x+50;
-       peekArrow2.y=player2.y-50;
-    }else if(player2.x+50<llave1.x&&player2.y-50<llave1.y){
-       peekArrow2.angle=50;
-       peekArrow2.x=player2.x+50;
-       peekArrow2.y=player2.y+50;   
-    }else if(player2.x>llave1.x&&player2.y+50>llave1.y&&player2.y-50<llave1.y){
-       peekArrow2.angle=180;
-       peekArrow2.x=player2.x-50;
-       peekArrow2.y=player2.y;   
-    }else if(player2.x-50>llave1.x&&player2.y+50>llave1.y){
-       peekArrow2.angle=230;
-       peekArrow2.x=player2.x-50;
-       peekArrow2.y=player2.y-50;       
-    }else if(player2.x-50>llave1.x&&player2.y-50<llave1.y){
-       peekArrow2.angle=130;
-       peekArrow2.x=player2.x-50;
-       peekArrow2.y=player2.y+50;   
-    }else if(player2.y<llave1.y){
-       peekArrow2.angle=90;
-       peekArrow2.x=player2.x;
-       peekArrow2.y=player2.y+50;    
-    }else if(player2.y>llave1.y){
-       peekArrow2.angle=-90;
-       peekArrow2.x=player2.x;
-       peekArrow2.y=player2.y-50;   
-    }
-    }
-    if(found2&&!llave4cogida){
-    if(player2.x<llave4.x&&player2.y+50>llave4.y&&player2.y-50<llave4.y){
-       peekArrow2.angle=0;
-       peekArrow2.x=player2.x+50;
-       peekArrow2.y=player2.y;
-    }else if(player2.x+50<llave4.x&&player2.y+50>llave4.y){
-       peekArrow2.angle=-50;
-       peekArrow2.x=player2.x+50;
-       peekArrow2.y=player2.y-50;
-    }else if(player2.x+50<llave4.x&&player2.y-50<llave4.y){
-       peekArrow2.angle=50;
-       peekArrow2.x=player2.x+50;
-       peekArrow2.y=player2.y+50;   
-    }else if(player2.x>llave4.x&&player2.y+50>llave4.y&&player2.y-50<llave4.y){
-       peekArrow2.angle=180;
-       peekArrow2.x=player2.x-50;
-       peekArrow2.y=player2.y;   
-    }else if(player2.x-50>llave4.x&&player2.y+50>llave4.y){
-       peekArrow2.angle=230;
-       peekArrow2.x=player2.x-50;
-       peekArrow2.y=player2.y-50;       
-    }else if(player2.x-50>llave4.x&&player2.y-50<llave4.y){
-       peekArrow2.angle=130;
-       peekArrow2.x=player2.x-50;
-       peekArrow2.y=player2.y+50;   
-    }else if(player2.y<llave4.y){
-       peekArrow2.angle=90;
-       peekArrow2.x=player2.x;
-       peekArrow2.y=player2.y+50;    
-    }else if(player2.y>llave4.y){
-       peekArrow2.angle=-90;
-       peekArrow2.x=player2.x;
-       peekArrow2.y=player2.y-50;   
-    }
-    }
-    
+
+	if(llave3cogida){
+		peekArrow.alpha=0;
+	}
+	if(llave4cogida){
+		peekArrow2.alpha=0;
+	}
+
+	if(!found){
+		if(player1.x<llave2.x&&player1.y+50>llave2.y&&player1.y-50<llave2.y){
+			peekArrow.angle=0;
+			peekArrow.x=player1.x+50;
+			peekArrow.y=player1.y;
+		}else if(player1.x+50<llave2.x&&player1.y+50>llave2.y){
+			peekArrow.angle=-50;
+			peekArrow.x=player1.x+50;
+			peekArrow.y=player1.y-50;
+		}else if(player1.x+50<llave2.x&&player1.y-50<llave2.y){
+			peekArrow.angle=50;
+			peekArrow.x=player1.x+50;
+			peekArrow.y=player1.y+50;   
+		}else if(player1.x>llave2.x&&player1.y+50>llave2.y&&player1.y-50<llave2.y){
+			peekArrow.angle=180;
+			peekArrow.x=player1.x-50;
+			peekArrow.y=player1.y;   
+		}else if(player1.x-50>llave2.x&&player1.y+50>llave2.y){
+			peekArrow.angle=230;
+			peekArrow.x=player1.x-50;
+			peekArrow.y=player1.y-50;       
+		}else if(player1.x-50>llave2.x&&player1.y-50<llave2.y){
+			peekArrow.angle=130;
+			peekArrow.x=player1.x-50;
+			peekArrow.y=player1.y+50;   
+		}else if(player1.y<llave2.y){
+			peekArrow.angle=90;
+			peekArrow.x=player1.x;
+			peekArrow.y=player1.y+50;    
+		}else if(player1.y>llave2.y){
+			peekArrow.angle=-90;
+			peekArrow.x=player1.x;
+			peekArrow.y=player1.y-50;   
+		}
+	}
+	if(found&&!llave3cogida){
+		if(player1.x<llave3.x&&player1.y+50>llave3.y&&player1.y-50<llave3.y){
+			peekArrow.angle=0;
+			peekArrow.x=player1.x+50;
+			peekArrow.y=player1.y;
+		}else if(player1.x+50<llave3.x&&player1.y+50>llave3.y){
+			peekArrow.angle=-50;
+			peekArrow.x=player1.x+50;
+			peekArrow.y=player1.y-50;
+		}else if(player1.x+50<llave3.x&&player1.y-50<llave3.y){
+			peekArrow.angle=50;
+			peekArrow.x=player1.x+50;
+			peekArrow.y=player1.y+50;   
+		}else if(player1.x>llave3.x&&player1.y+50>llave3.y&&player1.y-50<llave3.y){
+			peekArrow.angle=180;
+			peekArrow.x=player1.x-50;
+			peekArrow.y=player1.y;   
+		}else if(player1.x-50>llave3.x&&player1.y+50>llave3.y){
+			peekArrow.angle=230;
+			peekArrow.x=player1.x-50;
+			peekArrow.y=player1.y-50;       
+		}else if(player1.x-50>llave3.x&&player1.y-50<llave3.y){
+			peekArrow.angle=130;
+			peekArrow.x=player1.x-50;
+			peekArrow.y=player1.y+50;   
+		}else if(player1.y<llave3.y){
+			peekArrow.angle=90;
+			peekArrow.x=player1.x;
+			peekArrow.y=player1.y+50;    
+		}else if(player1.y>llave3.y){
+			peekArrow.angle=-90;
+			peekArrow.x=player1.x;
+			peekArrow.y=player1.y-50;   
+		}  
+	}
+
+	if(!found2){
+		if(player2.x<llave1.x&&player2.y+50>llave1.y&&player2.y-50<llave1.y){
+			peekArrow2.angle=0;
+			peekArrow2.x=player2.x+50;
+			peekArrow2.y=player2.y;
+		}else if(player2.x+50<llave1.x&&player2.y+50>llave1.y){
+			peekArrow2.angle=-50;
+			peekArrow2.x=player2.x+50;
+			peekArrow2.y=player2.y-50;
+		}else if(player2.x+50<llave1.x&&player2.y-50<llave1.y){
+			peekArrow2.angle=50;
+			peekArrow2.x=player2.x+50;
+			peekArrow2.y=player2.y+50;   
+		}else if(player2.x>llave1.x&&player2.y+50>llave1.y&&player2.y-50<llave1.y){
+			peekArrow2.angle=180;
+			peekArrow2.x=player2.x-50;
+			peekArrow2.y=player2.y;   
+		}else if(player2.x-50>llave1.x&&player2.y+50>llave1.y){
+			peekArrow2.angle=230;
+			peekArrow2.x=player2.x-50;
+			peekArrow2.y=player2.y-50;       
+		}else if(player2.x-50>llave1.x&&player2.y-50<llave1.y){
+			peekArrow2.angle=130;
+			peekArrow2.x=player2.x-50;
+			peekArrow2.y=player2.y+50;   
+		}else if(player2.y<llave1.y){
+			peekArrow2.angle=90;
+			peekArrow2.x=player2.x;
+			peekArrow2.y=player2.y+50;    
+		}else if(player2.y>llave1.y){
+			peekArrow2.angle=-90;
+			peekArrow2.x=player2.x;
+			peekArrow2.y=player2.y-50;   
+		}
+	}
+	if(found2&&!llave4cogida){
+		if(player2.x<llave4.x&&player2.y+50>llave4.y&&player2.y-50<llave4.y){
+			peekArrow2.angle=0;
+			peekArrow2.x=player2.x+50;
+			peekArrow2.y=player2.y;
+		}else if(player2.x+50<llave4.x&&player2.y+50>llave4.y){
+			peekArrow2.angle=-50;
+			peekArrow2.x=player2.x+50;
+			peekArrow2.y=player2.y-50;
+		}else if(player2.x+50<llave4.x&&player2.y-50<llave4.y){
+			peekArrow2.angle=50;
+			peekArrow2.x=player2.x+50;
+			peekArrow2.y=player2.y+50;   
+		}else if(player2.x>llave4.x&&player2.y+50>llave4.y&&player2.y-50<llave4.y){
+			peekArrow2.angle=180;
+			peekArrow2.x=player2.x-50;
+			peekArrow2.y=player2.y;   
+		}else if(player2.x-50>llave4.x&&player2.y+50>llave4.y){
+			peekArrow2.angle=230;
+			peekArrow2.x=player2.x-50;
+			peekArrow2.y=player2.y-50;       
+		}else if(player2.x-50>llave4.x&&player2.y-50<llave4.y){
+			peekArrow2.angle=130;
+			peekArrow2.x=player2.x-50;
+			peekArrow2.y=player2.y+50;   
+		}else if(player2.y<llave4.y){
+			peekArrow2.angle=90;
+			peekArrow2.x=player2.x;
+			peekArrow2.y=player2.y+50;    
+		}else if(player2.y>llave4.y){
+			peekArrow2.angle=-90;
+			peekArrow2.x=player2.x;
+			peekArrow2.y=player2.y-50;   
+		}
+	}
+
 	//text.setText('Tiempo: ' + number + "%");
 	this.physics.world.collide(player1, capa);
 	if(!puerta1abierta) this.physics.world.collide(player1, puerta1);
@@ -945,5 +961,26 @@ offcooperate.update=function () {
 				player1.body.velocity.x = 200;
 				player1.play('right',true);
 			}
+		var number = "";
+		if (tiempoOffcooperate == 180){
+			number = "3:00";
+		} else {
+			var copia;
+			if(tiempoOffcooperate >= 120){
+				number+="2:";
+				copia = tiempoOffcooperate-120;
+			} else if (tiempoOffcooperate >= 60){
+				number+="1:";
+				copia = tiempoOffcooperate-60;
+			} else {
+				number+= "0:"
+					copia = tiempoOffcooperate;
+			}
+			if(copia < 10) number += "0";
+			number+=copia;
+		}
+		//Actualizamos el tiempo que queda en pantalla
+
+		text.setText(number);
 	}
 }

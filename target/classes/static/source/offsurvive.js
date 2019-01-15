@@ -169,7 +169,7 @@ offsurvive.create =function () {
     	if (tiemposurviveoff > 0 && !pausa && !usingpowerup3){
     		tiemposurviveoff--;
     	}
-    	if(tiempoalone <= 0 && !flag){
+    	if(tiemposurviveoff <= 0 && !flag){
     		offsurvive.add.image(300, 200, 'ganahumano').setScrollFactor(0);
     		flag=true;
     		addGame(globalid, 'Survive Offline', "Player1", logros);

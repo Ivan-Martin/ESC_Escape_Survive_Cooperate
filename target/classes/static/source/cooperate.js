@@ -64,7 +64,7 @@ function comprobarMundoListo () {
 }
 
 cooperate.create = function () {
-
+    nomovimiento=false;
 	//Definición de los logros para mostrar al completar suficientes partidas
 
 	var logros = function (user) {

@@ -24,6 +24,8 @@ logo.preload=function () {
 	this.load.spritesheet('puertah1', 'assets/actors/puerhs.png', {frameWidth:5,frameHeight:48});
 	this.load.spritesheet('puertah2', 'assets/actors/puer2hs.png', {frameWidth:5,frameHeight:48});
 	this.load.spritesheet('puertah3', 'assets/actors/puer3hs.png', {frameWidth:5,frameHeight:48});
+	this.load.spritesheet('coopb','Assets/Fase5/pressure.png',{frameWidth:26,frameHeight:26});
+	this.load.image('peek','Assets/Fase5/arrow.png');
 	this.load.image('borde', 'assets/actors/borde.png');
 	this.load.image('luz','assets/menu/luz.png');
 	this.load.image('ESC','assets/menu/fondo.png');
