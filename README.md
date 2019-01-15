@@ -85,7 +85,7 @@ La distribuición de los menús es de la siguente manera:
 
 # Ejecutando el servidor
 
-Para ejecutar el servidor, se deben descargar las carpetas de github, y ejecutar el jar "ESCGame-1.4.jar" mediante el comando java -jar. Para acceder al servidor desde otro ordenador, se debe utilizar la IP Local de la red, que es donde Spring aloja el juego.
+Para ejecutar el servidor, se deben descargar las carpetas de github, y ejecutar el jar "ESCGame-1.5.jar" mediante el comando java -jar. Para acceder al servidor desde otro ordenador, se debe utilizar la IP Local de la red, que es donde Spring aloja el juego.
 
 Alternativamente, se puede depurar el servidor descargandose las carpetas de Github, donde se puede ver el código fuente. En caso de existir problemas con las conexiones de servidor, pueden provenir de la IP escrita en el fichero "script.js", puesto que puede mandar las peticiones a una dirección equivocada.
 
@@ -99,9 +99,9 @@ Además, una vez iniciada una partida, los jugadores principalmente enviarán un
 
 # Fase 5
 
-En las ultimas etapas de desarrollo de este proyecto hemos realizo beta-testing e intentando implementar el feedback de este al proyecto mediante multiples mejoras entre las cuales se incluye:
+En las ultimas etapas de desarrollo de este proyecto hemos realizo beta-testing e intentando implementar el feedback de este al proyecto mediante múltiples mejoras entre las cuales se incluye:
 
-* La IA del modo alone cuenta ahora con dos estados: Inicialmente, la IA explorará de forma aleatoria los pasillos hasta llegar a un limite de proximidad con el jugador y entonces la IA comenzará a perseguir a este.
+* La IA del modo alone cuenta ahora con dos estados: Inicialmente, la IA explorará de forma aleatoria los pasillos hasta llegar a un límite de proximidad con el jugador y entonces la IA comenzará a perseguir a este.
 
 * Se han añadido al modo cooperate dos nuevas mecánicas: Se generan ahora en los laberintos sensores de presión en el suelo sobre los cuales un jugador debe mantenerse quieto para abrirle el camino a su compañero. También se ha añadido una flecha que indica la dirección general hacia el proximo objetivo para asistir a los jugadores en este modo más complejo. La flecha aparecerá dos veces; cuando queden 2 y 1 minuto.
 
