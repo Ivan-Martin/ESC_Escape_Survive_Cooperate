@@ -810,7 +810,7 @@ cooperate.create = function () {
     tiempoCooperate=180;
     
     intervaloCooperate=setInterval(function(){
-        if(tiempoCooperate>0&&!pausa){
+        if(tiempoCooperate>0){
             tiempoCooperate--;
         }
         if(tiempoCooperate<=0&&!nomovimiento){

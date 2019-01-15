@@ -480,7 +480,7 @@ survive.create =function () {
 	}
     tiempoSurvive=180;
     intervaloSurviveT=setInterval(function(){
-        if(tiempoSurvive>0&&!pausa){
+        if(tiempoSurvive>0){
             tiempoSurvive--;
            }
         if(tiempoSurvive<=0 && !flag){
