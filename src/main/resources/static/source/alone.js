@@ -35,6 +35,7 @@ var intervaloalone;
 var recorrido;
 
 alone.create=function() {
+    flag=false;
 	var logros = function (user) {
 		if(user.partidasjugadas[3] == 1){
 			log=alone.add.image(500,340,'alone1').setScrollFactor(0);

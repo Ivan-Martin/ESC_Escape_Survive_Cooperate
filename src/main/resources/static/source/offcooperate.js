@@ -35,6 +35,9 @@ var peekArrow;
 var peekArrow2;
 var found; //p1
 var found2; //p2
+var tiempoOffcooperate;
+var intervaloOffcooperate;
+
 offcooperate.create=function () {
       peekArrow=offcooperate.add.image(48,48,'peek');
       peekArrow2=offcooperate.add.image(0,0,'peek');
@@ -262,6 +265,7 @@ offcooperate.create=function () {
 
 	this.add.image(0, 0, 'borde').setScrollFactor(0);
 
+    text=this.add.text(32,32).setScrollFactor(0);
 
 	this.anims.create({
 		key:'downwards2', frames:this.anims.generateFrameNumbers('player2',{start:1, end:3}), repeat:0, frameRate:6
@@ -480,10 +484,7 @@ offcooperate.create=function () {
 	this.physics.add.collider(player2, llave4, getllave4, null, this);
 
 	var pierden = function () {
-		this.add.image(300, 200, 'pierden').setScrollFactor(0);
-		flag=true;
-		music.stop();
-		var t=offcooperate.scene.transition({target:'menu',duration:3000});
+	
 	}
 
 	/*cuentatiempo = this.time.addEvent({
@@ -502,6 +503,19 @@ offcooperate.create=function () {
     peekArrow.depth=1;
     peekArrow2.alpha=0;
     peekArrow2.depth=1;
+    
+    tiempoOffcooperate = 180;
+    intervaloOffcooperate = setInterval(function(){
+        if(tiempoOffcooperate>0 && !pausa){
+           tiempoOffcooperate--;
+           }
+        if(tiempoOffcooperate<=0&&!flag){
+              offcooperate.add.image(300, 200, 'pierden').setScrollFactor(0);
+              flag=true;
+              music.stop();
+              var t=offcooperate.scene.transition({target:'menu',duration:3000});
+           }
+    },1000);
     
     setTimeout(function(){
         if(!found&&!found2||!found&&!llave4cogida&&!llave3cogida&&!found2||llave3cogida&&!llave4cogida){
@@ -945,5 +959,26 @@ offcooperate.update=function () {
 				player1.body.velocity.x = 200;
 				player1.play('right',true);
 			}
+        var number = "";
+        if (tiempoOffcooperate == 180){
+			number = "3:00";
+		} else {
+			var copia;
+			if(tiempoOffcooperate >= 120){
+				number+="2:";
+				copia = tiempoOffcooperate-120;
+			} else if (tiempoOffcooperate >= 60){
+				number+="1:";
+				copia = tiempoOffcooperate-60;
+			} else {
+				number+= "0:"
+				copia = tiempoOffcooperate;
+			}
+			if(copia < 10) number += "0";
+            number+=copia;
+		}
+		//Actualizamos el tiempo que queda en pantalla
+
+		text.setText(number);
 	}
 }

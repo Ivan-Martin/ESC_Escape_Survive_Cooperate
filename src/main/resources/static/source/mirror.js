@@ -60,7 +60,7 @@ function comprobarMundoListo () {
 }
 
 mirror.create=function() {
-
+    nomovimiento=false;
 	//Definición de los logros para mostrar al completar suficientes partidas
 	var logros = function (user) {
 		if(user.partidasjugadas[1] == 1){
