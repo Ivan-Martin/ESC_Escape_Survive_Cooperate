@@ -39,6 +39,8 @@ var pausa=false;
 var pausaimg;
 var intervalo;
 var finrender = false;
+var tiempoCooperate;
+var intervaloCooperate;
 
 function comprobarMundoListo () {
 	//Función para comprobar que no se haya perdido ningún paquete al enviar el mundo al otro jugador
@@ -694,7 +696,7 @@ cooperate.create = function () {
 			nomovimiento=true;
 			cooperate.add.image(600,400,'ganan');
 			addGame(globalid, 'Cooperate', "Player1", logros);
-            music.stop();
+            coopmusic.stop();
 			var t=cooperate.scene.transition({target:'menu',duration:3000});
 
 		}
@@ -705,7 +707,7 @@ cooperate.create = function () {
 			nomovimiento=true;
 			cooperate.add.image(600,400,'ganan');
 			addGame(globalid, 'Cooperate', "Player1", logros);
-            music.stop();
+            coopmusic.stop();
 			var t=cooperate.scene.transition({target:'menu',duration:3000});
 
 		}
@@ -754,19 +756,7 @@ cooperate.create = function () {
 
 		cooperate.physics.add.collider(player2, llave4, getllave4, null, cooperate);
 
-		var pierden = function () {
-			cooperate.add.image(300, 200, 'pierden').setScrollFactor(0);
-			nomovimiento=true;
-            music.stop();
-			var t=cooperate.scene.transition({target:'menu',duration:3000});
-		}
-
-		cuentatiempo = cooperate.time.addEvent({
-			delay: 180000,
-			callback: pierden,
-			callbackScope: cooperate
-		});
-
+		
 
 		text = cooperate.add.text(32, 32).setScrollFactor(0);
 		
@@ -797,7 +787,20 @@ cooperate.create = function () {
     pausaimg.alpha=0;
     pausaimg.depth = 1;
 
-	
+    tiempoCooperate=180;
+    
+    intervaloCooperate=setInterval(function(){
+        if(tiempoCooperate>0&&!pausa){
+            tiempoCooperate--;
+        }
+        if(tiempoCooperate<=0&&!nomovimiento){
+        cooperate.add.image(300, 200, 'pierden').setScrollFactor(0);
+        nomovimiento=true;
+        coopmusic.stop();
+        clearInterval(intervalo);
+        var t=cooperate.scene.transition({target:'menu',duration:3000});
+        }
+    },1000);
 }
 
 cooperate.update=function () {
@@ -856,10 +859,27 @@ cooperate.update=function () {
 		if(!puerta3abierta) cooperate.physics.world.collide(player1, puerta3);
 		if(!puerta3abierta) cooperate.physics.world.collide(player2, puerta4);
 		
-		var number = cuentatiempo.getProgress().toString().substr(2, 2);
-		number = 100-number;
+		var number = "";
+		if (tiempoCooperate == 180){
+			number = "3:00";
+		} else {
+			var copia;
+			if(tiempoCooperate >= 120){
+				number+="2:";
+				copia = tiempoCooperate-120;
+			} else if (tiempoCooperate >= 60){
+				number+="1:";
+				copia = tiempoCooperate-60;
+			} else {
+				number+= "0:"
+				copia = tiempoCooperate;
+			}
+			if(copia < 10) number += "0";
+			number+=copia;
+		}
+		//Actualizamos el tiempo que queda en pantalla
 
-		text.setText('Time: ' + number + "%");
+		text.setText(number);
 		
 		//Si podemos comenzar a jugar
 		var mijugador;
