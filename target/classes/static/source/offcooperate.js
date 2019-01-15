@@ -522,7 +522,7 @@ offcooperate.create=function () {
 			offcooperate.add.image(300, 200, 'pierden').setScrollFactor(0);
 			flag=true;
 			music.stop();
-			var t=offcooperate.scene.transition({target:'menu',duration:3000});
+			var t=offcooperate.scene.transition({target:'offmenu',duration:3000});
 		}
 		
 	},1000);

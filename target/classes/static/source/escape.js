@@ -35,6 +35,7 @@ var abriendose=false;
 var pausa=false;
 var pausaimg;
 var intervalo;
+var identificadortile;
 
 function comprobarMundoListo () {
 	//Función para comprobar que no se haya perdido ningún paquete al enviar el mundo al otro jugador
@@ -112,6 +113,11 @@ escape.create = function () {
 				//ID: play
 				player2ready = true;
 				console.log("Recibido que el jugador 2 está listo");
+				var enviartile = {};
+				enviartile.id = "tileo";
+				enviartile.tile = identificadortile;
+				enviartile.userid = globalid;
+				connection.send(JSON.stringify(enviartile));
 			} else if (datos.id == "rellenoMapa") {
 				var dimensionrelleno = datos.dim;
 				rellenocapa[dimensionrelleno] = true;
@@ -150,6 +156,11 @@ escape.create = function () {
 					var t=escape.scene.transition({target:'menu',duration:3000});
 					clearInterval(intervalo);
 					}, 3000);
+			} else if (datos.id == "tileo"){
+				var nombretileo = "tileo" + datos.tile;
+				var tileset = mapatiles.addTilesetImage(nombretileo, nombretileo, 32, 32); //Cargamos el mapa de sprites de tiles
+				capa = mapatiles.createBlankDynamicLayer('nivel', tileset, 0, 0, worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
+
 			}
 		}
 
@@ -162,10 +173,7 @@ escape.create = function () {
 	worldtiles += 24; //Bordes necesarios a cada lado de la sala central
 
 	worldtiles += centralsize*3; //Tamaño de la sala central
-
-	var tileset = mapatiles.addTilesetImage('tileo', 'tileo', 32, 32); //Cargamos el mapa de sprites de tiles
-	capa = mapatiles.createBlankDynamicLayer('nivel', tileset, 0, 0, worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
-
+	
 	velocidadp2 = 200;
 
 	var stairs1pos = {}, stairs2pos = {}, goldenstairspos = {}, player2pos = {};
@@ -180,6 +188,11 @@ escape.create = function () {
 		 * La 3º vez se crea el mundo derecho (Jugador 2)
 		 * También se genera la posición del jugador 2 y las escaleras.
 		 */
+		identificadortile = Math.ceil(Math.random()*6);
+		var nombretileset = 'tileo' + identificadortile;
+		var tileset = mapatiles.addTilesetImage(nombretileset, nombretileset, 32, 32); //Cargamos el mapa de sprites de tiles
+		capa = mapatiles.createBlankDynamicLayer('nivel', tileset, 0, 0, worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
+
 
 		createworld(worldsize); //Lanzamos el generador de laberintos con un tamaño de worldsize x worldsize
 
@@ -335,7 +348,7 @@ escape.create = function () {
 
 
 
-	mapatiles.setCollisionBetween(3, 14, true, true, capa); //Le dice que las tiles de 3 a 14 colisionan
+	
 
 	//Camaras
 
@@ -346,6 +359,8 @@ escape.create = function () {
 		 * Renderiza la escena una vez tiene todos los datos necesarios para hacerlo
 		 * Añade los elementos
 		 */
+		mapatiles.setCollisionBetween(3, 14, true, true, capa); //Le dice que las tiles de 3 a 14 colisionan
+		
 		camara1 = escape.cameras.main.setSize(600,400);
 		camara2 = escape.cameras.add(600, 0, 600, 400);
 

@@ -35,6 +35,7 @@ var abriendose=false;
 var pausa=false;
 var pausaimg;
 var intervalo;
+var identificadortilemirror;
 
 function comprobarMundoListo () {
 	//Función para comprobar que no se haya perdido ningún paquete al enviar el mundo al otro jugador
@@ -110,6 +111,11 @@ mirror.create=function() {
 				//ID: play
 				player2ready = true;
 				console.log("Recibido que el jugador 2 está listo");
+				var enviartile = {};
+				enviartile.id = "tileo";
+				enviartile.tile = identificadortilemirror;
+				enviartile.userid = globalid;
+				connection.send(JSON.stringify(enviartile));
 			} else if (datos.id == "rellenoMapa") {
 				var dimensionrelleno = datos.dim;
 				rellenocapa[dimensionrelleno] = true;
@@ -148,6 +154,11 @@ mirror.create=function() {
 					var t=mirror.scene.transition({target:'menu',duration:3000});
 					clearInterval(intervalo);
 				}, 3000);
+			} else if (datos.id == "tileo"){
+				var nombretileo = "tileo" + datos.tile;
+				var tileset = mapatiles.addTilesetImage(nombretileo, nombretileo, 32, 32); //Cargamos el mapa de sprites de tiles
+				capa = mapatiles.createBlankDynamicLayer('nivel', tileset, 0, 0, worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
+
 			}
 		}
 
@@ -161,10 +172,6 @@ mirror.create=function() {
 
 	mapatiles = this.make.tilemap({ tileWidth: 32, tileHeight: 32, width: 2*worldtiles*32+centralsize*32+24*32, heigth: 2*worldtiles*32+centralsize*32+24*32}); //Esto añade un mapa vacío al mundo
 
-	var tileset = mapatiles.addTilesetImage('tileo', 'tileo', 32, 32); //Cargamos el mapa de sprites de tiles
-
-	capa = mapatiles.createBlankDynamicLayer('nivel', tileset, 0, 0, worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
-	
 	var stairs1pos = {}, stairs2pos = {}, goldenstairspos = {}, player2pos = {};
 	var stairs1 = {}, stairs2 = {}, goldenstairs = {};
 
@@ -178,6 +185,10 @@ mirror.create=function() {
 		 * La 3º vez se copia el mundo izquierdo en el mundo derecho (Jugador 2)
 		 * También se genera la posición del jugador 2 y las escaleras.
 		 */
+		identificadortilemirror = Math.ceil(Math.random()*6);
+		var nombretileset = 'tileo' + identificadortilemirror;
+		var tileset = mapatiles.addTilesetImage(nombretileset, nombretileset, 32, 32); //Cargamos el mapa de sprites de tiles
+		capa = mapatiles.createBlankDynamicLayer('nivel', tileset, 0, 0, worldtiles, worldtiles, 32, 32); //Crea una capa de worldtiles, cada tile 32x32 y la llama nivel1
 
 
 		createworld(worldsize); //Lanzamos el generador de laberintos con un tamaño de worldsize x worldsize
